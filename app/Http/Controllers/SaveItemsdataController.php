@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class SaveItemsdataController extends Controller
 {
-    public function save_citydata_method(Request $party){
-        $data =  DB::insert("insert into items(ItemName,Category,Rate,Quantity)
-         values(?,?,?,?)",[$party->ItemName,$party->Category,$party->Rate,$party->Quantity]);
-         if($data){
+    public function save_itemsdata_method(Request $items){
+        $items =  DB::insert("insert into items(itemname,company)
+         values(?,?)",[$items->ItemName,$items->Company]);
+         if($items){
              return redirect('/show_itemsdata')->with('status','inserted successfuly');
          }
          else{
@@ -31,18 +31,16 @@ class SaveItemsdataController extends Controller
      }
      public function edit_companydata_method($id){
         $editdata =  DB::table('items')
-         ->where('ItemName', $id)
+         ->where('itemname', $id)
          ->get();
          return view('/admin/modules/Items/itemedit',['data'=>$editdata]);
      }
      public function update_companydata_method(Request $updatecompany){
          $data = DB::table('items')
-         ->where('ItemName', $updatecompany->id)
+         ->where('itemname', $updatecompany->id)
          ->update([
-             'ItemName' => $updatecompany->ItemName,
-             'Category' => $updatecompany->Category,
-             'Rate' => $updatecompany->Rate,
-             'Quantity' => $updatecompany->Quantity,
+             'itemname' => $updatecompany->ItemName,
+             'company' => $updatecompany->Company
          ]);
          // return $data;
          if($data){

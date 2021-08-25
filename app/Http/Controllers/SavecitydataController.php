@@ -6,44 +6,49 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class SavecitydataController extends Controller
 {
-    public function save_citydata_method(Request $party){
-        $data =  DB::insert("insert into cities(CityName) values(?)",[$party->CityName]);
+    public function save_svdata_method(Request $sv){
+        $data =  DB::insert("insert into sup_and_ven(name,phoneNo,cnic,address,type) values(?,?,?,?,?)",
+        [$sv->name,$sv->phoneNo,$sv->cnic,$sv->address,$sv->type,]);
          if($data){
-             return redirect('/show_citydata')->with('status','Inserted Successfuly');
+             return redirect('/show_svdata')->with('status','Inserted Successfuly');
          }
          else{
-            return redirect('/show_citydata')->with('failed','Not Inserted ');
+            return redirect('/show_svdata')->with('failed','Not Inserted ');
          }
  
      }
-     public function show_companydata_method(Request $request){
-         $cities = DB::table('cities')->get();
+     public function show_svdata_method(Request $request){
+         $sup_and_ven = DB::table('sup_and_ven')->get();
          
-         return view('admin/modules/Cities/city',['cities'=>$cities]);
+         return view('admin/modules/Supplier_and_Vender/sv',['sup_and_ven'=>$sup_and_ven]);
         
      }
-     public function delete_companydata_method($id){
-         DB::table('cities')
-             ->where('CityName', $id)
+     public function delete_svdata_method($id){
+         DB::table('sup_and_ven')
+             ->where('phoneNo', $id)
              ->delete();
-             return redirect('/show_citydata');
+             return redirect('/show_svdata');
      }
-     public function edit_companydata_method($id){
-        $editdata =  DB::table('cities')
-         ->where('CityName', $id)
+     public function edit_svdata_method($id){
+        $editdata =  DB::table('sup_and_ven')
+         ->where('phoneNo', $id)
          ->get();
         //  return $editdata;
-         return view('/admin/modules/Cities/cityedit',['data'=>$editdata]);
+         return view('/admin/modules/Supplier_and_Vender/svedit',['data'=>$editdata]);
      }
-     public function update_companydata_method(Request $updatecompany){
-         $data = DB::table('cities')
-         ->where('CityName', $updatecompany->id)
+     public function update_svdata_method(Request $updatecompany){
+         $data = DB::table('sup_and_ven')
+         ->where('phoneNo', $updatecompany->id)
          ->update([
-             'CityName' => $updatecompany->CityName
+             'name' => $updatecompany->name,
+             'phoneNo' => $updatecompany->phoneNo,
+             'cnic' => $updatecompany->cnic,
+             'address' => $updatecompany->address,
+             'type' => $updatecompany->type
          ]);
          // return $data;
          if($data){
-             return redirect('/show_citydata');
+             return redirect('/show_svdata');
          }
      }
 }

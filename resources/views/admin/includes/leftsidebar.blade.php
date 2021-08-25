@@ -14,29 +14,35 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="fas fa-industry"></i>
               <p>
-              Basic Menu
+              MANUFACTURING
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/aew/public/show_companydata" class="nav-link">
+                <a href="/gennyFactory/public/show_material" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Material</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/aew/public/show_citydata" class="nav-link">
+                <a href="/gennyFactory/public/show_svdata" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Cities</p>
+                  <p>Suppliers & Venders</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/aew/public/show_itemsdata" class="nav-link">
+                <a href="/gennyFactory/public/show_itemsdata" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Items</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/gennyFactory/public/show_Stockdata" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Stock</p>
                 </a>
               </li>
              
