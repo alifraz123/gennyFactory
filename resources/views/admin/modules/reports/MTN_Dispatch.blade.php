@@ -19,46 +19,40 @@
     <p>Dispatch Report of : {{$dispatch[$a]->supplier}} {{$dispatch[$a]->city}} {{$dispatch[$a]->date}}</p>
 </div>
 
-<table style="width: 10%;" class="table">
-    <thead>
-        <tr>
+<div style="width:100%; border:1px solid black;display:flex">
+    @for($f=0; $f < 10; $f++)
+     <div style="width: 10%;border:1px solid black">
+        <div style="display: inline-block;width: 41px;text-align: center;font-weight:bold;">CNo</div>
+        <div style="display: inline-block;width: 45px;text-align: center;font-weight:bold;">Qty</div>
+</div>
+@endfor
+</div>
+<div style="height: 500px; border:1px solid black; display:flex;flex-direction:column;flex-wrap:wrap;align-content:flex-start" class="">
 
-            <th scope="col">CNo</th>
-            <th scope="col">Qty</th>
+    @for($b=0; $b < count($dispatch[$a]->dispatch_detail); $b++)
 
-        </tr>
 
-    </thead>
-    <tbody>
-        <div style="column-count: 4;">
-        @for($b=0; $b < count($dispatch[$a]->dispatch_detail); $b++)
+        <span style="background-color: black; color: white;text-align: center;width:10%">
+            {{$dispatch[$a]->dispatch_detail[$b]['items']}}
+        </span>
 
-            <tr>
-                <td style="text-align: center;background-color: black;color: white;" colspan="2">
-                    {{$dispatch[$a]->dispatch_detail[$b]['items']}}
-                </td>
-            </tr>
+        @for($c=0; $c < count($dispatch[$a]->dispatch_detail[$b]['qty_var']); $c++)
+            <div style="width: 10%; border:1px solid black">
+                <div style="display: inline-block;width: 41px;text-align: center;">{{$dispatch[$a]->dispatch_detail[$b]['qty_var'][$c]->varient}}</div>
+                <div style="display: inline-block;width: 45px;text-align: center;">{{$dispatch[$a]->dispatch_detail[$b]['qty_var'][$c]->qty}}</div>
+            </div>
 
-            @for($c=0; $c < count($dispatch[$a]->dispatch_detail[$b]['qty_var']); $c++)
-                <tr>
-                    <td>{{$dispatch[$a]->dispatch_detail[$b]['qty_var'][$c]->varient}}</td>
-                    <td>{{$dispatch[$a]->dispatch_detail[$b]['qty_var'][$c]->qty}}</td>
-                </tr>
+            @endfor
+            <div style="width: 10%; border:1px solid black">
+                <div style="display: inline-block;width: 41px;text-align: center;font-weight:bold;">Total</div>
+                <div style="display: inline-block;width: 45px;text-align: center;font-weight:bold;">{{$dispatch[$a]->dispatch_detail[$b]['total']}}</div>
+            </div>
 
-                @endfor
+            @endfor
 
-                <tr>
-                    <td style="font-weight: bold;">
-                        Total
-                    </td>
-                    <td style="font-weight: bold;">
-                        {{$dispatch[$a]->dispatch_detail[$b]['total']}}
-                    </td>
-                </tr>
-                @endfor
-                </div>
-    </tbody>
-</table>
+
+</div>
+
 
 @endfor
 
