@@ -34,7 +34,9 @@
 
                                             <select name="itemname" required class="form-control">
                                                 <option value="{{$data[0]->itemname}}">{{$data[0]->itemname}}</option>
-
+                                                @foreach($items as $item)
+                                            <option value="{{$item->itemname}}">{{$item->itemname}}</option>
+                                            @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -45,7 +47,7 @@
                                         <div class="form-group">
                                             <label>Company</label>
 
-                                            <select name="company" required class="form-control">
+                                            <select disabled name="company" required class="form-control">
                                                 <option value="{{$data[0]->company}}">{{$data[0]->company}}</option>
 
                                             </select>

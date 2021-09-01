@@ -16,31 +16,60 @@
                         @csrf
                         <input type="hidden" value="{{$data[0]->phoneNo}}" name="id">
                         <div class="row">
-                            <div class="col-sm-5">
+                            <div class="col-sm-4">
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>Name</label>
                                     <input type="text" name="name" value="{{$data[0]->name}}" required class="form-control" placeholder="Enter City">
                                 </div>
                             </div>
-                            <div class="col-sm-5">
+                            <div class="col-sm-4">
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>Phone No.</label>
                                     <input type="text" name="phoneNo" value="{{$data[0]->phoneNo}}" required class="form-control" placeholder="Enter phoneNo">
                                 </div>
                             </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-5">
+                            <div class="col-sm-4">
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>CNIC</label>
                                     <input type="text" name="cnic" value="{{$data[0]->cnic}}" required class="form-control" placeholder="Enter CNIC">
                                 </div>
                             </div>
-                            <div class="col-sm-5">
+
+                        </div>
+                        <div class="row">
+                            
+                            <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>Zone</label>
+
+                                    <select class="form-control" name="zone" required id="">
+                                        <option disabled selected value="{{$data[0]->zone}}">{{$data[0]->zone}}</option>
+                                        @foreach($zones as $zone)
+                                        <option value="{{$zone->zoneName}}">{{$zone->zoneName}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>City</label>
+
+                                    <select class="form-control" name="city" required id="">
+                                        <option disabled selected value="{{$data[0]->city}}">{{$data[0]->city}}</option>
+                                        @foreach($cities as $city)
+                                        <option value="{{$city->cityName}}">{{$city->cityName}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-4">
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>Type</label>
@@ -58,7 +87,7 @@
 
                         </div>
                         <div class="row">
-                            <div class="col-sm-5">
+                            <div class="col-sm-4">
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>Address</label>

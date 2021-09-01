@@ -17,25 +17,26 @@ class SaveItemsdataController extends Controller
          }
         
      }
-     public function show_companydata_method(Request $request){
+
+     public function show_itemsdata_method(Request $request){
          $items = DB::table('items')->get();
-       
-        return view('admin/modules/Items/item',['items'=>$items]);
+         $companies = DB::table('company')->get();
+        return view('admin/modules/Items/item',['items'=>$items,'companies'=>$companies]);
         
      }
-     public function delete_companydata_method($id){
+     public function delete_itemsdata_method($id){
          DB::table('items')
              ->where('ItemName', $id)
              ->delete();
              return redirect('/show_itemsdata');
      }
-     public function edit_companydata_method($id){
+     public function edit_itemsdata_method($id){
         $editdata =  DB::table('items')
          ->where('itemname', $id)
          ->get();
          return view('/admin/modules/Items/itemedit',['data'=>$editdata]);
      }
-     public function update_companydata_method(Request $updatecompany){
+     public function update_itemsdata_method(Request $updatecompany){
          $data = DB::table('items')
          ->where('itemname', $updatecompany->id)
          ->update([

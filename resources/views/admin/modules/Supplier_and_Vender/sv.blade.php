@@ -24,31 +24,60 @@
                     @csrf
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-5">
+                            <div class="col-sm-4">
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input type="text" name="name" required class="form-control" placeholder="Enter City">
+                                    <input type="text" name="name" required class="form-control" placeholder="Enter Supplier Name">
                                 </div>
                             </div>
-                            <div class="col-sm-5">
+                            <div class="col-sm-4">
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>Phone No.</label>
                                     <input type="text" name="phoneNo" required class="form-control" placeholder="Enter phoneNo">
                                 </div>
                             </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-5">
+                            <div class="col-sm-4">
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>CNIC</label>
                                     <input type="text" name="cnic" required class="form-control" placeholder="Enter CNIC">
                                 </div>
                             </div>
-                            <div class="col-sm-5">
+
+                        </div>
+                        <div class="row">
+                        <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>Zone</label>
+
+                                    <select class="form-control" name="zone" required id="">
+                                        <option disabled selected value="">Choose zone...</option>
+                                        @foreach($zones as $zone)
+                                        <option value="{{$zone->zoneName}}">{{$zone->zoneName}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>City</label>
+
+                                    <select class="form-control" name="city" required id="">
+                                        <option disabled selected value="">Choose city ..</option>
+                                        @foreach($cities as $city)
+                                        <option value="{{$city->cityName}}">{{$city->cityName}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
+                            
+                            <div class="col-sm-4">
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>Type</label>
@@ -86,6 +115,8 @@
                                 <th>Name</th>
                                 <th>Phone No.</th>
                                 <th>CNIC</th>
+                                <th>City</th>
+                                <th>Zone</th>
                                 <th>Address</th>
                                 <th>Type</th>
                                 <th>Edit</th>
@@ -100,6 +131,8 @@
                                 <td>{{$sv->name}}</td>
                                 <td>{{$sv->phoneNo}}</td>
                                 <td>{{$sv->cnic}}</td>
+                                <td>{{$sv->city}}</td>
+                                <td>{{$sv->zone}}</td>
                                 <td>{{$sv->address}}</td>
                                 <td>{{$sv->type}}</td>
                                 <td><a href='edit_svdata/{{$sv->phoneNo}}' class="btn btn-success">Edit</a> </td>

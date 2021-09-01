@@ -18,11 +18,12 @@ class Stock extends Controller
          }
         
      }
+     
      public function show_Stockdata_method(Request $request){
          $stock = DB::table('stock')->get();
-         $items = DB::table('items')->get();
+         $companies = DB::table('company')->get();
       
-        return view('admin/modules/Stock/stock',['stocks'=>$stock,'items'=>$items]);
+        return view('admin/modules/Stock/stock',['stocks'=>$stock,'companies'=>$companies]);
         
      }
      public function delete_stockdata_method($id){
@@ -32,10 +33,9 @@ class Stock extends Controller
              return redirect('/show_Stockdata');
      }
      public function edit_stockdata_method($id){
-        $editdata =  DB::table('stock')
-         ->where('id', $id)
-         ->get();
-         return view('/admin/modules/Stock/stockedit',['data'=>$editdata]);
+        $editdata =  DB::table('stock')->where('id', $id)->get();
+         $items = DB::table('items')->where('company', $editdata[0]->company)->get();;
+         return view('/admin/modules/Stock/stockedit',['data'=>$editdata,'items'=>$items]);
      }
      public function update_Stockdata_method(Request $updatecompany){
          $data = DB::table('stock')
@@ -52,5 +52,14 @@ class Stock extends Controller
          if($data){
              return redirect('/show_Stockdata');
          }
+     }
+
+     public function getItemsOfSelectedCompany_method(Request $getItems){
+        $items = DB::table('items')->where('company',$getItems->company)->get();
+        return $items;
+     }
+     public function getItemsOfSelectedCompany_For_dispatch_method(Request $getItems){
+        $items = DB::table('stock')->where('company',$getItems->company)->where('finish','>',0)->get();
+        return $items;
      }
 }

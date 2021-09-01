@@ -19,37 +19,26 @@
         <div class="container-fluid">
 
             <div class="row">
-                <h4>Items</h4>
+                <h4>Zone</h4>
             </div>
             <div class="card card-body">
 
 
-                <form method="post" action="save_itemsdata">
+                <form method="post" action="save_zone">
                     @csrf
 
                     <div class="row">
                         <div class="col-sm-5">
                             <!-- text input -->
                             <div class="form-group">
-                                <label>Item Name</label>
-                                <input type="text" name="ItemName" required class="form-control" placeholder="Enter Item Name">
+                                <label>Zone Name</label>
+                                <input type="text" name="zone" required class="form-control" placeholder="Enter Zone Name">
                             </div>
                         </div>
-                        <div class="col-sm-5">
-                            <div class="form-group">
-                                <label>Company</label>
 
-                                <select name="Company" require class="form-control" id="Company">
-                                    <option disabled selected value="">Choose company</option>
-                                    @foreach($companies as $company)
-                                    <option value="{{$company->companyName}}">{{$company->companyName}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
                     </div>
 
-                    <button style="float:right; margin-right:80px; margin-top: -54px;" type="submit" class="btn btn-primary">Submit</button>
+                    <button style="float:right; margin-right:32rem; margin-top: -54px;" type="submit" class="btn btn-primary">Submit</button>
 
                 </form>
             </div>
@@ -60,23 +49,22 @@
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>Item Name</th>
-                                <th>Company</th>
 
+                                <th>Zone</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody id="companydata">
-                            @foreach($items as $item)
+                            @foreach($zones as $zone)
                             <tr>
-                                <td> {{$item->itemname}}</td>
-                                <td>{{$item->company}}</td>
+                                <td> {{$zone->zoneName}}</td>
 
-                                <td><a href='edit_itemsdata/{{$item->itemname}}' class="btn btn-success">Edit</a> </td>
-                                <td><a href='delete_itemsdata/{{$item->itemname}}' class="btn btn-danger">Delete</a> </td>
+                                <td><a href='edit_zone/{{$zone->zoneName}}' class="btn btn-success">Edit</a> </td>
+                                <td><a href='delete_zone/{{$zone->zoneName}}' class="btn btn-danger">Delete</a> </td>
                             </tr>
                             @endforeach
+
 
                         </tbody>
 

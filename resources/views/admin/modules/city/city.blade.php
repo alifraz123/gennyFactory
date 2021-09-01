@@ -19,34 +19,36 @@
         <div class="container-fluid">
 
             <div class="row">
-                <h4>Items</h4>
+                <h4>City</h4>
             </div>
             <div class="card card-body">
 
 
-                <form method="post" action="save_itemsdata">
+                <form method="post" action="save_city">
                     @csrf
 
                     <div class="row">
                         <div class="col-sm-5">
                             <!-- text input -->
                             <div class="form-group">
-                                <label>Item Name</label>
-                                <input type="text" name="ItemName" required class="form-control" placeholder="Enter Item Name">
+                                <label>City Name</label>
+                                <input type="text" name="city" required class="form-control" placeholder="Enter City Name">
                             </div>
                         </div>
-                        <div class="col-sm-5">
+                        <div class="col-md-5">
                             <div class="form-group">
-                                <label>Company</label>
-
-                                <select name="Company" require class="form-control" id="Company">
-                                    <option disabled selected value="">Choose company</option>
-                                    @foreach($companies as $company)
-                                    <option value="{{$company->companyName}}">{{$company->companyName}}</option>
+                                <label for="">Zone</label>
+                                <select name="zone" class="form-control select2 select2bs4">
+                                    <option selected disabled value="">Choose zone..</option>
+                                    @foreach($zones as $zone)
+                                    <option value="{{$zone->zoneName}}">{{$zone->zoneName}}</option>
                                     @endforeach
                                 </select>
+
                             </div>
                         </div>
+
+
                     </div>
 
                     <button style="float:right; margin-right:80px; margin-top: -54px;" type="submit" class="btn btn-primary">Submit</button>
@@ -60,21 +62,21 @@
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>Item Name</th>
-                                <th>Company</th>
 
+                                <th>City</th>
+                                <th>Zone</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody id="companydata">
-                            @foreach($items as $item)
+                            @foreach($cities as $city)
                             <tr>
-                                <td> {{$item->itemname}}</td>
-                                <td>{{$item->company}}</td>
+                                <td> {{$city->cityName}}</td>
+                                <td>{{$city->zoneName}}</td>
 
-                                <td><a href='edit_itemsdata/{{$item->itemname}}' class="btn btn-success">Edit</a> </td>
-                                <td><a href='delete_itemsdata/{{$item->itemname}}' class="btn btn-danger">Delete</a> </td>
+                                <td><a href='edit_city/{{$city->cityName}}' class="btn btn-success">Edit</a> </td>
+                                <td><a href='delete_city/{{$city->cityName}}' class="btn btn-danger">Delete</a> </td>
                             </tr>
                             @endforeach
 
