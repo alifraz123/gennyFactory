@@ -20,14 +20,13 @@
 </div>
 
 <div style="width:100%; border:1px solid black;display:flex">
-    @for($f=0; $f < 10; $f++)
-     <div style="width: 10%;border:1px solid black">
+    @for($f=0; $f < 10; $f++) <div style="width: 10%;border:1px solid black">
         <div style="display: inline-block;width: 41px;text-align: center;font-weight:bold;">CNo</div>
         <div style="display: inline-block;width: 45px;text-align: center;font-weight:bold;">Qty</div>
 </div>
 @endfor
 </div>
-<div style="height: 500px; border:1px solid black; display:flex;flex-direction:column;flex-wrap:wrap;align-content:flex-start" class="">
+<div style="height: 1000px; border:1px solid black; display:flex;flex-direction:column;flex-wrap:wrap;align-content:flex-start" class="">
 
     @for($b=0; $b < count($dispatch[$a]->dispatch_detail); $b++)
 
@@ -52,7 +51,19 @@
 
 
 </div>
+<p style="font-weight: bold;font-size:20px;margin-bottom:30px">Delivered By: </p>
 
+<div style="height: 300px; width:100%;border:1px solid black;">
+    @for($b=0; $b < count($dispatch[$a]->dispatch_detail); $b++)
+
+        <div style="display: flex;flex-flow: wrap;align-items: flex-start;margin: 13px;line-height:0;margin-top:25px">
+            <span style="width: 10vw; font-weight:bold">{{$dispatch[$a]->dispatch_detail[$b]['items']}}</span>
+            <span>{{$dispatch[$a]->dispatch_detail[$b]['total']}}</span>
+        </div>
+
+        @endfor
+
+</div>
 
 @endfor
 
