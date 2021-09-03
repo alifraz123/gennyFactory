@@ -88,43 +88,127 @@
                 </div>
                 </form>
                 <!-- /.card-header -->
-                <div class="card-body">
-                    <table id="example1" class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th>Varient</th>
-                                <th>Item Name</th>
-                                <th>Company</th>
-                                <th>Semi Finish</th>
-                                <th>Finish</th>
-                                <th>Damaged</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody id="companydata">
-                            @foreach($stocks as $stock)
-                            <tr>
-                                <td> {{$stock->varient}}</td>
-                                <td>{{$stock->itemname}}</td>
-                                <td> {{$stock->company}}</td}>
-                                <td>{{$stock->semiFinish}}</td>
-                                <td>{{$stock->finish}}</td>
-                                <td>{{$stock->damage}}</td>
-                                <td><a href='edit_stockdata/{{$stock->id}}' class="btn btn-success">Edit</a> </td>
-                                <td><a href='delete_stockdata/{{$stock->id}}' class="btn btn-danger">Delete</a> </td>
-                            </tr>
-                            @endforeach
 
-                        </tbody>
 
-                    </table>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog mw-100 w-50" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Edit Stock</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" action="edit_stockdata">
+                                    @csrf
+                                    <input type="hidden" id="id" name="id">
+                                    <div class="card-body">
+                                        <div class="row">
+
+                                            <div class="col-sm-5">
+                                                <!-- text input -->
+                                                <div class="form-group">
+                                                    <label>Varient</label>
+                                                    <input type="text" name="Varient" id="Varient" required class="form-control" placeholder="Enter Varient">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="form-group">
+                                                    <label>Item Name</label>
+
+                                                    <select name="itemname" id="ItemName" required class="form-control">
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <!-- text input -->
+                                                <div class="form-group">
+                                                    <label>Company</label>
+
+                                                    <select name="company" id="Company" required class="form-control">
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="form-group">
+                                                    <label>Finish Quantity</label>
+                                                    <input type="number" name="finish" value="" id="finish" required class="form-control" placeholder="Enter Finish Items">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <!-- text input -->
+                                                <div class="form-group">
+                                                    <label>Semi Finish Quantity</label>
+                                                    <input type="number" name="semi_finish" id="semi_finish" value="" required class="form-control" placeholder="Enter semi_finish items">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="form-group">
+                                                    <label>Damage Quantity</label>
+                                                    <input type="number" name="damage" id="damage" value="" required class="form-control" placeholder="Enter Damage items">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <button style="float:right; margin-right:32px; margin-top: -75px;" type="submit" class="btn btn-primary">Update</button>
+                            </div>
+
+
+
+                        </div>
+                        <div class="card-footer">
+                        </div>
+                        </form>
+                    </div>
 
                 </div>
-                <!-- /.card-body -->
             </div>
+        </div>
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Varient</th>
+                        <th>Item Name</th>
+                        <th>Company</th>
+                        <th>Semi Finish</th>
+                        <th>Finish</th>
+                        <th>Damaged</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="companydata">
+                    @foreach($stocks as $stock)
+                    <tr>
+                        <td> {{$stock->varient}}</td>
+                        <td>{{$stock->itemname}}</td>
+                        <td> {{$stock->company}}</td}>
+                        <td>{{$stock->semiFinish}}</td>
+                        <td>{{$stock->finish}}</td>
+                        <td>{{$stock->damage}}</td>
+                        <td><button onclick="show_modal('{{$stock->id}}')" class="btn btn-success">Edit</button> </td>
+                        <td><a href='delete_stockdata/{{$stock->id}}' class="btn btn-danger">Delete</a> </td>
+                    </tr>
+                    @endforeach
+
+                </tbody>
+
+            </table>
 
         </div>
+        <!-- /.card-body -->
+</div>
+
+</div>
 
 </div>
 </div>
@@ -157,7 +241,39 @@
         })
 
     }
+
+
+
+    function show_modal(stock) {
+
+        $.ajax({
+            url: 'edit_stockdata/' + stock,
+            type: 'get',
+            data: {
+                stock: stock
+            },
+            success: function(data) {
+                // console.log(data)
+                document.getElementById('id').value = data['data'][0].id;
+                document.getElementById('Varient').value = data['data'][0].varient;
+                document.getElementById('finish').value = data['data'][0].finish;
+                document.getElementById('semi_finish').value = data['data'][0].semiFinish;
+                document.getElementById('damage').value = data['data'][0].damage;
+                let company = `<option selected readonly value="${data['data'][0].company}">${data['data'][0].company}</option>`;
+                let ItemName = `<option selected readonly value="${data['data'][0].itemname}">${data['data'][0].itemname}</option>`;
+
+                document.getElementById('Company').innerHTML = company;
+                document.getElementById('ItemName').innerHTML = ItemName;
+            },
+            error: function(req, status, error) {
+                console.log(error)
+
+            }
+        })
+        $('#exampleModal').modal('show');
+    }
 </script>
+
 
 
 @endsection

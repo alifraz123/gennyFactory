@@ -71,7 +71,7 @@ Route::get('/items', function () {
 Route::get('show_zone', [App\Http\Controllers\SavecitydataController::class, 'show_zone_method']);
 Route::post('save_zone', [App\Http\Controllers\SavecitydataController::class, 'save_zone_method']);
 Route::get('delete_zone/{id}', [App\Http\Controllers\SavecitydataController::class, 'delete_zone_method']);
-Route::get('edit_zone/{id}', [App\Http\Controllers\SavecitydataController::class, 'edit_zone_method']);
+
 Route::post('update_zone', [App\Http\Controllers\SavecitydataController::class, 'update_zone_method']);
 
 
@@ -103,7 +103,6 @@ Route::post('edit_itemsdata', [App\Http\Controllers\SaveItemsdataController::cla
 Route::post('save_company', [App\Http\Controllers\SavecitydataController::class, 'save_company_method']);
 Route::get('show_company', [App\Http\Controllers\SavecitydataController::class, 'show_company_method']);
 Route::get('delete_company/{id}', [App\Http\Controllers\SavecitydataController::class, 'delete_company_method']);
-Route::get('edit_company/{id}', [App\Http\Controllers\SavecitydataController::class, 'edit_company_method']);
 Route::post('edit_company', [App\Http\Controllers\SavecitydataController::class, 'update_company_method']);
 
 

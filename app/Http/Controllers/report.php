@@ -10,7 +10,8 @@ class report extends Controller
     public function MTN_CTN_Dispatch_method(Request $request)
     {
         $dispatch = DB::table('dispatch')->where('supplier', $request->supplier_name)->get(['supplier', 'date', 'invoice']);
-        $cno = DB::table('dispatch_detail')->where('invoice', $dispatch[0]->invoice)->distinct()->get(['cno']);
+       for($e=0; $e < count($dispatch); $e++){
+        $cno = DB::table('dispatch_detail')->where('invoice', $dispatch[$e]->invoice)->distinct()->get(['cno']);
         $dispatch_detail_array = [];
         for ($a = 0; $a < count($cno); $a++) {
             $bb = [];
@@ -26,13 +27,17 @@ class report extends Controller
             }
             $dispatch_detail_array[$a] = array('cno' => $cno[$a]->cno, 'ItemName' => $bb);
         }
-        $dispatch[0]->dispatch_detail = $dispatch_detail_array;
+        $dispatch[$e]->dispatch_detail = $dispatch_detail_array;
+       }
+       
+        
         return view('admin/modules/reports/MTN_CTN_Detail', ['dispatch' => $dispatch]);
     }
 
     public function MTN_Dispatch_method(Request $request){
         $dispatch = DB::table('dispatch')->where('supplier', $request->supplier_name)->get(['supplier', 'date', 'invoice','builtyNo','city']);
-        $ItemNames = DB::table('dispatch_detail')->where('invoice', $dispatch[0]->invoice)->distinct()->get(['ItemName']);
+        for($e=0; $e < count($dispatch); $e++){
+            $ItemNames = DB::table('dispatch_detail')->where('invoice', $dispatch[$e]->invoice)->distinct()->get(['ItemName']);
         $dispatch_detail_array = [];
         for ($a = 0; $a < count($ItemNames); $a++) {
             $bb = [];
@@ -46,7 +51,9 @@ class report extends Controller
 
              
         }
-        $dispatch[0]->dispatch_detail = $dispatch_detail_array;
+        $dispatch[$e]->dispatch_detail = $dispatch_detail_array;
+        }
+        
         return view('admin/modules/reports/MTN_Dispatch',['dispatch'=>$dispatch]);
     }
 }

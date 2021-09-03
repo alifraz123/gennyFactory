@@ -45,7 +45,7 @@ class SavePartydataController extends Controller
             ->get();
             $items = DB::table('items')->get();
         // return $editdata;
-        return view('/admin/modules/Material/materialedit', ['data' => $editdata,'items'=>$items]);
+        return ['data' => $editdata,'items'=>$items];
     }
     public function update_materialdata_method(Request $updatecompany)
     {

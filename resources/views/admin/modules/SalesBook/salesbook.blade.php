@@ -1,7 +1,7 @@
 @extends('admin/layouts/mainlayout')
 @section('content')
-
 <div class="content-wrapper">
+
 
     <section class="content">
         <div id="show_insert_status">
@@ -27,28 +27,28 @@
 
                                 </div>
                                 <div style="margin: 15px;line-height:0px" class="row">
-                                    <div style="width: 30%;">
+                                    <div style="width: 30%;margin-right:3px">
 
                                         <label>Supplier</label>
                                         <select name="supplier" id="supplier" class="control-form select2" style="width: 100%;" onchange="getDateOfSelectedSupplier()" required>
-                                            <option disabled selected value="">Choose Supplier</option>
+                                            <option readonly selected value="">Choose Supplier</option>
                                             @foreach($parties as $partydata)
                                             <option value="{{$partydata->name}}"> {{$partydata->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div style="width: 25%;">
+                                    <div style="width: 25%;margin-right:3px">
 
                                         <label>Company</label>
                                         <select name="company" onchange="getItemsOfSelectedCompany(this.value)" id="company" class="control-form select2" style="width: 100%;">
-                                            <option selected disabled value="">Choose company...</option>
+                                            <option selected readonly value="">Choose company...</option>
                                             @foreach($companies as $company)
                                             <option value="{{$company->companyName}}">{{$company->companyName}}</option>
                                             @endforeach
                                         </select>
                                     </div>
 
-                                    <div style="width: 25%;">
+                                    <div style="width: 25%;margin-right:3px">
                                         <label>Date</label>
                                         <input type="date" name="Date" id="Date" class="form-control" style="width: 100%;padding:0;height:30px" required>
                                     </div>
@@ -59,42 +59,37 @@
                                 <!-- Add Product Detail -->
                                 <div style="line-height: 0;" class="card-body">
 
-                                    <div class="row">
-                                        <div style="width: 10%;">
+                                    <div style="display: flex;">
+                                        <div style="width: 10%;margin-right:3px">
                                             <label>C.No</label>
                                             <input name="cNo" id="cNo" style="width: 100%;" type="text" placeholder="C.No" required>
                                         </div>
-                                        <div style="width: 30%;">
+                                        <div style="width: 30%;margin-right:3px">
                                             <label>Item Name</label>
                                             <select name="itemname" id="itemname" style="width: 100%;" required class="select2">
-                                                <option disabled selected value="">Choose Item...</option>
+                                                <option readonly selected value="">Choose Item...</option>
 
                                             </select>
                                         </div>
-                                        <div style="width: 25%;">
+                                        <div style="width: 25%;margin-right:3px">
 
                                             <label>Varient</label>
                                             <select name="varient" id="varient" style="width: 100%;" required class="select2">
-                                                <option disabled selected value="">Choose varient...</option>
+                                                <option readonly selected value="">Choose varient...</option>
 
                                             </select>
                                         </div>
-                                        <div style="width: 10%;">
-
+                                        <div style="width: 10%;margin-right:3px">
                                             <label>Quantity</label>
                                             <input name="quantity" id="quantity" style="width: 100%;" type="number" required>
 
                                         </div>
 
-                                        <button style="width: 10%;height: 26px;margin-top: 8px;" class="addRow">ADD +</button>
+                                        <button id="addRow" style="width: 5%;margin-left:-1px;height: 26px;margin-top: 8px;background:green;color:white;border:none" class="addRow">+</button>
 
                                     </div>
-
-                                    <table style="margin-left: -10px;">
-
-                                        <tbody id="whereProductsShow">
-                                        </tbody>
-                                    </table>
+                                    <div id="whereProductsShow">
+                                    </div>
                                 </div>
                             </div>
                             <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -107,25 +102,27 @@
                                     var quantity = document.getElementById('quantity').value;
 
                                     var tr =
-                                        `<tr>
-                                        <td><input style="width:100px" type='text'  name='cno[]' value='${cNo}' required ></td>
-                                        <td><input style="width:230px" disabled type='text' class='' name='itemname[]' value='${itemname} '></td>
-                                        <td><input style="width:230px"disabled type='text' name='varient[]' class='' value='${varient}' ></td>
-                                        <td><input style="width:100px" type='text'  name='quantity[]' value='${quantity}' required >
-                                        <td> <button style="padding:11px" class='deleteRow'>delete</button> </td>
-                                        </tr>`;
+                                        `<div>
+                                        <input style="width:10%" type='text' name='cno[]' value='${cNo}'  >
+                                        <input style="width:30%" readonly type='text' name='itemname[]' value='${itemname}'>
+                                        <input style="width:25%"readonly type='text' name='varient[]' value='${varient}'>
+                                        <input style="width:10%" type='number' name='quantity[]' value='${quantity}'>
+                                        <button style="margin-left:-1.5px;width: 5%;height: 26px;margin-top: 8px;background:red;color:white;border:none" class='deleteRow'>&times</button> 
+                                        </div>
+                                        `;
+                                    if (cNo != "" && itemname != "" && varient != "" && quantity != "") {
 
-                                    $('tbody').append(tr);
-
-
+                                        $('#whereProductsShow').append(tr);
+                                    }
 
                                     $(".deleteRow").click(function() {
-                                        $(this).parent().parent().remove();
+                                        $(this).parent().remove();
 
                                     });
-                                    $("#itemname").val('').trigger('change');
+                                    // $("#itemname").val('').trigger('change');
                                     document.getElementById('varient').value = '';
                                     document.getElementById('quantity').value = '';
+                                    document.getElementById('varient').focus();
 
                                 });
                             </script>
@@ -146,7 +143,7 @@
                                         <div style="width: 100%;">
                                             <div class="form-group">
                                                 <label>Zone</label>
-                                                <input id="zone" disabled name="zone" style="width: 100%;" type="text" required>
+                                                <input id="zone" readonly name="zone" style="width: 100%;" type="text" required>
 
                                             </div>
                                         </div>
@@ -154,13 +151,13 @@
                                         <div style="width: 100%;" class="form-group">
                                             <label>City</label>
 
-                                            <input type="text" name="City" id="City" disabled class="control-form" style="width: 100%;" required>
+                                            <input type="text" name="City" id="City" readonly class="control-form" style="width: 100%;" required>
 
                                         </div>
                                         <div style="width: 100%;">
                                             <div class="form-group">
                                                 <label>Address</label>
-                                                <textarea name="address" id="address" disabled style="width: 100%;line-height:initial" rows="3" required>
+                                                <textarea name="address" id="address" readonly style="width: 100%;line-height:initial" rows="3" required>
 
                                                 </textarea>
 
@@ -216,24 +213,7 @@
 </div>
 
 <script>
-    setDate();
-
-    function setDate() {
-        let currentDate = new Date();
-        let cDay = currentDate.getDate();
-        let cMonth = currentDate.getMonth() + 1;
-        if (cMonth >= 1 || cMonth <= 9) {
-            cMonth = "0" + cMonth;
-            // alert(cMonth);
-
-        } else {
-            cMonth = cMonth;
-            // alert(cMonth);
-
-        }
-        let cYear = currentDate.getFullYear();
-        document.getElementById('Date').value = cYear + "-" + cMonth + "-" + cDay;
-    }
+    todatDate();
 
     function getDateOfSelectedSupplier() {
         var supplier_value = document.getElementById('supplier').value;
@@ -260,10 +240,6 @@
                 }
             });
         }
-
-
-
-
 
     }
 
@@ -370,6 +346,7 @@
             document.getElementById('Remarks').value = '';
             $("#whereProductsShow tr").remove();
             $("#supplier").val('').trigger('change');
+            todatDate();
 
         }
 
@@ -389,8 +366,8 @@
                 _token: token
             },
             success: function(data) {
-                let output = '<option selected disabled value="">Choose Item...</option>';
-                let output2 = '<option selected disabled value="">Choose varient...</option>';
+                let output = '<option selected readonly value="">Choose Item...</option>';
+                let output2 = '<option selected readonly value="">Choose varient...</option>';
                 data.forEach(el => {
                     output += `
                     <option value="${el.itemname}">${el.itemname}</option>
@@ -410,6 +387,44 @@
         })
 
     }
+
+    function todatDate() {
+        var now = new Date();
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = now.getFullYear() + "-" + (month) + "-" + (day);
+        $('#Date').val(today);
+    }
+
+
+    var cNo = document.getElementById("cNo");
+    cNo.addEventListener("keydown", function(e) {
+        if (e.key === "Enter") {
+            document.getElementById('addRow').click();
+
+        }
+    });
+    var itemname = document.getElementById("itemname");
+    itemname.addEventListener("keydown", function(e) {
+        if (e.key === "Enter") {
+            document.getElementById('addRow').click();
+
+        }
+    });
+    var varient = document.getElementById("varient");
+    varient.addEventListener("keydown", function(e) {
+        if (e.key === "Enter") {
+            document.getElementById('addRow').click();
+
+        }
+    });
+    var quantity = document.getElementById("quantity");
+    quantity.addEventListener("keydown", function(e) {
+        if (e.key === "Enter") {
+            document.getElementById('addRow').click();
+
+        }
+    });
 </script>
 
 

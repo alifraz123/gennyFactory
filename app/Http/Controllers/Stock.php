@@ -34,8 +34,7 @@ class Stock extends Controller
      }
      public function edit_stockdata_method($id){
         $editdata =  DB::table('stock')->where('id', $id)->get();
-         $items = DB::table('items')->where('company', $editdata[0]->company)->get();;
-         return view('/admin/modules/Stock/stockedit',['data'=>$editdata,'items'=>$items]);
+         return ['data'=>$editdata];
      }
      public function update_Stockdata_method(Request $updatecompany){
          $data = DB::table('stock')

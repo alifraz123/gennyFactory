@@ -37,30 +37,16 @@
 
                                 <div class="form-group">
                                     <label>Date From :</label>
-                                    <input type="date" name="startDate" id="startDate" required class="form-control" placeholder="Enter Date">
+                                    <input type="date" name="startDate" id="startDate"  class="form-control" >
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Date To :</label>
-                                    <input type="date" name="endDate" id="endDate" required class="form-control" placeholder="Enter Date">
+                                    <input type="date" name="endDate" id="endDate" required class="form-control" >
                                 </div>
                             </div>
-                            <script>
-                                let currentDate = new Date();
-                                let cDay = currentDate.getDate();
-                                let cMonth = currentDate.getMonth() + 1;
-                                if (cMonth >= 1 || cMonth <= 9) {
-                                    cMonth = "0" + cMonth;
-
-                                } else {
-                                    cMonth = cMonth;
-
-                                }
-                                let cYear = currentDate.getFullYear();
-                                document.getElementById('startDate').value = cYear + "-" + cMonth + "-" + cDay;
-                                document.getElementById('endDate').value = cYear + "-" + cMonth + "-" + cDay;
-                            </script>
+                           
                             <div>
 
                             </div>
@@ -100,20 +86,24 @@
 </div>
 
 <script>
+var now = new Date();
+var day = ("0" + now.getDate()).slice(-2);
+var month = ("0" + (now.getMonth() + 1)).slice(-2);
+var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+$('#startDate').val(today);
+$('#endDate').val(today);
+    
     function getPartyReport() {
         var supplier_name = document.getElementById('supplier_name').value;
         var startDate = document.getElementById('startDate').value;
         var endDate = document.getElementById('endDate').value;
-        
-            window.open("MTN_CTN_Dispatch?supplier_name="+supplier_name+"&startDate="+startDate+"&endDate="+endDate, '_blank');
-       
-       
+        window.open("MTN_CTN_Dispatch?supplier_name="+supplier_name+"&startDate="+startDate+"&endDate="+endDate, '_blank'); 
     }
     function getPartyDetailedReport() {
-        var PartyName = document.getElementById('PartyName').value;
+        var supplier_name = document.getElementById('supplier_name').value;
         var startDate = document.getElementById('startDate').value;
         var endDate = document.getElementById('endDate').value;
-            window.open("PartyDetailedLedger?PartyName="+PartyName+"&startDate="+startDate+"&endDate="+endDate, '_blank'); 
+        window.open("MTN_Dispatch?supplier_name="+supplier_name+"&startDate="+startDate+"&endDate="+endDate, '_blank'); 
     }
    
 </script>

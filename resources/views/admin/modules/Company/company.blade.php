@@ -35,7 +35,7 @@
                                 <input type="text" name="company" required class="form-control" placeholder="Enter Company Name">
                             </div>
                         </div>
-                        
+
                     </div>
 
                     <button style="float:right; margin-right:32rem; margin-top: -54px;" type="submit" class="btn btn-primary">Submit</button>
@@ -43,13 +43,49 @@
                 </form>
             </div>
 
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog mw-100 w-50" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit Company</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" action="edit_company">
+                                @csrf
+                                <input type="hidden" value="" id="id" name="id">
+                                <div class="card-body">
+                                    <div class="row">
+
+                                        <div class="col-sm-5">
+                                            <div class="form-group">
+                                                <label>Company</label>
+                                                <input type="text" style="width: 140%;" id="company" name="Company" value="" required class="form-control" placeholder="Enter Company">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button style="float:right; margin-right:11rem; margin-top: -55px;" type="submit" class="btn btn-primary">Update</button>
+                                </div>
+                                <div class="card-footer">
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
             <div class="card card-primary">
 
                 <div class="card-body">
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                               
+
                                 <th>Company</th>
 
                                 <th>Edit</th>
@@ -60,8 +96,8 @@
                             @foreach($companies as $company)
                             <tr>
                                 <td> {{$company->companyName}}</td>
-                                
-                                <td><a href='edit_company/{{$company->companyName}}' class="btn btn-success">Edit</a> </td>
+
+                                <td><button onclick="show_modal('{{$company->companyName}}')" class="btn btn-success">Edit</button> </td>
                                 <td><a href='delete_company/{{$company->companyName}}' class="btn btn-danger">Delete</a> </td>
                             </tr>
                             @endforeach
@@ -79,7 +115,13 @@
         </div>
 </div>
 </section>
-
+<script>
+    function show_modal(company) {
+        document.getElementById('company').value = company;
+        document.getElementById('id').value = company;
+        $('#exampleModal').modal('show');
+    }
+</script>
 
 
 @endsection

@@ -28,31 +28,17 @@
 
                                 <div class="form-group">
                                     <label>Date From :</label>
-                                    <input type="date" name="startDate" id="startDate" required class="form-control" placeholder="Enter Date">
+                                    <input type="date" name="startDate" id="startDate" required class="form-control" >
                                 </div>
 
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Date To :</label>
-                                    <input type="date" name="endDate" id="endDate" required class="form-control" placeholder="Enter Date">
+                                    <input type="date" name="endDate" id="endDate" required class="form-control" >
                                 </div>
                             </div>
-                            <script>
-                                let currentDate = new Date();
-                                let cDay = currentDate.getDate();
-                                let cMonth = currentDate.getMonth() + 1;
-                                if (cMonth >= 1 || cMonth <= 9) {
-                                    cMonth = "0" + cMonth;
-
-                                } else {
-                                    cMonth = cMonth;
-
-                                }
-                                let cYear = currentDate.getFullYear();
-                                document.getElementById('startDate').value = cYear + "-" + cMonth + "-" + cDay;
-                                document.getElementById('endDate').value = cYear + "-" + cMonth + "-" + cDay;
-                            </script>
+                           
                             <!-- /.col-->
                         </div>
 
@@ -70,7 +56,7 @@
                             </div>
                             <div class="col-md-2">
                                 <div style="margin-top: 32px;" class="form-group">
-                                    <input type="submit">
+                                    <input class="btn btn-primary" type="submit">
                                     <!-- <button onclick="getInvoicesForEdit()" class="btn btn-info">Open Invoices</button> -->
                                 </div>
 
@@ -83,6 +69,13 @@
         </div>
     </section>
 </div>
-
+<script>
+    var now = new Date();
+var day = ("0" + now.getDate()).slice(-2);
+var month = ("0" + (now.getMonth() + 1)).slice(-2);
+var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+document.getElementById('startDate').value = today;
+document.getElementById('endDate').value = today;
+</script>
 
 @endsection

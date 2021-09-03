@@ -32,6 +32,7 @@ class SavecitydataController extends Controller
         DB::table('sup_and_ven')
             ->where('phoneNo', $id)
             ->delete();
+
         return redirect('/show_svdata');
     }
     public function edit_svdata_method($id)
@@ -41,7 +42,7 @@ class SavecitydataController extends Controller
             ->get();
             $zones = DB::table('zone')->get();
             $cities = DB::table('city')->get();
-        return view('/admin/modules/Supplier_and_Vender/svedit', ['data' => $editdata,'zones'=>$zones,'cities'=>$cities]);
+        return  ['data' => $editdata,'zones'=>$zones,'cities'=>$cities];
     }
     public function update_svdata_method(Request $updatecompany)
     {
@@ -51,6 +52,8 @@ class SavecitydataController extends Controller
                 'name' => $updatecompany->name,
                 'phoneNo' => $updatecompany->phoneNo,
                 'cnic' => $updatecompany->cnic,
+                'zone' => $updatecompany->zone,
+                'city' => $updatecompany->city,
                 'address' => $updatecompany->address,
                 'type' => $updatecompany->type
             ]);
@@ -78,12 +81,7 @@ class SavecitydataController extends Controller
         DB::table('zone')->where('zoneName', $id)->delete();
         return redirect('/show_zone');
     }
-    public function edit_zone_method($id){
-        $editzone =  DB::table('zone')
-            ->where('zoneName', $id)
-            ->get();
-        return view('/admin/modules/zone/zone_edit', ['zone' => $editzone]);
-    }
+    
     public function update_zone_method(Request $updateZone){
         $data = DB::table('zone')
             ->where('zoneName', $updateZone->zone_hidden_id)
@@ -125,7 +123,8 @@ class SavecitydataController extends Controller
             ->where('cityName', $id)
             ->get();
             $zones = DB::table('zone')->get();
-        return view('/admin/modules/city/city_edit', ['city' => $editcity,'zones'=>$zones]);
+            $city_zone= array('city'=>$editcity,'zone'=>$zones);
+        return $city_zone;
     }
     public function update_city_method(Request $updateZone){
         $data = DB::table('city')
@@ -162,13 +161,7 @@ class SavecitydataController extends Controller
         DB::table('company')->where('companyName', $id)->delete();
         return redirect('/show_company');
     }
-    public function edit_company_method($id){
-        $editcity =  DB::table('company')
-            ->where('companyName', $id)
-            ->get();
-            
-        return view('/admin/modules/Company/companyedit', ['company' => $editcity]);
-    }
+    
     public function update_company_method(Request $updateZone){
         $data = DB::table('company')
             ->where('companyName', $updateZone->id)

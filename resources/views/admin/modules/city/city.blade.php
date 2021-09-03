@@ -56,6 +56,51 @@
                 </form>
             </div>
 
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog mw-100 w-50" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit Company</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" action="update_city">
+                                @csrf
+                                <input type="hidden" value="" id="id" name="id">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-5">
+                                            <!-- text input -->
+                                            <div class="form-group">
+                                                <label>City Name</label>
+                                                <input type="text" name="city" id="city" value="" required class="form-control" placeholder="Enter City Name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label for="">Zone</label>
+                                                <select name="zone" id="zone" class="form-control select2 select2bs4">
+
+                                                </select>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <button style="float:right; margin-right:20px; margin-top: -55px;" type="submit" class="btn btn-primary">Update</button>
+                                </div>
+                                <div class="card-footer">
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
             <div class="card card-primary">
 
                 <div class="card-body">
@@ -75,7 +120,7 @@
                                 <td> {{$city->cityName}}</td>
                                 <td>{{$city->zoneName}}</td>
 
-                                <td><a href='edit_city/{{$city->cityName}}' class="btn btn-success">Edit</a> </td>
+                                <td><button onclick="show_modal('{{$city->cityName}}')" class="btn btn-success">Edit</button> </td>
                                 <td><a href='delete_city/{{$city->cityName}}' class="btn btn-danger">Delete</a> </td>
                             </tr>
                             @endforeach
@@ -95,5 +140,36 @@
 </section>
 
 
+<script>
+    function show_modal(city) {
 
+        $.ajax({
+            url: 'edit_city/' + city,
+            type: 'get',
+            data: {
+                city: city
+            },
+            success: function(data) {
+
+                document.getElementById('id').value = data['city'][0].cityName;
+                document.getElementById('city').value = data['city'][0].cityName;
+                let output = `<option selected readonly value="${data['city'][0].zoneName}">${data['city'][0].zoneName}</option>`;
+
+                data['zone'].forEach(el => {
+                    output += `
+                    <option value="${el.zoneName}">${el.zoneName}</option>
+                    `;
+
+                    document.getElementById('zone').innerHTML = output;
+
+                });
+            },
+            error: function(req, status, error) {
+                console.log(error)
+
+            }
+        })
+        $('#exampleModal').modal('show');
+    }
+</script>
 @endsection
