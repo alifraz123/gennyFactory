@@ -58,7 +58,11 @@ class Stock extends Controller
         return $items;
      }
      public function getItemsOfSelectedCompany_For_dispatch_method(Request $getItems){
-        $items = DB::table('stock')->where('company',$getItems->company)->where('finish','>',0)->get();
+        $items = DB::table('stock')->where('company',$getItems->company)->where('finish','>',0)->distinct()->get('itemname');
         return $items;
+     }
+     public function getVarientsOfSelectedItem_For_dispatch_method(Request $request){
+        $varients = DB::table('stock')->where('itemname',$request->ItemName)->where('finish','>',0)->distinct()->get('varient');
+        return $varients;
      }
 }

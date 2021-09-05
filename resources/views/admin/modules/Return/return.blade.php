@@ -19,7 +19,7 @@
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h3 class="card-title">Sales Book Detail Data</h3>
+                                            <h3 class="card-title">Stock Return Detail</h3>
                                         </div>
 
                                     </div>
@@ -60,10 +60,7 @@
                                 <div style="line-height: 0;" class="card-body">
 
                                     <div style="display: flex;">
-                                        <div style="width: 10%;margin-right:3px">
-                                            <label>C.No</label>
-                                            <input name="cNo" id="cNo" style="width: 100%;" type="text" placeholder="C.No" required>
-                                        </div>
+
                                         <div style="width: 30%;margin-right:3px">
                                             <label>Item Name</label>
                                             <select onchange="getVarientsOfSelectedItem(this.value)" name="itemname" id="itemname" style="width: 100%;" required class="select2">
@@ -96,21 +93,21 @@
 
                             <script>
                                 $('.addRow').on('click', function() {
-                                    var cNo = document.getElementById('cNo').value;
+
                                     var itemname = document.getElementById('itemname').value;
                                     var varient = document.getElementById('varient').value;
                                     var quantity = document.getElementById('quantity').value;
 
                                     var tr =
                                         `<div>
-                                        <input style="width:10%" type='text' name='cno[]' value='${cNo}'  >
+                                       
                                         <input style="width:30%" readonly type='text' name='itemname[]' value='${itemname}'>
                                         <input style="width:25%"readonly type='text' name='varient[]' value='${varient}'>
                                         <input style="width:10%" type='number' name='quantity[]' value='${quantity}'>
                                         <button style="margin-left:-1.5px;width: 5%;height: 26px;margin-top: 8px;background:red;color:white;border:none" class='deleteRow'>&times</button> 
                                         </div>
                                         `;
-                                    if (cNo != "" && itemname != "" && varient != "" && quantity != "") {
+                                    if (itemname != "" && varient != "" && quantity != "") {
 
                                         $('#whereProductsShow').append(tr);
                                         $("#itemname").val('').trigger('change');
@@ -134,7 +131,7 @@
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <h3 class="card-title">Sales Book Data</h3>
+                                            <h3 class="card-title">Stock Return</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -167,23 +164,6 @@
 
                                         <div class="row">
 
-
-
-
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Gate Pass No</label>
-                                                    <input type="text" id="gatePass" name="gatePass" style="width: 100%;" required class="" placeholder="Builty No.">
-                                                </div>
-
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Builty No.</label>
-                                                    <input type="text" id="BuiltyNo" name="BuiltyNo" style="width: 100%;" required class="" placeholder="Builty No.">
-                                                </div>
-
-                                            </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Remarks</label>
@@ -249,51 +229,49 @@
         var itemname = document.getElementsByName('itemname[]');
         var varient = document.getElementsByName('varient[]');
         var quantity = document.getElementsByName('quantity[]');
-        var cno = document.getElementsByName('cno[]');
+
         var obj = [];
         for (var i = 0; i < itemname.length; i++) {
             var itemname1 = itemname[i].value;
             var quantity1 = quantity[i].value;
             var varient1 = varient[i].value;
-            var cno1 = cno[i].value;
+
             var obje;
             obje = {
                 itemname: "",
                 quantity: "",
                 varient: "",
-                cno: ""
+
             };
             obje.itemname = itemname1;
             obje.quantity = quantity1;
             obje.varient = varient1;
-            obje.cno = cno1;
+
             obj.push(obje);
         }
-        // console.log(obj);
+        console.log(obj);
 
         var City = document.getElementById('City').value;
         var zone = document.getElementById('zone').value;
-        var gatePass = document.getElementById('gatePass').value;
-        var BuiltyNo = document.getElementById('BuiltyNo').value;
         var Remarks = document.getElementById('Remarks').value;
 
-        if (City != '' && Remarks != '' && zone != '' && gatePass != '' && BuiltyNo != '') {
+        if (City != '' && Remarks != '' && zone != '') {
 
             var token = '{{csrf_token()}}';
             $.ajax({
                 type: "post",
-                url: "dispatch",
+                url: "addReturn",
                 data: {
 
                     obj: obj,
                     Date: document.getElementById('Date').value,
                     City: document.getElementById('City').value,
-                    BuiltyNo: document.getElementById('BuiltyNo').value,
+
                     zone: document.getElementById('zone').value,
                     company: document.getElementById('company').value,
                     supplier: document.getElementById('supplier').value,
                     address: document.getElementById('address').value,
-                    gatePass: document.getElementById('gatePass').value,
+
                     Remarks: document.getElementById('Remarks').value,
                     _token: token
                 },
@@ -342,10 +320,8 @@
             $("#City").val('').trigger('change');
             document.getElementById('address').value = '';
             document.getElementById('zone').value = '';
-            document.getElementById('gatePass').value = '';
-            document.getElementById('BuiltyNo').value = '';
             document.getElementById('Remarks').value = '';
-            document.getElementById('cNo').value = '';
+
             $("#whereProductsShow div").remove();
             $("#supplier").val('').trigger('change');
             todatDate();
@@ -377,7 +353,7 @@
                     `;
 
                     document.getElementById('itemname').innerHTML = output;
-                    
+                   
                 });
             },
             error: function(req, status, error) {
@@ -426,14 +402,6 @@
         $('#Date').val(today);
     }
 
-
-    var cNo = document.getElementById("cNo");
-    cNo.addEventListener("keydown", function(e) {
-        if (e.key === "Enter") {
-            document.getElementById('addRow').click();
-
-        }
-    });
     var itemname = document.getElementById("itemname");
     itemname.addEventListener("keydown", function(e) {
         if (e.key === "Enter") {
@@ -451,7 +419,6 @@
     var quantity = document.getElementById("quantity");
     quantity.addEventListener("keydown", function(e) {
         if (e.key === "Enter") {
-            alert("fff")
             document.getElementById('addRow').click();
 
         }

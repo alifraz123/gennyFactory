@@ -9,13 +9,13 @@ class report extends Controller
 {
     public function MTN_CTN_Dispatch_method(Request $request)
     {
-        $dispatch = DB::table('dispatch')->where('supplier', $request->supplier_name)->get(['supplier', 'date', 'invoice']);
+        $dispatch = DB::table('dispatch')->where('supplier', $request->supplier_name)->where('Date',[$request->startDate, $request->endDate])->get(['supplier', 'date', 'invoice']);
        for($e=0; $e < count($dispatch); $e++){
         $cno = DB::table('dispatch_detail')->where('invoice', $dispatch[$e]->invoice)->distinct()->get(['cno']);
         $dispatch_detail_array = [];
         for ($a = 0; $a < count($cno); $a++) {
             $bb = [];
-            $ab = DB::table('dispatch_detail')->where('cno', $cno[$a]->cno)->distinct()->get(['ItemName']);
+            $ab = DB::table('dispatch_detail')->where('cno', $cno[$a]->cno)->distinct()->get(['ItemName','cno']);
             for ($b = 0; $b < count($ab); $b++) {
                 $total = 0;
                 $for_total =  DB::table('dispatch_detail')->where('ItemName', $ab[$b]->ItemName)->distinct()->get(['qty']);
@@ -23,7 +23,7 @@ class report extends Controller
                     $total = $total + $for_total[$d]->qty;
                 }
                 $bb[$b] = array('items' => $ab[$b]->ItemName, 'qty_var' => DB::table('dispatch_detail')
-                    ->where('ItemName', $ab[$b]->ItemName)->distinct()->get(['varient', 'qty']), 'total' => $total);
+                    ->where('cno', $ab[$b]->cno)->where('ItemName', $ab[$b]->ItemName)->distinct()->get(['varient', 'qty']), 'total' => $total);
             }
             $dispatch_detail_array[$a] = array('cno' => $cno[$a]->cno, 'ItemName' => $bb);
         }
@@ -35,9 +35,9 @@ class report extends Controller
     }
 
     public function MTN_Dispatch_method(Request $request){
-        $dispatch = DB::table('dispatch')->where('supplier', $request->supplier_name)->get(['supplier', 'date', 'invoice','builtyNo','city']);
+        $dispatch = DB::table('dispatch')->where('supplier', $request->supplier_name)->where('Date',[$request->startDate, $request->endDate])->get(['supplier', 'date', 'invoice','builtyNo','city']);
         for($e=0; $e < count($dispatch); $e++){
-            $ItemNames = DB::table('dispatch_detail')->where('invoice', $dispatch[$e]->invoice)->distinct()->get(['ItemName']);
+            $ItemNames = DB::table('dispatch_detail')->where('invoice', $dispatch[$e]->invoice)->distinct()->get(['ItemName','cno']);
         $dispatch_detail_array = [];
         for ($a = 0; $a < count($ItemNames); $a++) {
             $bb = [];
@@ -47,7 +47,7 @@ class report extends Controller
                     $total = $total + $for_total[$d]->qty;
                 }
                 $dispatch_detail_array[$a] = array('items' => $ItemNames[$a]->ItemName, 'qty_var' => DB::table('dispatch_detail')
-                    ->where('ItemName', $ItemNames[$a]->ItemName)->distinct()->get(['varient', 'qty']), 'total' => $total);
+                ->where('cno', $ItemNames[$a]->cno)->where('ItemName', $ItemNames[$a]->ItemName)->distinct()->get(['varient', 'qty']), 'total' => $total);
 
              
         }

@@ -9,6 +9,7 @@ use App\Http\Controllers\SaveSalesBookDetaildataController;
 use App\Http\Controllers\Cashbook;
 use App\Http\Controllers\Stock;
 use App\Http\Controllers\Dispatch;
+use App\Http\Controllers\stockReturn;
 use App\Http\Controllers\report;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -122,6 +123,9 @@ Route::post('edit_stockdata', [App\Http\Controllers\Stock::class, 'update_Stockd
 Route::post('getItemsOfSelectedCompany', [App\Http\Controllers\Stock::class, 'getItemsOfSelectedCompany_method']);
 Route::post('getItemsOfSelectedCompany_For_dispatch', [App\Http\Controllers\Stock::class,
 'getItemsOfSelectedCompany_For_dispatch_method']);
+Route::post('getVarientsOfSelectedItem_For_dispatch', [App\Http\Controllers\Stock::class,
+'getVarientsOfSelectedItem_For_dispatch_method']);
+
 
 
 // Dispatch code
@@ -163,6 +167,35 @@ Route::get('Report', function () {
         return view('admin/modules/reports/Report', ['sup_ven' => $sup_ven]);
     }
 });
+
+
+// Stock Return code
+Route::get('/Return', function () {
+    if (Auth::guest()) {
+        return redirect('login');
+    } else {
+        $sup_and_ven = DB::table('sup_and_ven')->get();
+        $items = DB::table('items')->get();
+        $stock = DB::table('stock')->get();
+        $zones = DB::table('zone')->get();
+        $companies = DB::table('company')->get();
+        return view('admin/modules/Return/return', ['parties' => $sup_and_ven,'zones'=>$zones,
+         'items' => $items, 'stocks' => $stock,'companies'=>$companies]);
+    }
+});
+Route::post('addReturn', [App\Http\Controllers\stockReturn::class, 'addReturn_method']);
+Route::get('edit_return_invoice', function () {
+    if (Auth::guest()) {
+        return redirect('login');
+    } else {
+        $parties = DB::table('sup_and_ven')->get();
+        return view('admin/modules/Return/stockReturn_edit', ['parties' => $parties]);
+    }
+});
+Route::get('getReturnInvoicesForEdit', [App\Http\Controllers\stockReturn::class, 'getReturnInvoicesForEdit_method']);
+Route::get('delete_return_invoice', [App\Http\Controllers\stockReturn::class, 'delete_return_invoice']);
+Route::get('edit_Returninvoice/{id}', [App\Http\Controllers\stockReturn::class, 'edit_Returninvoice_method']);
+Route::post('update_stockReturn', [App\Http\Controllers\stockReturn::class, 'update_stockReturn']);
 
 Route::get('MTN_CTN_Dispatch', [App\Http\Controllers\report::class, 'MTN_CTN_Dispatch_method']);
 
