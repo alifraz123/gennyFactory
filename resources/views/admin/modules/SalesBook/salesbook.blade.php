@@ -85,7 +85,7 @@
 
                                         </div>
 
-                                        <button id="addRow" style="width: 5%;margin-left:-1px;height: 26px;margin-top: 8px;background:green;color:white;border:none" class="addRow">+</button>
+                                        <button onclick="addRow()" id="addRow" style="width: 5%;margin-left:-1px;height: 26px;margin-top: 8px;background:green;color:white;border:none" class="addRow">+</button>
 
                                     </div>
                                     <div id="whereProductsShow">
@@ -95,7 +95,7 @@
                             <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
                             <script>
-                                $('.addRow').on('click', function() {
+                                function addRow() {
                                     var cNo = document.getElementById('cNo').value;
                                     var itemname = document.getElementById('itemname').value;
                                     var varient = document.getElementById('varient').value;
@@ -107,25 +107,27 @@
                                         <input style="width:30%" readonly type='text' name='itemname[]' value='${itemname}'>
                                         <input style="width:25%"readonly type='text' name='varient[]' value='${varient}'>
                                         <input style="width:10%" type='number' name='quantity[]' value='${quantity}'>
-                                        <button style="margin-left:-1.5px;width: 5%;height: 26px;margin-top: 8px;background:red;color:white;border:none" class='deleteRow'>&times</button> 
+                                        <button  style="margin-left:-1.5px;width: 5%;height: 26px;margin-top: 8px;background:red;color:white;border:none" class='deleteRow'>&times</button> 
                                         </div>
                                         `;
                                     if (cNo != "" && itemname != "" && varient != "" && quantity != "") {
 
-                                        $('#whereProductsShow').append(tr);
+                                       
+                                        document.getElementById('whereProductsShow').innerHTML +=tr;
+                                       
                                         $("#itemname").val('').trigger('change');
                                         document.getElementById('varient').value = '';
                                         document.getElementById('quantity').value = '';
                                         document.getElementById('varient').focus();
                                     }
-
                                     $(".deleteRow").click(function() {
                                         $(this).parent().remove();
-
                                     });
+                                    
+                                    
 
-
-                                });
+                                };
+                                
                             </script>
 
                         </div>
@@ -451,7 +453,7 @@
     var quantity = document.getElementById("quantity");
     quantity.addEventListener("keydown", function(e) {
         if (e.key === "Enter") {
-            alert("fff")
+           
             document.getElementById('addRow').click();
 
         }

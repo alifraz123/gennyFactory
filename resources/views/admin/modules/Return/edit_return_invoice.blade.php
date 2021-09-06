@@ -75,9 +75,18 @@
                                             </select>
                                         </div>
                                         <div style="width: 10%;margin-right:3px">
+                                            <label>Finish</label>
+                                            <input name="finish" id="finish" style="width: 100%;" type="number" required>
 
-                                            <label>Quantity</label>
-                                            <input name="quantity" id="quantity" style="width: 100%;" type="number" required>
+                                        </div>
+                                        <div style="width: 10%;margin-right:3px">
+                                            <label>S. Finish</label>
+                                            <input name="sfinish" id="sfinish" style="width: 100%;" type="number" required>
+
+                                        </div>
+                                        <div style="width: 10%;margin-right:3px">
+                                            <label>Damage</label>
+                                            <input name="damage" id="damage" style="width: 100%;" type="number" required>
 
                                         </div>
 
@@ -92,7 +101,9 @@
                                             
                                             <input style="width:30%" readonly value="{{$sbd->ItemName}}" type='text' name='itemname[]'>
                                             <input style="width:25%" readonly value="{{$sbd->varient}}" type='text' name='varient[]'>
-                                            <input style="width:10%" value="{{$sbd->qty}}" type='text' name='quantity[]' required>
+                                            <input style="width:10%" value="{{$sbd->finish}}" type='text' name='finish[]' required>
+                                            <input style="width:10%" value="{{$sbd->sfinish}}" type='text' name='sfinish[]' required>
+                                            <input style="width:10%" value="{{$sbd->damage}}" type='text' name='damage[]' required>
                                             <button style="margin-left:-1.5px;width: 5%;height: 26px;margin-top: 8px;background:red;color:white;border:none" class='deleteRow'>&times;</button>
                                         </div>
                                         @endforeach
@@ -112,14 +123,18 @@
                                     
                                     var itemname = document.getElementById('itemname').value;
                                     var varient = document.getElementById('varient').value;
-                                    var quantity = document.getElementById('quantity').value;
+                                    var finish = document.getElementById('finish').value;
+                                    var sfinish = document.getElementById('sfinish').value;
+                                    var damage = document.getElementById('damage').value;
 
                                     var tr =
                                         `<div>
                                       
                                         <input style="width:30%"readonly type='text'  name='itemname[]' value='${itemname} '>
                                         <input style="width:25%" readonly type='text' name='varient[]'  value='${varient}' >
-                                        <input style="width:10%" type='text'  name='quantity[]' value='${quantity}'  >
+                                        <input style="width:10%" type='text'  name='finish[]' value='${finish}'  >
+                                        <input style="width:10%" type='text'  name='sfinish[]' value='${sfinish}'  >
+                                        <input style="width:10%" type='text'  name='damage[]' value='${damage}'  >
                                          <button style="margin-left:-1.5px;width: 5%;height: 26px;margin-top: 8px;background:red;color:white;border:none" class='deleteRow'>&times;</button>
                                         </div>`;
 
@@ -133,8 +148,9 @@
                                     });
                                     // $("#itemname").val('').trigger('change');
                                     document.getElementById('varient').value = '';
-                                    document.getElementById('quantity').value = '';
-                                   
+                                    document.getElementById('finish').value = '';
+                                    document.getElementById('sfinish').value = '';
+                                    document.getElementById('damage').value = '';
                                     document.getElementById('varient').focus();
 
                                 });
@@ -273,23 +289,31 @@
     function update_dispatch() {
         var itemname = document.getElementsByName('itemname[]');
         var varient = document.getElementsByName('varient[]');
-        var quantity = document.getElementsByName('quantity[]');
+        var finish = document.getElementsByName('finish[]');
+        var sfinish = document.getElementsByName('sfinish[]');
+        var damage = document.getElementsByName('damage[]');
       
         var obj = [];
         for (var i = 0; i < itemname.length; i++) {
             var itemname1 = itemname[i].value;
-            var quantity1 = quantity[i].value;
+            var finish1 = finish[i].value;
+            var sfinish1 = sfinish[i].value;
+            var damage1 = damage[i].value;
             var varient1 = varient[i].value;
             
             var obje;
             obje = {
                 itemname: "",
-                quantity: "",
+                finish: "",
+                sfinish: "",
+                damage: "",
                 varient: "",
                 
             };
             obje.itemname = itemname1;
-            obje.quantity = quantity1;
+            obje.finish = finish1;
+            obje.sfinish = sfinish1;
+            obje.damage = damage1;
             obje.varient = varient1;
            
             obj.push(obje);
@@ -324,9 +348,9 @@
                 },
                 dataType: "text",
                 success: function(data) {
-                    alert()
+                    
                     console.log("returned data is :" + data);
-                    setDate();
+                   
                     if (data == "inserted") {
                         var output = `
                                 <div class="alert alert-success">

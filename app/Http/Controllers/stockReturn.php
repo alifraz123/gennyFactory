@@ -24,7 +24,7 @@ class stockReturn extends Controller
 
         $dispatch =  DB::insert("insert into stockreturn(invoice,supplier,date,company,city,zone,address,remarks,Username)
         values(?,?,?,?,?,?,?,?,?)", [
-            $invoice, $request->supplier, $request->Date, $request->company, $request->City,$request->zone, $request->address,
+            $invoice, $request->supplier, $request->Date, $request->company, $request->City, $request->zone, $request->address,
             $request->Remarks, Auth::user()->name
         ]);
 
@@ -33,19 +33,32 @@ class stockReturn extends Controller
             $abc = [
                 'invoice' => $invoice,
                 'ItemName' => $request->obj[$key]['itemname'],
-                'qty' => $request->obj[$key]['quantity'],
+
                 'varient' => $request->obj[$key]['varient'],
+                'finish' => $request->obj[$key]['finish'],
+                'sfinish' => $request->obj[$key]['sfinish'],
+                'damage' => $request->obj[$key]['damage']
             ];
             $dispatch_detail = DB::table('stockreturn_detail')->insert($abc);
 
             $itemname = $request->obj[$key]['itemname'];
             $varient = $request->obj[$key]['varient'];
-            $qty = $request->obj[$key]['quantity'];
+            $finish = $request->obj[$key]['finish'];
+            $sfinish = $request->obj[$key]['sfinish'];
+            $damage = $request->obj[$key]['damage'];
 
             $finishProduct = DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->first('finish');
-            $remaining_finishProduct = $finishProduct->finish + $qty;
+            $sfinishProduct = DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->first('semiFinish');
+            $damageProduct = DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->first('damage');
+
+            $finish_Product = $finishProduct->finish + $finish;
+            $sfinish_Product = $sfinishProduct->semiFinish + $sfinish;
+            $damage_finishProduct = $damageProduct->damage + $damage;
+
             DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->update([
-                'finish' => $remaining_finishProduct
+                'finish' => $finish_Product,
+                'semiFinish' => $sfinish_Product,
+                'damage' => $damage_finishProduct
             ]);
         }
         if ($dispatch && $dispatch_detail) {
@@ -86,7 +99,7 @@ class stockReturn extends Controller
             ->delete();
         if ($dispatch_detail && $dispatch) {
             return redirect('getReturnInvoicesForEdit?startDate=' . $startDate . '&endDate=' . $endDate
-                . '&supplier=' . $partyName);
+                . '&supplier=' . $partyName.'&invoice='.$invoice);
         }
     }
     public function edit_Returninvoice_method($id)
@@ -114,10 +127,79 @@ class stockReturn extends Controller
             'city' => $request->City,
             'address' => $request->address,
             'zone' => $request->zone,
-           
+
             'remarks' => $request->Remarks,
 
         ]);
+
+        foreach ($request->obj as $key => $value) {
+
+            $itemname = $request->obj[$key]['itemname'];
+            $varient = $request->obj[$key]['varient'];
+            $finish = $request->obj[$key]['finish'];
+            $sfinish = $request->obj[$key]['sfinish'];
+            $damage = $request->obj[$key]['damage'];
+
+            $stockreturn_qty = DB::table('stockreturn_detail')->where('invoice', $request->invoice_edit)
+            ->where('itemname', $itemname)->where('varient', $varient)->first(['finish','sfinish','damage']);
+            $finishProduct = DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->first('finish');
+            $sfinishProduct = DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->first('semiFinish');
+            $damageProduct = DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->first('damage');
+
+            if ($stockreturn_qty->finish > $finish) {
+
+                $aa = $stockreturn_qty->finish - $finish;
+                $remaining_finishProduct = $finishProduct->finish - $aa;
+
+                DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->update([
+                    'finish' => $remaining_finishProduct
+                ]);
+            } else {
+
+                $aa = $finish - $stockreturn_qty->finish;
+                $remaining_finishProduct = $finishProduct->finish + $aa;
+
+                DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->update([
+                    'finish' => $remaining_finishProduct
+                ]);
+            }
+
+            if ($stockreturn_qty->sfinish > $sfinish) {
+
+                $sfinish_total = $stockreturn_qty->sfinish - $sfinish;
+                $remaining_sfinishProduct = $sfinishProduct->semiFinish - $sfinish_total;
+
+                DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->update([
+                    'semiFinish' => $remaining_sfinishProduct
+                ]);
+            } else {
+
+                $sfinish_total = $sfinish - $stockreturn_qty->sfinish;
+                $remaining_sfinishProduct = $sfinishProduct->semiFinish + $sfinish_total;
+
+                DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->update([
+                    'semiFinish' => $remaining_sfinishProduct
+                ]);
+            }
+
+            if ($stockreturn_qty->sfinish > $damage) {
+
+                $sfinish_total = $stockreturn_qty->damage - $damage;
+                $remaining_damageProduct = $damageProduct->damage - $sfinish_total;
+
+                DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->update([
+                    'damage' => $remaining_damageProduct
+                ]);
+            } else {
+
+                $sfinish_total = $damage - $stockreturn_qty->damage;
+                $remaining_damageProduct = $damageProduct->damage + $sfinish_total;
+
+                DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->update([
+                    'damage' => $remaining_damageProduct
+                ]);
+            }
+        }
 
         $delete = DB::table('stockreturn_detail')->where('invoice', $request->invoice_edit)->delete();
         if ($delete) {
@@ -126,25 +208,18 @@ class stockReturn extends Controller
                 $abc = [
                     'invoice' => $request->invoice_edit,
                     'ItemName' => $request->obj[$key]['itemname'],
-                    'qty' => $request->obj[$key]['quantity'],
+                    'finish' => $request->obj[$key]['finish'],
+                    'sfinish' => $request->obj[$key]['sfinish'],
+                    'damage' => $request->obj[$key]['damage'],
                     'varient' => $request->obj[$key]['varient'],
-                   
+
                 ];
                 $dispatch_detail = DB::table('stockreturn_detail')->insert($abc);
-
-                $itemname = $request->obj[$key]['itemname'];
-                $varient = $request->obj[$key]['varient'];
-                $qty = $request->obj[$key]['quantity'];
-    
-                $finishProduct = DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->first('finish');
-                $finishProduct = DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->first('finish');
-                $remaining_finishProduct = $finishProduct->finish + $qty;
-                DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->update([
-                    'finish' => $remaining_finishProduct
-                ]);
-
             }
         }
+
+
+
         if ($dispatch || $dispatch_detail) {
             echo "inserted";
         }

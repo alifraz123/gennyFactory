@@ -125,6 +125,35 @@ class dispatch extends Controller
 
         ]);
 
+        foreach ($request->obj as $key => $value) {
+           
+            $itemname = $request->obj[$key]['itemname'];
+            $varient = $request->obj[$key]['varient'];
+            $qty = $request->obj[$key]['quantity'];
+
+            $dispatch_qty = DB::table('dispatch_detail')->where('invoice', $request->invoice_edit)
+            ->where('itemname', $itemname)->where('varient', $varient)->first('qty');
+            $finishProduct = DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->first('finish');
+         
+            if ($dispatch_qty->qty > $qty) {
+               
+                $aa = $dispatch_qty->qty - $qty;
+                $remaining_finishProduct = $finishProduct->finish + $aa;
+
+                DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->update([
+                    'finish' => $remaining_finishProduct
+                ]);
+            } else {
+                
+                  $aa = $qty - $dispatch_qty->qty;
+                 $remaining_finishProduct = $finishProduct->finish - $aa;
+
+                DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->update([
+                    'finish' => $remaining_finishProduct
+                ]);
+            }
+        }
+
         $delete = DB::table('dispatch_detail')->where('invoice', $request->invoice_edit)->delete();
         if ($delete) {
             $abc = [];

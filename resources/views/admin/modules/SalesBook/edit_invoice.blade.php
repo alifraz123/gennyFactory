@@ -345,7 +345,7 @@
                 dataType: "text",
                 success: function(data) {
                     console.log("returned data is :" + data);
-                    setDate();
+                   
                     if (data == "inserted") {
                         var output = `
                                 <div class="alert alert-success">

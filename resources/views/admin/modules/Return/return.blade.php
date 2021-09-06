@@ -68,7 +68,7 @@
 
                                             </select>
                                         </div>
-                                        <div style="width: 25%;margin-right:3px">
+                                        <div style="width: 10%;margin-right:3px">
 
                                             <label>Varient</label>
                                             <select name="varient" id="varient" style="width: 100%;" required class="select2">
@@ -77,8 +77,18 @@
                                             </select>
                                         </div>
                                         <div style="width: 10%;margin-right:3px">
-                                            <label>Quantity</label>
-                                            <input name="quantity" id="quantity" style="width: 100%;" type="number" required>
+                                            <label>Finish</label>
+                                            <input name="finish" id="finish" style="width: 100%;" type="number" required>
+
+                                        </div>
+                                        <div style="width: 10%;margin-right:3px">
+                                            <label>S. Finish</label>
+                                            <input name="sfinish" id="sfinish" style="width: 100%;" type="number" required>
+
+                                        </div>
+                                        <div style="width: 10%;margin-right:3px">
+                                            <label>Damage</label>
+                                            <input name="damage" id="damage" style="width: 100%;" type="number" required>
 
                                         </div>
 
@@ -96,23 +106,32 @@
 
                                     var itemname = document.getElementById('itemname').value;
                                     var varient = document.getElementById('varient').value;
-                                    var quantity = document.getElementById('quantity').value;
+                                    var finish = document.getElementById('finish').value;
+                                    var sfinish = document.getElementById('sfinish').value;
+                                    var damage = document.getElementById('damage').value;
+
 
                                     var tr =
                                         `<div>
                                        
                                         <input style="width:30%" readonly type='text' name='itemname[]' value='${itemname}'>
-                                        <input style="width:25%"readonly type='text' name='varient[]' value='${varient}'>
-                                        <input style="width:10%" type='number' name='quantity[]' value='${quantity}'>
+                                        <input style="width:10%"readonly type='text' name='varient[]' value='${varient}'>
+                                        <input style="width:10%" type='number' name='finish[]' value='${finish}'>
+                                        <input style="width:10%" type='number' name='sfinish[]' value='${sfinish}'>
+                                        <input style="width:10%" type='number' name='damage[]' value='${damage}'>
+                                       
                                         <button style="margin-left:-1.5px;width: 5%;height: 26px;margin-top: 8px;background:red;color:white;border:none" class='deleteRow'>&times</button> 
                                         </div>
                                         `;
-                                    if (itemname != "" && varient != "" && quantity != "") {
+                                    if (itemname != "" && varient != "") {
 
                                         $('#whereProductsShow').append(tr);
                                         $("#itemname").val('').trigger('change');
                                         document.getElementById('varient').value = '';
-                                        document.getElementById('quantity').value = '';
+                                        document.getElementById('finish').value = '';
+                                        document.getElementById('sfinish').value = '';
+                                        document.getElementById('damage').value = '';
+
                                         document.getElementById('varient').focus();
                                     }
 
@@ -228,23 +247,35 @@
 
         var itemname = document.getElementsByName('itemname[]');
         var varient = document.getElementsByName('varient[]');
-        var quantity = document.getElementsByName('quantity[]');
+        var finish = document.getElementsByName('finish[]');
+        var sfinish = document.getElementsByName('sfinish[]');
+        var damage = document.getElementsByName('damage[]');
+
 
         var obj = [];
         for (var i = 0; i < itemname.length; i++) {
             var itemname1 = itemname[i].value;
-            var quantity1 = quantity[i].value;
+            var finish1 = finish[i].value;
+            var sfinish1 = sfinish[i].value;
+            var damage1 = damage[i].value;
+
             var varient1 = varient[i].value;
 
             var obje;
             obje = {
                 itemname: "",
-                quantity: "",
+                finish: "",
+                sfinish: "",
+                damage: "",
+
                 varient: "",
 
             };
             obje.itemname = itemname1;
-            obje.quantity = quantity1;
+            obje.finish = finish1;
+            obje.sfinish = sfinish1;
+            obje.damage = damage1;
+
             obje.varient = varient1;
 
             obj.push(obje);
@@ -277,7 +308,7 @@
                 },
                 dataType: "text",
                 success: function(data) {
-
+                    console.log(data);
                     if (data == "inserted") {
                         var output = `
                                 <div class="alert alert-success">
@@ -316,7 +347,7 @@
             $("#company").val('').trigger('change');
             $("#itemname").val('').trigger('change');
             $("#varient").val('').trigger('change');
-            $("#quantity").val('').trigger('change');
+
             $("#City").val('').trigger('change');
             document.getElementById('address').value = '';
             document.getElementById('zone').value = '';
@@ -346,14 +377,14 @@
             success: function(data) {
                 // console.log(data)
                 let output = '<option selected readonly value="">Choose Item...</option>';
-              
+
                 data.forEach(el => {
                     output += `
                     <option value="${el.itemname}">${el.itemname}</option>
                     `;
 
                     document.getElementById('itemname').innerHTML = output;
-                   
+
                 });
             },
             error: function(req, status, error) {
@@ -416,8 +447,22 @@
 
         }
     });
-    var quantity = document.getElementById("quantity");
-    quantity.addEventListener("keydown", function(e) {
+    var varient = document.getElementById("finish");
+    varient.addEventListener("keydown", function(e) {
+        if (e.key === "Enter") {
+            document.getElementById('addRow').click();
+
+        }
+    });
+    var varient = document.getElementById("sfinish");
+    varient.addEventListener("keydown", function(e) {
+        if (e.key === "Enter") {
+            document.getElementById('addRow').click();
+
+        }
+    });
+    var varient = document.getElementById("damage");
+    varient.addEventListener("keydown", function(e) {
         if (e.key === "Enter") {
             document.getElementById('addRow').click();
 
