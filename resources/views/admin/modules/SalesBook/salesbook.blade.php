@@ -107,7 +107,7 @@
                                         <input style="width:30%" readonly type='text' name='itemname[]' value='${itemname}'>
                                         <input style="width:25%"readonly type='text' name='varient[]' value='${varient}'>
                                         <input style="width:10%" type='number' name='quantity[]' value='${quantity}'>
-                                        <button  style="margin-left:-1.5px;width: 5%;height: 26px;margin-top: 8px;background:red;color:white;border:none" class='deleteRow'>&times</button> 
+                                        <button onclick="return this.parentNode.remove();" style="margin-left:-1.5px;width: 5%;height: 26px;margin-top: 8px;background:red;color:white;border:none" class='deleteRow'>&times</button> 
                                         </div>
                                         `;
                                     if (cNo != "" && itemname != "" && varient != "" && quantity != "") {
@@ -120,9 +120,9 @@
                                         document.getElementById('quantity').value = '';
                                         document.getElementById('varient').focus();
                                     }
-                                    $(".deleteRow").click(function() {
-                                        $(this).parent().remove();
-                                    });
+                                    // $(".deleteRow").click(function() {
+                                    //     $(this).parent().remove();
+                                    // });
                                     
                                     
 
@@ -182,7 +182,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Builty No.</label>
-                                                    <input type="text" id="BuiltyNo" name="BuiltyNo" style="width: 100%;" required class="" placeholder="Builty No.">
+                                                    <input type="text" id="BuiltyNo" name="BuiltyNo" style="width: 100%;" required class="" placeholder="Gate Pass No.">
                                                 </div>
 
                                             </div>
