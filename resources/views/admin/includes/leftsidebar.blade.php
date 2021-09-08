@@ -55,10 +55,27 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="/gennyFactory/public/show_material" class="nav-link">
+              <a href="" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Material</p>
+                <i class="right fas fa-angle-left"></i>
               </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/gennyFactory/public/show_material" class="nav-link">
+                    <i class="far fa-dot-circle nav-icon"></i>
+                    <p>Material</p>
+                   
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/gennyFactory/public/show_material_detail" class="nav-link">
+                    <i class="far fa-dot-circle nav-icon"></i>
+                    <p>Material Detail</p>
+                  </a>
+                </li>
+
+              </ul>
             </li>
 
             <li class="nav-item">
@@ -68,10 +85,28 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="/gennyFactory/public/show_Stockdata" class="nav-link">
+              <a href="" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Stock</p>
+                <i class="right fas fa-angle-left"></i>
               </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/gennyFactory/public/show_Stockdata" class="nav-link">
+                    <i class="far fa-dot-circle nav-icon"></i>
+                    <p>Stock</p>
+                   
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/gennyFactory/public/show_Stockdata_detail" class="nav-link">
+                    <i class="far fa-dot-circle nav-icon"></i>
+                    <p>Stock Detail</p>
+                  </a>
+                </li>
+
+              </ul>
+
             </li>
 
 
@@ -100,6 +135,29 @@
 
           </ul>
         </li>
+        <li class="nav-item">
+          <a href="" class="nav-link">
+            <i class="fab fa-sellsy"></i>
+            <p>Purchase</p>
+            <i class="right fas fa-angle-left"></i>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="/gennyFactory/public/purchasebook" class="nav-link">
+                <i class="far fa-dot-circle nav-icon"></i>
+                <p>PurchaseBook</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/gennyFactory/public/edit_purchasebookinvoice" class="nav-link">
+                <i class="far fa-dot-circle nav-icon"></i>
+                <p>Edit PurchaseBook</p>
+              </a>
+            </li>
+
+          </ul>
+        </li>
+
         <li class="nav-item">
           <a href="" class="nav-link">
             <i class="far fa-circle nav-icon"></i>

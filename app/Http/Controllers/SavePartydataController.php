@@ -31,6 +31,15 @@ class SavePartydataController extends Controller
          return view('admin/modules/Material/material',['materials'=>$material,'items'=>$items]);
        
     }
+    public function show_material_detail_method(Request $request)
+    {
+         $material = DB::table('material')->get();
+        //  $parties->appends($request->all());
+        $items = DB::table('items')->get();
+       
+         return view('admin/modules/Material/material_detail',['materials'=>$material,'items'=>$items]);
+       
+    }
     public function delete_materialdata_method($id)
     {
         DB::table('material')

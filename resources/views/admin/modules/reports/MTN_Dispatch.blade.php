@@ -4,9 +4,10 @@
 <input type="hidden" id="hidden_credit">
 <div class="container">
     <section style="margin-top: 40px;" class="content">
-
-        <div style="display: flex;justify-content:space-between">
-            @for($a=0; $a < count($dispatch); $a++) <div>
+    @for($a=0; $a < count($dispatch); $a++)
+<div style="display: flex;justify-content:space-between;margin-top:50px">
+             
+        <div>
                 BuiltyNo : {{$dispatch[$a]->builtyNo}}
         </div>
         <div>

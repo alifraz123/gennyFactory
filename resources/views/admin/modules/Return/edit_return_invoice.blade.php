@@ -325,8 +325,7 @@
       
         var Remarks = document.getElementById('Remarks').value;
 
-        if (City != '' && Remarks != '' && zone != '') {
-
+       
             var token = '{{csrf_token()}}';
             $.ajax({
                 type: "post",
@@ -399,7 +398,7 @@
             $("#whereProductsShow tr").remove();
             $("#supplier").val('').trigger('change');
 
-        }
+        
 
     }
 

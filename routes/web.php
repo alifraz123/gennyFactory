@@ -9,6 +9,7 @@ use App\Http\Controllers\SaveSalesBookDetaildataController;
 use App\Http\Controllers\Cashbook;
 use App\Http\Controllers\Stock;
 use App\Http\Controllers\Dispatch;
+use App\Http\Controllers\Purchase_book;
 use App\Http\Controllers\stockReturn;
 use App\Http\Controllers\report;
 use Illuminate\Support\Facades\DB;
@@ -29,6 +30,7 @@ Route::get('/admin', function () {
 // Material code start
 Route::post('save_materialdata', [App\Http\Controllers\SavePartydataController::class, 'save_materialdata_method']);
 Route::get('show_material', [App\Http\Controllers\SavePartydataController::class, 'show_material_method']);
+Route::get('show_material_detail', [App\Http\Controllers\SavePartydataController::class, 'show_material_detail_method']);
 Route::get('delete_materialdata/{id}', [App\Http\Controllers\SavePartydataController::class, 'delete_materialdata_method']);
 Route::get('edit_materialdata/{id}', [App\Http\Controllers\SavePartydataController::class, 'edit_materialdata_method']);
 Route::get('/materialeditform', function () {
@@ -39,6 +41,9 @@ Route::get('/materialeditform', function () {
     }
 });
 Route::post('edit_materialdata', [App\Http\Controllers\SavePartydataController::class, 'update_materialdata_method']);
+
+
+
 
 
 
@@ -110,6 +115,7 @@ Route::post('edit_company', [App\Http\Controllers\SavecitydataController::class,
 // Stock code
 Route::post('save_stockdata', [App\Http\Controllers\Stock::class, 'save_stockdata_method']);
 Route::get('show_Stockdata', [App\Http\Controllers\Stock::class, 'show_Stockdata_method']);
+Route::get('show_Stockdata_detail', [App\Http\Controllers\Stock::class, 'show_Stockdata_detail_method']);
 Route::get('delete_stockdata/{id}', [App\Http\Controllers\Stock::class, 'delete_stockdata_method']);
 Route::get('edit_stockdata/{id}', [App\Http\Controllers\Stock::class, 'edit_stockdata_method']);
 Route::get('/stockditform', function () {
@@ -156,6 +162,37 @@ Route::get('getInvoicesForEdit', [App\Http\Controllers\Dispatch::class, 'getInvo
 Route::get('edit_invoice/{id}', [App\Http\Controllers\Dispatch::class, 'edit_invoice_method']);
 Route::post('update_dispatch', [App\Http\Controllers\Dispatch::class, 'update_dispatch']);
 Route::get('delete_dispatch', [App\Http\Controllers\Dispatch::class, 'delete_dispatch']);
+
+
+// purchase book code
+Route::get('/purchasebook', function () {
+    if (Auth::guest()) {
+        return redirect('login');
+    } else {
+        $sup_and_ven = DB::table('sup_and_ven')->get();
+        $items = DB::table('items')->get();
+        $stock = DB::table('stock')->get();
+        $zones = DB::table('zone')->get();
+        $companies = DB::table('company')->get();
+        return view('admin/modules/Purchase_book/purchasebook', ['parties' => $sup_and_ven,'zones'=>$zones,
+         'items' => $items, 'stocks' => $stock,'companies'=>$companies]);
+    }
+});
+Route::post('getDateOfSelectedSupplier', [App\Http\Controllers\Purchase_book::class, 'getDateOfSelectedSupplier_method']);
+Route::post('purchasebook', [App\Http\Controllers\Purchase_book::class, 'purchasebook_method']);
+Route::get('edit_purchasebookinvoice', function () {
+    if (Auth::guest()) {
+        return redirect('login');
+    } else {
+        $parties = DB::table('sup_and_ven')->get();
+        return view('admin/modules/Purchase_book/purchasebookedit', ['parties' => $parties]);
+    }
+});
+Route::get('getPurchaseInvoicesForEdit', [App\Http\Controllers\Purchase_book::class, 'getInvoicesForEdit_method']);
+Route::get('edit_purchasebook/{id}', [App\Http\Controllers\Purchase_book::class, 'edit_invoice_method']);
+Route::post('update_purchasebook', [App\Http\Controllers\Purchase_book::class, 'update_purchasebook']);
+Route::get('delete_purchasebook', [App\Http\Controllers\Purchase_book::class, 'delete_purchasebook']);
+
 
 
 // Reports code start from here

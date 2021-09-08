@@ -18,7 +18,7 @@ class report extends Controller
             $ab = DB::table('dispatch_detail')->where('cno', $cno[$a]->cno)->distinct()->get(['ItemName','cno']);
             for ($b = 0; $b < count($ab); $b++) {
                 $total = 0;
-                $for_total =  DB::table('dispatch_detail')->where('ItemName', $ab[$b]->ItemName)->distinct()->get(['qty']);
+                $for_total =  DB::table('dispatch_detail')->where('cno', $cno[$a]->cno)->where('ItemName', $ab[$b]->ItemName)->distinct()->get(['qty']);
                 for ($d = 0; $d < count($for_total); $d++) {
                     $total = $total + $for_total[$d]->qty;
                 }

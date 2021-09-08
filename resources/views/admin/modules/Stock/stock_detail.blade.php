@@ -18,7 +18,7 @@
         <div style="margin-top: 1rem;" class="container-fluid">
             <div style="margin-top: 1rem;" class="container-fluid">
                 <div class="row">
-                    <h3 style="text-align: center;">Stock</h4>
+                    <h3 style="text-align: center;">Stock Detail</h4>
                 </div>
                 <div class="card card-primary">
                     <form method="post" action="save_stockdata">
@@ -74,16 +74,11 @@
                                         <input type="number" name="semi_finish" required class="form-control" placeholder="Enter semi_finish items">
                                     </div>
                                 </div>
-                                <div class="col-sm-5">
-                                    <div class="form-group">
-                                        <label>Damage Quantity</label>
-                                        <input type="number" name="damage" required class="form-control" placeholder="Enter Damage items">
-                                    </div>
-                                </div>
+                                
                             </div>
 
                         </div>
-                        <button style="float:right; margin-right:80px; margin-top: -55px;" type="submit" class="btn btn-primary">Submit</button>
+                        <button style="float:right; margin-right:33rem; margin-top: -74px;" type="submit" class="btn btn-primary">Submit</button>
                 </div>
                 <div class="card-footer">
                 </div>

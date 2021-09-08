@@ -18,7 +18,7 @@
         @endif
         <div class="container-fluid">
             <div class="row">
-                <h4>Material</h4>
+                <h4>Material Detail</h4>
             </div>
             <div class=" card card-body">
                 <form method="post" action="save_materialdata">
@@ -62,11 +62,62 @@
                                 <input type="text" name="material_name" value="" required class="form-control" placeholder="Enter material name">
                             </div>
                         </div>
+                        <div class="col-sm-5">
+                            <!-- text input -->
+                            <div class="form-group">
+                                <label>Varient</label>
+                                <select name="item" required class="form-control">
+                                    <option selected disabled value="">choose varient...</option>
+                                    @foreach($items as $item)
+                                    <option value="{{$item->itemname}}">{{$item->itemname}}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                    <div class="col-sm-2">
+                            <!-- text input -->
+                            <div class="form-group">
+                                <label>Opening Blnc</label>
+                                <input type="text" name="material_name" value="" required class="form-control" placeholder="Enter material name">
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <!-- text input -->
+                            <div class="form-group">
+                                <label>Recieved</label>
+                                <input type="text" name="material_name" value="" required class="form-control" placeholder="Enter material name">
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <!-- text input -->
+                            <div class="form-group">
+                                <label>Total</label>
+                                <input type="text" name="material_name" value="" required class="form-control" placeholder="Enter material name">
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <!-- text input -->
+                            <div class="form-group">
+                                <label>Used</label>
+                                <input type="text" name="material_name" value="" required class="form-control" placeholder="Enter material name">
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <!-- text input -->
+                            <div class="form-group">
+                                <label>Closing Blnc</label>
+                                <input type="text" name="material_name" value="" required class="form-control" placeholder="Enter material name">
+                            </div>
+                        </div>
 
                     </div>
 
 
-                    <button style="float:right; margin-right:32rem; margin-top: -55px;" type="submit" class="btn btn-primary">Submit</button>
+                    <button style="float:right; margin-right:5rem; margin-top: -55px;" type="submit" class="btn btn-primary">Submit</button>
 
 
                 </form>
@@ -139,6 +190,13 @@
                                 <th>Item</th>
                                 <th>Category</th>
 
+                                <th>Varient</th>
+                                <th>O.B</th>
+                                <th>Recvd</th>
+                                <th>Total</th>
+                                <th>Used</th>
+                                <th>Cl.B</th>
+
                                 <th>Edit</th>
                                 <th>Delete</th>
 
@@ -147,6 +205,14 @@
                         <tbody id="companydata">
                             @foreach($materials as $material)
                             <tr>
+                                <td> {{$material->material}}</td>
+                                <td>{{$material->item}}</td>
+                                <td> {{$material->category}}</td>
+
+                                <td> {{$material->material}}</td>
+                                <td>{{$material->item}}</td>
+                                <td> {{$material->category}}</td>
+
                                 <td> {{$material->material}}</td>
                                 <td>{{$material->item}}</td>
                                 <td> {{$material->category}}</td>

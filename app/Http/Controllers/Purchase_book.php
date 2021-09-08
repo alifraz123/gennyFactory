@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-class dispatch extends Controller
+class Purchase_book extends Controller
 {
     public $startDate = '';
     public $endDate = '';
     public $partyName = '';
-    public function dispatch_method(Request $request)
+    public function purchasebook_method(Request $request)
     {
         $dispatch = '';
         $dispatch_detail = '';
@@ -63,8 +62,8 @@ class dispatch extends Controller
         $startDate = $_GET['startDate'];
         $endDate = $_GET['endDate'];
         $partyName = $_GET['supplier'];
-        $data = DB::table('dispatch')->whereBetween('date', [$startDate, $endDate])
-            ->where('supplier', $partyName)->where('Ref', 'sb')->get();
+        $data = DB::table('purchase_book')->whereBetween('date', [$startDate, $endDate])
+            ->where('vender', $partyName)->get();
 
         for ($a = 0; $a < count($data); $a++) {
             $data[$a]->startDate = $startDate;
@@ -72,11 +71,11 @@ class dispatch extends Controller
             $data[$a]->partyName = $partyName;
         }
         // return $data;
-        return view('admin/modules/SalesBook/showSaleInvoices', [
+        return view('admin/modules/Purchase_book/showPurchaseInvoices', [
             'saleInvoices' => $data
         ]);
     }
-    public function delete_dispatch()
+    public function delete_purchasebook()
     {
         $startDate = $_GET['startDate'];
         $endDate = $_GET['endDate'];
@@ -95,19 +94,19 @@ class dispatch extends Controller
     }
     public function edit_invoice_method($id)
     {
-        $salebook = DB::table('dispatch')->where('invoice', $id)->get();
+        $salebook = DB::table('purchase_book')->where('invoice', $id)->get();
         $salebook_detail = DB::table('dispatch_detail')->where('invoice', $id)->get();
         $cities = DB::table('sup_and_ven')->get();
         $parties = DB::table('stock')->get();
         $items = DB::table('items')->get();
         return view(
-            'admin/modules/SalesBook/edit_invoice',
-            ['salebook' => $salebook, 'salebook_detail' => $salebook_detail, 'parties' => $parties, 'items' => $items, 'cities' => $cities]
+            'admin/modules/Purchase_book/edit_purchasebook',
+            ['salebook' => $salebook, 'parties' => $parties, 'items' => $items, 'cities' => $cities]
         );
     }
 
 
-    public function update_dispatch(Request $request)
+    public function update_purchasebook(Request $request)
     {
         $dispatch = '';
         $dispatch_detail = '';

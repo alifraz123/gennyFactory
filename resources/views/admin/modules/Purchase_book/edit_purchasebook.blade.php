@@ -19,7 +19,7 @@
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h3 class="card-title">Edit Sales Book Detail Data</h3>
+                                            <h3 class="card-title">Edit PurchaseBook Detail</h3>
                                         </div>
 
                                     </div>
@@ -29,28 +29,27 @@
                                 <div style="margin: 15px;line-height:0px" class="row">
                                     <div style="width: 30%;margin-right:3px">
                                         <input type="hidden" id="invoice_edit" name="invoice_edit" value="{{$salebook[0]->invoice}}">
-                                        <label>Supplier</label>
+                                        <label>Vender</label>
                                         <select name="supplier" id="supplier" class="control-form select2" style="width: 100%;" onchange="getDateOfSelectedSupplier()" required>
-                                            <option readonly selected value="{{$salebook[0]->supplier}}">{{$salebook[0]->supplier}}</option>
-                                            @foreach($salebook as $partydata)
-                                            <option value="{{$partydata->supplier}}"> {{$partydata->supplier}}</option>
-                                            @endforeach
+                                            <option readonly selected value="">Choose Supplier</option>
+                                            
                                         </select>
                                     </div>
-                                    <div style="width: 25%;margin-right:3px">
+                                    
 
-                                        <label>Company</label>
-                                        <select name="company" readonly id="company"  onchange="getItemsOfSelectedCompany(this.value)" class="control-form select2" style="width: 100%;">
-                                            <option selected value="{{$salebook[0]->company}}">{{$salebook[0]->company}}</option>
-                                            @foreach($salebook as $item)
-                                            <option value="{{$item->company}}"> {{$item->company}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div style="width: 25%;margin-right:3px">
+                                    <div style="width: 25%;margin-right:3px;display:none">
                                         <label>Date</label>
                                         <input type="date" name="Date" value="{{$salebook[0]->date}}" id="Date" class="form-control" style="width: 100%;padding:0;height:30px" required>
+                                    </div>
+                                    <div style="width:25%;margin-right:3px">
+                                        <label>Dispatch Date</label>
+                                        <input type="date" name="dispathcDate" id="dispathcDate" class="form-control" style="width: 100%;padding:0;height:30px" required>
+
+                                    </div>
+                                    <div style="width:25%;margin-right:3px">
+                                        <label>Recieve Date</label>
+                                        <input type="date" name="recieveDate" id="recieveDate" class="form-control" style="width: 100%;padding:0;height:30px" required>
+
                                     </div>
 
 
@@ -60,13 +59,20 @@
                                 <div style="line-height: 0;" class="card-body">
 
                                     <div style="margin-left: -4px;" class="row">
-                                        <div style="width: 10%;margin-right:3px">
-                                            <label>C.No</label>
-                                            <input name="cNo" id="cNo" style="width: 100%;" type="text" placeholder="C.No" required>
-                                        </div>
+                                        
                                         <div style="width: 29.5%;margin-right:3px">
                                             <label>Item Name</label>
                                             <select name="itemname" id="itemname" onchange="getVarientsOfSelectedItem(this.value)" style="width: 100%;" required class="select2">
+
+                                            </select>
+                                        </div>
+                                        <div style="width: 20%;margin-right:3px">
+                                            <label>Category</label>
+                                            <select onchange="getVarientsOfSelectedItem(this.value)" name="category" id="category" style="width: 100%;" required class="select2">
+                                                <option readonly selected value="">Choose category...</option>
+                                                <option value="Raw Material">Raw Material</option>
+                                                <option value="Packing Material">Packing Material</option>
+                                                <option value="Stickers">Stickers</option>
 
                                             </select>
                                         </div>
@@ -90,15 +96,7 @@
 
 
                                     <div style="margin-left: -4px;" id="whereProductsShow">
-                                        @foreach($salebook_detail as $sbd)
-                                        <div>
-                                            <input style="width:10%" value="{{$sbd->cno}}" readonly type='text' name='cno[]'>
-                                            <input style="width:30%" readonly value="{{$sbd->ItemName}}" type='text' name='itemname[]'>
-                                            <input style="width:25%" readonly value="{{$sbd->varient}}" type='text' name='varient[]'>
-                                            <input style="width:10%" value="{{$sbd->qty}}" type='text' name='quantity[]' required>
-                                            <button style="margin-left:-1.5px;width: 5%;height: 26px;margin-top: 8px;background:red;color:white;border:none" class='deleteRow'>&times;</button>
-                                        </div>
-                                        @endforeach
+                                       
                                     </div>
 
                                 </div>
@@ -149,7 +147,7 @@
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <h3 class="card-title">Sales Book Data</h3>
+                                            <h3 class="card-title">PurchaseBook Data</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -161,17 +159,14 @@
                                             <label>City</label>
 
                                             <select readonly name="City" id="City" class="control-form select2" style="width: 100%;">
-                                                <option selected value="{{$salebook[0]->city}}">{{$salebook[0]->city}}</option>
-                                                @foreach($cities as $item)
-                                                <option value="{{$item->city}}"> {{$item->city}}</option>
-                                                @endforeach
+                                                
                                             </select>
                                         </div>
                                         <div style="width: 100%;">
                                             <div class="form-group">
                                                 <label>Address</label>
                                                 <textarea name="address" id="address" readonly style="width: 100%;line-height:initial" rows="3" required>
-                                                {{$salebook[0]->address}}
+                                               
                                                 </textarea>
 
                                             </div>
@@ -182,22 +177,28 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Zone</label>
-                                                    <input id="zone" readonly value="{{$salebook[0]->zone}}" name="zone" style="width: 100%;" type="text" required>
+                                                    <input id="zone" readonly value="" name="zone" style="width: 100%;" type="text" required>
                                                 </div>
                                             </div>
-
-
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label>Gate Pass No</label>
-                                                    <input type="text" value="{{$salebook[0]->gatePass}}" id="gatePass" name="gatePass" style="width: 100%;" required>
+                                                    <label>Via Transport</label>
+                                                    <input type="text" id="via" name="via" style="width: 100%;" required class="" placeholder="Via Transport">
                                                 </div>
 
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Builty No.</label>
-                                                    <input type="text" value="{{$salebook[0]->builtyNo}}" id="BuiltyNo" name="BuiltyNo" style="width: 100%;" required class="" placeholder="Builty No.">
+                                                    <input type="text" value="" id="BuiltyNo" name="BuiltyNo" style="width: 100%;" required class="" placeholder="Builty No.">
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Carton qty</label>
+                                                    <input type="text" id="ctn_qty" name="ctn_qty" style="width: 100%;" require placeholder="Carton recieve qty">
+
                                                 </div>
 
                                             </div>
@@ -205,7 +206,7 @@
                                                 <div class="form-group">
                                                     <label>Remarks</label>
                                                     <textarea name="Remarks" id="Remarks" style="width: 100%;line-height:initial" rows="3" required>
-                                                    {{$salebook[0]->remarks}}
+                                                   
                                                     </textarea>
 
                                                 </div>

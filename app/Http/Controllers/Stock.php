@@ -26,6 +26,13 @@ class Stock extends Controller
         return view('admin/modules/Stock/stock',['stocks'=>$stock,'companies'=>$companies]);
         
      }
+     public function show_Stockdata_detail_method(Request $request){
+        $stock = DB::table('stock')->get();
+        $companies = DB::table('company')->get();
+     
+       return view('admin/modules/Stock/stock_detail',['stocks'=>$stock,'companies'=>$companies]);
+       
+    }
      public function delete_stockdata_method($id){
          DB::table('stock')
              ->where('id', $id)
