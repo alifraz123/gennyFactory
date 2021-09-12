@@ -30,8 +30,8 @@
                                     <div style="width: 30%;margin-right:3px">
 
                                         <label>Vender</label>
-                                        <select name="supplier" id="supplier" class="control-form select2" style="width: 100%;" onchange="getDateOfSelectedSupplier()" required>
-                                            <option readonly selected value="">Choose Supplier</option>
+                                        <select name="vender" id="vender" class="control-form select2" style="width: 100%;" onchange="getDateOfSelectedSupplier()" required>
+                                            <option readonly selected value="">Choose vender</option>
                                             @foreach($parties as $partydata)
                                             <option value="{{$partydata->name}}"> {{$partydata->name}}</option>
                                             @endforeach
@@ -45,7 +45,7 @@
 
                                     <div style="width:25%;margin-right:3px">
                                         <label>Dispatch Date</label>
-                                        <input type="date" name="dispathcDate" id="dispathcDate" class="form-control" style="width: 100%;padding:0;height:30px" required>
+                                        <input type="date" name="dispatchDate" id="dispatchDate" class="form-control" style="width: 100%;padding:0;height:30px" required>
 
                                     </div>
                                     <div style="width:25%;margin-right:3px">
@@ -64,9 +64,11 @@
 
                                         <div style="width: 30%;margin-right:3px">
                                             <label>Item Name</label>
-                                            <select onchange="getVarientsOfSelectedItem(this.value)" name="itemname" id="itemname" style="width: 100%;" required class="select2">
+                                            <select name="itemname" id="itemname" style="width: 100%;" required class="select2">
                                                 <option readonly selected value="">Choose Item...</option>
-
+                                                @foreach($items as $item)
+                                                <option value="{{$item->itemname}}"> {{$item->itemname}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div style="width: 20%;margin-right:3px">
@@ -79,16 +81,24 @@
 
                                             </select>
                                         </div>
-                                        <div style="width: 25%;margin-right:3px">
+                                        <div style="width: 15%;margin-right:3px">
 
                                             <label>Varient</label>
                                             <select name="varient" id="varient" style="width: 100%;" required class="select2">
                                                 <option readonly selected value="">Choose varient...</option>
 
+
                                             </select>
                                         </div>
-                                        <div style="width: 10%;margin-right:3px">
-                                            <label>Quantity</label>
+                                        <div style="width: 15%;margin-right:3px">
+                                            <label>Carton qty</label>
+                                            <input type="text" id="ctn_qty" name="ctn_qty" style="width: 100%;" require placeholder="Carton qty">
+
+                                        </div>
+
+
+                                        <div style="width: 15%;margin-right:3px">
+                                            <label>T. Quantity</label>
                                             <input name="quantity" id="quantity" style="width: 100%;" type="number" required>
 
                                         </div>
@@ -104,17 +114,21 @@
 
                             <script>
                                 function addRow() {
-                                    var cNo = document.getElementById('cNo').value;
+                                    var category = document.getElementById('category').value;
+                                    var carton_qty = document.getElementById('ctn_qty').value;
                                     var itemname = document.getElementById('itemname').value;
                                     var varient = document.getElementById('varient').value;
+                                  
                                     var quantity = document.getElementById('quantity').value;
 
                                     var tr =
                                         `<div>
-                                        <input style="width:10%" type='text' name='cno[]' value='${cNo}'  >
-                                        <input style="width:30%" readonly type='text' name='itemname[]' value='${itemname}'>
-                                        <input style="width:25%"readonly type='text' name='varient[]' value='${varient}'>
-                                        <input style="width:10%" type='number' name='quantity[]' value='${quantity}'>
+                                       
+                                        <input style="width:29.5%" readonly type='text' name='itemname[]' value='${itemname}'>
+                                        <input style="width:19.5%" type='text' name='category[]' value='${category}'  >
+                                        <input style="width:14.5%"readonly type='text' name='varient[]' value='${varient}'>
+                                        <input style="width: 15%;" type="text" id="ctn_qty" name="ctn_qty[]" value='${carton_qty}'  require >
+                                        <input style="width:14.5%" type='number' name='quantity[]' value='${quantity}'>
                                         <button onclick="return this.parentNode.remove();" style="margin-left:-1.5px;width: 5%;height: 26px;margin-top: 8px;background:red;color:white;border:none" class='deleteRow'>&times</button> 
                                         </div>
                                         `;
@@ -153,7 +167,7 @@
                                         <div style="width: 100%;">
                                             <div class="form-group">
                                                 <label>Zone</label>
-                                                <input id="zone" readonly name="zone" style="width: 100%;" type="text" required>
+                                                <input id="zone" readonly name="zone" placeholder="Zone" style="width: 100%;" type="text" required>
 
                                             </div>
                                         </div>
@@ -161,7 +175,7 @@
                                         <div style="width: 100%;" class="form-group">
                                             <label>City</label>
 
-                                            <input type="text" name="City" id="City" readonly class="control-form" style="width: 100%;" required>
+                                            <input type="text" name="City" id="City" placeholder="City" readonly class="control-form" style="width: 100%;" required>
 
                                         </div>
                                         <div style="width: 100%;">
@@ -186,18 +200,11 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Builty No.</label>
-                                                    <input type="text" id="BuiltyNo" name="BuiltyNo" style="width: 100%;" required placeholder="Gate Pass No.">
+                                                    <input type="text" id="BuiltyNo" name="BuiltyNo" style="width: 100%;" required placeholder="builtyNo.">
                                                 </div>
 
                                             </div>
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Carton qty</label>
-                                                    <input type="text" id="ctn_qty" name="ctn_qty" style="width: 100%;" require placeholder="Carton recieve qty">
 
-                                                </div>
-
-                                            </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Remarks</label>
@@ -231,20 +238,21 @@
     todatDate();
 
     function getDateOfSelectedSupplier() {
-        var supplier_value = document.getElementById('supplier').value;
-        if (supplier_value != '') {
+        var vender_value = document.getElementById('vender').value;
+        if (vender_value != '') {
+
             var token = '{{csrf_token()}}';
             $.ajax({
                 type: "post",
-                url: "getDateOfSelectedSupplier",
+                url: "getDateOfSelectedVender",
                 data: {
-                    supplier: supplier_value,
+                    vender: vender_value,
                     _token: token
                 },
-                dataType: "json",
+
                 success: function(data) {
 
-                    // console.log(data);
+                    // console.log("return : " + data);
                     document.getElementById('City').value = data.city;
                     document.getElementById('address').value = data.address;
                     document.getElementById('zone').value = data.zone;
@@ -263,40 +271,45 @@
         var itemname = document.getElementsByName('itemname[]');
         var varient = document.getElementsByName('varient[]');
         var quantity = document.getElementsByName('quantity[]');
-        var cno = document.getElementsByName('cno[]');
+        var category = document.getElementsByName('category[]');
+        var ctn_qty = document.getElementsByName('ctn_qty[]');
         var obj = [];
         for (var i = 0; i < itemname.length; i++) {
             var itemname1 = itemname[i].value;
             var quantity1 = quantity[i].value;
             var varient1 = varient[i].value;
-            var cno1 = cno[i].value;
+            var category1 = category[i].value;
+            var ctn_qty1 = ctn_qty[i].value;
             var obje;
             obje = {
                 itemname: "",
                 quantity: "",
                 varient: "",
-                cno: ""
+                category: "",
+                ctn_qty:""
             };
             obje.itemname = itemname1;
             obje.quantity = quantity1;
             obje.varient = varient1;
-            obje.cno = cno1;
+            obje.category = category1;
+            obje.ctn_qty = ctn_qty1;
             obj.push(obje);
         }
-        // console.log(obj);
+        console.log(obj);
 
         var City = document.getElementById('City').value;
         var zone = document.getElementById('zone').value;
-        var gatePass = document.getElementById('gatePass').value;
+        var via = document.getElementById('via').value;
         var BuiltyNo = document.getElementById('BuiltyNo').value;
+        
         var Remarks = document.getElementById('Remarks').value;
 
-        if (City != '' && Remarks != '' && zone != '' && gatePass != '' && BuiltyNo != '') {
-
+        if (City != '' && Remarks != '' && zone != '' && via != '' && BuiltyNo != '' && ctn_qty != '') {
+            
             var token = '{{csrf_token()}}';
             $.ajax({
                 type: "post",
-                url: "dispatch",
+                url: "purchase",
                 data: {
 
                     obj: obj,
@@ -304,11 +317,13 @@
                     City: document.getElementById('City').value,
                     BuiltyNo: document.getElementById('BuiltyNo').value,
                     zone: document.getElementById('zone').value,
-                    company: document.getElementById('company').value,
-                    supplier: document.getElementById('supplier').value,
+                   
+                    vender: document.getElementById('vender').value,
                     address: document.getElementById('address').value,
-                    gatePass: document.getElementById('gatePass').value,
+                    via: document.getElementById('via').value,
                     Remarks: document.getElementById('Remarks').value,
+                    dispatchDate: document.getElementById('dispatchDate').value,
+                    recieveDate: document.getElementById('recieveDate').value,
                     _token: token
                 },
                 dataType: "text",
@@ -356,7 +371,7 @@
             $("#City").val('').trigger('change');
             document.getElementById('address').value = '';
             document.getElementById('zone').value = '';
-            document.getElementById('gatePass').value = '';
+            document.getElementById('via').value = '';
             document.getElementById('BuiltyNo').value = '';
             document.getElementById('Remarks').value = '';
             document.getElementById('cNo').value = '';
@@ -371,53 +386,25 @@
     }
 
 
-    function getItemsOfSelectedCompany(companyName) {
-        var company = companyName;
+
+
+    function getVarientsOfSelectedItem(material_type) {
         var token = '{{csrf_token()}}';
         $.ajax({
-            url: 'getItemsOfSelectedCompany_For_dispatch',
+            url: 'getVarientsOfSelectedItem_For_purchase',
             type: 'post',
             data: {
-                company: company,
+                material_type: material_type,
                 _token: token
             },
             success: function(data) {
-                // console.log(data)
-                let output = '<option selected readonly value="">Choose Item...</option>';
 
-                data.forEach(el => {
-                    output += `
-                    <option value="${el.itemname}">${el.itemname}</option>
-                    `;
-
-                    document.getElementById('itemname').innerHTML = output;
-
-                });
-            },
-            error: function(req, status, error) {
-                console.log(error)
-
-            }
-        })
-
-    }
-
-    function getVarientsOfSelectedItem(ItemName) {
-        var token = '{{csrf_token()}}';
-        $.ajax({
-            url: 'getVarientsOfSelectedItem_For_dispatch',
-            type: 'post',
-            data: {
-                ItemName: ItemName,
-                _token: token
-            },
-            success: function(data) {
                 if (data) {
-                    // console.log("varient data is :"+data)
+                    // console.log(data)
                     let output2 = '<option selected readonly value="">Choose varient...</option>';
                     data.forEach(el => {
                         output2 += `
-                    <option value="${el.varient}">${el.varient}</option>
+                    <option value="${el.material}">${el.material}</option>
                     `;
                         document.getElementById('varient').innerHTML = output2;
                     });

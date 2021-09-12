@@ -14,21 +14,24 @@ class Purchase_book extends Controller
     {
         $dispatch = '';
         $dispatch_detail = '';
-        $ab = DB::table('dispatch')->get();
+        $ab = DB::table('purchase_book')->get();
         $invoice_r = 1;
         // $final_total = $request->FinalTotal;
         if ($ab->count() != 0) {
-            $invoice_id = DB::table('dispatch')->latest('invoice')->first();
+            $invoice_id = DB::table('purchase_book')->latest('invoice')->first();
             $invoice = $invoice_id->invoice + 1;
         } else {
             $invoice = $invoice_r;
         }
 
-        $dispatch =  DB::insert("insert into dispatch(Ref,invoice,supplier,date,company,city,address,zone 
-        ,gatePass,builtyNo,remarks,Username)values(?,?,?,?,?,?,?,?,?,?,?,?)", [
-            "sb", $invoice, $request->supplier, $request->Date, $request->company, $request->City, $request->address,
-            $request->zone,
-            $request->gatePass, $request->BuiltyNo, $request->Remarks, Auth::user()->name
+        $dispatch =  DB::insert("insert into purchase_book(invoice,date,vender,builtyNo,via_transport
+        ,zone,city,address 
+        ,remarks,Username,dispatch_date,recieve_date)values(?,?,?,?,?,?,?,?,?,?,?,?)", [
+             $invoice, $request->Date, $request->vender, $request->BuiltyNo,$request->via ,
+             $request->zone, $request->City, $request->address,
+           
+              $request->Remarks, Auth::user()->name,
+            $request->dispatchDate,$request->recieveDate
         ]);
 
         $abc = [];
@@ -38,19 +41,20 @@ class Purchase_book extends Controller
                 'ItemName' => $request->obj[$key]['itemname'],
                 'qty' => $request->obj[$key]['quantity'],
                 'varient' => $request->obj[$key]['varient'],
-                'cno' => $request->obj[$key]['cno'],
+                'carton_qty' => $request->obj[$key]['ctn_qty'],
+                'category' => $request->obj[$key]['category'],
             ];
-            $dispatch_detail = DB::table('dispatch_detail')->insert($abc);
+            $dispatch_detail = DB::table('purchase_book_detail')->insert($abc);
 
-            $itemname = $request->obj[$key]['itemname'];
-            $varient = $request->obj[$key]['varient'];
-            $qty = $request->obj[$key]['quantity'];
+            // $itemname = $request->obj[$key]['itemname'];
+            // $varient = $request->obj[$key]['varient'];
+            // $qty = $request->obj[$key]['quantity'];
 
-            $finishProduct = DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->first('finish');
-            $remaining_finishProduct = $finishProduct->finish - $qty;
-            DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->update([
-                'finish' => $remaining_finishProduct
-            ]);
+            // $finishProduct = DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->first('finish');
+            // $remaining_finishProduct = $finishProduct->finish - $qty;
+            // DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->update([
+            //     'finish' => $remaining_finishProduct
+            // ]);
         }
         if ($dispatch && $dispatch_detail) {
             echo "inserted";
@@ -94,77 +98,79 @@ class Purchase_book extends Controller
     }
     public function edit_invoice_method($id)
     {
-        $salebook = DB::table('purchase_book')->where('invoice', $id)->get();
-        $salebook_detail = DB::table('dispatch_detail')->where('invoice', $id)->get();
-        $cities = DB::table('sup_and_ven')->get();
+        $salebook = DB::table('purchase_book')->where('invoice', $id)->first();
+        $salebook_detail = DB::table('purchase_book_detail')->where('invoice', $id)->get();
+        $venders = DB::table('sup_and_ven')->where('type','Vender')->get();
         $parties = DB::table('stock')->get();
         $items = DB::table('items')->get();
         return view(
             'admin/modules/Purchase_book/edit_purchasebook',
-            ['salebook' => $salebook, 'parties' => $parties, 'items' => $items, 'cities' => $cities]
+            ['salebook_detail'=>$salebook_detail,'salebook' => $salebook, 'parties' => $parties, 'items' => $items, 'venders' => $venders]
         );
     }
 
 
-    public function update_purchasebook(Request $request)
+    public function update_purchase(Request $request)
     {
         $dispatch = '';
         $dispatch_detail = '';
-        $dispatch = DB::table('dispatch')->where('invoice', $request->invoice_edit)->update([
-            'supplier' => $request->supplier,
+        $dispatch = DB::table('purchase_book')->where('invoice', $request->invoice_edit)->update([
+            'vender' => $request->vender,
             'date' => $request->Date,
-            'company' => $request->company,
             'city' => $request->City,
             'address' => $request->address,
             'zone' => $request->zone,
-            'gatePass' => $request->gatePass,
+            'via_transport' => $request->via,
             'builtyNo' => $request->BuiltyNo,
+            'dispatch_date' => $request->dispatchDate,
+            'recieve_date' => $request->recieveDate,
             'remarks' => $request->Remarks,
 
         ]);
 
 
-        $dispatch_detail_data = DB::table('dispatch_detail')->where('invoice', $request->invoice_edit)->get();
+        $dispatch_detail_data = DB::table('purchase_book_detail')->where('invoice', $request->invoice_edit)->get();
 
-        for ($a = 0; $a < count($dispatch_detail_data); $a++) {
+        // for ($a = 0; $a < count($dispatch_detail_data); $a++) {
 
-            $dispatach_detail_qty = DB::table('dispatch_detail')->where('invoice', $request->invoice_edit)
-            ->where('itemname', $dispatch_detail_data[$a]->ItemName)
-                ->where('varient', $dispatch_detail_data[$a]->varient)->first('qty');
+        //     $dispatach_detail_qty = DB::table('dispatch_detail')->where('invoice', $request->invoice_edit)
+        //     ->where('itemname', $dispatch_detail_data[$a]->ItemName)
+        //         ->where('varient', $dispatch_detail_data[$a]->varient)->first('qty');
 
-            $stock_qty = DB::table('stock')->where('itemname', $dispatch_detail_data[$a]->ItemName)
-                ->where('varient', $dispatch_detail_data[$a]->varient)->first('finish');
+        //     $stock_qty = DB::table('stock')->where('itemname', $dispatch_detail_data[$a]->ItemName)
+        //         ->where('varient', $dispatch_detail_data[$a]->varient)->first('finish');
                 
-            $remaining_finishProduct = $dispatach_detail_qty->qty + $stock_qty->finish;
+        //     $remaining_finishProduct = $dispatach_detail_qty->qty + $stock_qty->finish;
 
-            DB::table('stock')->where('itemname', $dispatch_detail_data[$a]->ItemName)
-                ->where('varient', $dispatch_detail_data[$a]->varient)->update([
-                    'finish' => $remaining_finishProduct
-                ]);
-        }
+        //     DB::table('stock')->where('itemname', $dispatch_detail_data[$a]->ItemName)
+        //         ->where('varient', $dispatch_detail_data[$a]->varient)->update([
+        //             'finish' => $remaining_finishProduct
+        //         ]);
+        // }
 
-        $delete = DB::table('dispatch_detail')->where('invoice', $request->invoice_edit)->delete();
+        $delete = DB::table('purchase_book_detail')->where('invoice', $request->invoice_edit)->delete();
         if ($delete) {
             $abc = [];
             foreach ($request->obj as $key => $value) {
                 $abc = [
-                    'invoice' => $request->invoice_edit,
+                   'invoice'=>$request->invoice_edit,
                     'ItemName' => $request->obj[$key]['itemname'],
                     'qty' => $request->obj[$key]['quantity'],
                     'varient' => $request->obj[$key]['varient'],
-                    'cno' => $request->obj[$key]['cno'],
+                    'carton_qty' => $request->obj[$key]['ctn_qty'],
+                    'category' => $request->obj[$key]['category'],
                 ];
-                $dispatch_detail = DB::table('dispatch_detail')->insert($abc);
+                $dispatch_detail = DB::table('purchase_book_detail')->insert($abc);
 
-                $itemname = $request->obj[$key]['itemname'];
-                $varient = $request->obj[$key]['varient'];
-                $qty = $request->obj[$key]['quantity'];
+                // $itemname = $request->obj[$key]['itemname'];
+                // $varient = $request->obj[$key]['varient'];
+                // $qty = $request->obj[$key]['quantity'];
 
-                $finishProduct = DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->first('finish');
-                $remaining_finishProduct = $finishProduct->finish - $qty;
-                DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->update([
-                    'finish' => $remaining_finishProduct
-                ]);
+                // $finishProduct = DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->first('finish');
+                // $remaining_finishProduct = $finishProduct->finish - $qty;
+                // DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->update([
+                //     'finish' => $remaining_finishProduct
+                // ]);
             }
         }
         if ($dispatch || $dispatch_detail) {
@@ -177,5 +183,9 @@ class Purchase_book extends Controller
     public function getDateOfSelectedSupplier_method(Request $request)
     {
         return DB::table('sup_and_ven')->where('name', $request->supplier)->get()->first();
+    }
+    public function getDateOfSelectedVender_method(Request $request)
+    {
+        return DB::table('sup_and_ven')->where('name', $request->vender)->first();
     }
 }

@@ -8,7 +8,7 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
 
-                    <h1>Sales Invoice Edit</h1>
+                    <h1>Purchasebook Invoice Edit</h1>
                 </div>
 
             </div>
@@ -45,7 +45,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Supplier Name</label>
+                                    <label>Vender Name</label>
                                     <select name="supplier" id="supplier" required class="form-control select2 select2bs4">
                                         <option disabled selected value="">Choose value...</option>
                                         @foreach($parties as $partydata)

@@ -21,13 +21,20 @@
                     <h3 style="text-align: center;">Stock Detail</h4>
                 </div>
                 <div class="card card-primary">
-                    <form method="post" action="save_stockdata">
+                    <form method="post" action="save_stockdata_detail">
                         @csrf
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-5">
                                     <!-- text input -->
                                     <div class="form-group">
+                                        <label>Date</label>
+                                        <input type="date" name="date" id="date" required class="form-control">
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-sm-5">
+                                <div class="form-group">
                                         <label>Company</label>
 
                                         <select onchange="getItemsOfSelectedCompany(this.value)" name="company" required class="form-control">
@@ -37,25 +44,20 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-sm-5">
                                     <!-- text input -->
-                                    <div class="form-group">
-                                        <label>Item Name</label>
-
-                                        <select name="itemname" id="itemname" required class="form-control">
-                                            <option selected disabled value="">Choose item...</option>
-
-                                        </select>
-                                    </div>
+                                    
                                 </div>
 
                             </div>
                             <div class="row">
                                 <div class="col-sm-5">
                                 <div class="form-group">
-                                        <label>Varient</label>
-                                        <input type="text" name="Varient" required class="form-control" placeholder="Enter Varient">
+                                        <label>Item Name</label>
+
+                                        <select name="itemname" id="itemname" required class="form-control">
+                                            <option selected disabled value="">Choose item...</option>
+
+                                        </select>
                                     </div>
                                     
                                 </div>
@@ -90,13 +92,13 @@
                     <div class="modal-dialog mw-100 w-50" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Edit Stock</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Edit Stock Detail</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form method="post" action="edit_stockdata">
+                                <form method="post" action="edit_stockdata_detail">
                                     @csrf
                                     <input type="hidden" id="id" name="id">
                                     <div class="card-body">
@@ -105,27 +107,29 @@
                                             <div class="col-sm-5">
                                                 <!-- text input -->
                                                 <div class="form-group">
-                                                    <label>Varient</label>
-                                                    <input type="text" name="Varient" id="Varient" required class="form-control" placeholder="Enter Varient">
+                                                    <label>Date</label>
+                                                    <input type="date" name="date" id="modal_date" required class="form-control" >
+                                                    
                                                 </div>
                                             </div>
                                             <div class="col-sm-5">
-                                                <div class="form-group">
-                                                    <label>Item Name</label>
+                                            <div class="form-group">
+                                                    <label>Company</label>
 
-                                                    <select name="itemname" id="ItemName" required class="form-control">
+                                                    <select name="company" id="Company" required class="form-control">
 
                                                     </select>
                                                 </div>
+                                                
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-5">
                                                 <!-- text input -->
                                                 <div class="form-group">
-                                                    <label>Company</label>
+                                                    <label>Item Name</label>
 
-                                                    <select name="company" id="Company" required class="form-control">
+                                                    <select name="itemname" id="ItemName" required class="form-control">
 
                                                     </select>
                                                 </div>
@@ -145,16 +149,11 @@
                                                     <input type="number" name="semi_finish" id="semi_finish" value="" required class="form-control" placeholder="Enter semi_finish items">
                                                 </div>
                                             </div>
-                                            <div class="col-sm-5">
-                                                <div class="form-group">
-                                                    <label>Damage Quantity</label>
-                                                    <input type="number" name="damage" id="damage" value="" required class="form-control" placeholder="Enter Damage items">
-                                                </div>
-                                            </div>
+                                           
                                         </div>
 
                                     </div>
-                                    <button style="float:right; margin-right:32px; margin-top: -75px;" type="submit" class="btn btn-primary">Update</button>
+                                    <button style="float:right; margin-right:18rem; margin-top: -75px;" type="submit" class="btn btn-primary">Update</button>
                             </div>
 
 
@@ -172,12 +171,12 @@
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>Varient</th>
-                        <th>Item Name</th>
+                        <th>Date</th>
                         <th>Company</th>
-                        <th>Semi Finish</th>
+                        <th>Item Name</th>
                         <th>Finish</th>
-                        <th>Damaged</th>
+                        <th>Semi Finish</th>
+                        
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
@@ -185,14 +184,14 @@
                 <tbody id="companydata">
                     @foreach($stocks as $stock)
                     <tr>
-                        <td> {{$stock->varient}}</td>
-                        <td>{{$stock->itemname}}</td>
+                        <td> {{$stock->date}}</td>
                         <td> {{$stock->company}}</td}>
-                        <td>{{$stock->semiFinish}}</td>
+                        <td>{{$stock->itemname}}</td>
                         <td>{{$stock->finish}}</td>
-                        <td>{{$stock->damage}}</td>
+                        <td>{{$stock->semiFinish}}</td>
+                        
                         <td><button onclick="show_modal('{{$stock->id}}')" class="btn btn-success">Edit</button> </td>
-                        <td><a href='delete_stockdata/{{$stock->id}}' class="btn btn-danger">Delete</a> </td>
+                        <td><a href='delete_stockdata_detail/{{$stock->id}}' class="btn btn-danger">Delete</a> </td>
                     </tr>
                     @endforeach
 
@@ -243,18 +242,19 @@
     function show_modal(stock) {
 
         $.ajax({
-            url: 'edit_stockdata/' + stock,
+            url: 'edit_stockdata_detail/'+stock,
             type: 'get',
             data: {
                 stock: stock
             },
             success: function(data) {
-                // console.log(data)
+            
                 document.getElementById('id').value = data['data'][0].id;
-                document.getElementById('Varient').value = data['data'][0].varient;
+                document.getElementById('modal_date').value = data['data'][0].date;
                 document.getElementById('finish').value = data['data'][0].finish;
                 document.getElementById('semi_finish').value = data['data'][0].semiFinish;
-                document.getElementById('damage').value = data['data'][0].damage;
+                document.getElementById('date').innerHTML = data['data'][0].date;
+    //   console.log("date is  : "+data['data'][0].date)
                 let company = `<option selected readonly value="${data['data'][0].company}">${data['data'][0].company}</option>`;
                 let ItemName = `<option selected readonly value="${data['data'][0].itemname}">${data['data'][0].itemname}</option>`;
 
@@ -268,6 +268,11 @@
         })
         $('#exampleModal').modal('show');
     }
+    var now = new Date();
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = now.getFullYear() + "-" + (month) + "-" + (day);
+        document.getElementById('date').value = today;
 </script>
 
 

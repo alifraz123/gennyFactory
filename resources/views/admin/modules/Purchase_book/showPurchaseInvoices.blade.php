@@ -26,11 +26,9 @@
                 <th scope="col">Invoice</th>
                 <th scope="col">Date</th>
                 <th scope="col">Vender</th>
-                <th scope="col">Company</th>
-                <th scope="col">Zone</th>
+                <th scope="col">BuiltyNo</th>
+                
                 <th scope="col">Via Transport</th>
-                <th scope="col">Builty No</th>
-                <th scope="col">Rcvd Ctn Qty</th>
                 <th scope="col">Action</th>
                 <th scope="col">Action</th>
               </tr>
@@ -40,11 +38,11 @@
               <tr>
               <td>{{$saleInvoice->invoice}}</td>
                 <td>{{$saleInvoice->date}}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{$saleInvoice->vender}}</td>
                 <td>{{$saleInvoice->builtyNo}}</td>
+                
+                <td>{{$saleInvoice->via_transport}}</td>
+                
                 <td>
                   <button class="btn btn-success">
                     <a style="color: white;" href="edit_purchasebook/{{$saleInvoice->invoice}}">Edit</a>
