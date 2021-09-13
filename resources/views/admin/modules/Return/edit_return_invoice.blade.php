@@ -63,7 +63,7 @@
                                         
                                         <div style="width: 29.5%;margin-right:3px">
                                             <label>Item Name</label>
-                                            <select name="itemname" id="itemname" style="width: 100%;" required class="select2">
+                                            <select name="itemname" onchange="getVarientsOfSelectedItem(this.value)" id="itemname" style="width: 100%;" required class="select2">
 
                                             </select>
                                         </div>
@@ -399,6 +399,38 @@
             $("#supplier").val('').trigger('change');
 
         
+
+    }
+
+
+    function getVarientsOfSelectedItem(ItemName) {
+        alert(ItemName)
+        var token = '{{csrf_token()}}';
+        $.ajax({
+            url: '../getVarientsOfSelectedItem_For_dispatch',
+            type: 'post',
+            data: {
+                ItemName: ItemName,
+                _token: token
+            },
+            success: function(data) {
+                if (data) {
+                    // console.log("varient data is :"+data)
+                    let output2 = '<option selected readonly value="">Choose varient...</option>';
+                    data.forEach(el => {
+                        output2 += `
+                    <option value="${el.varient}">${el.varient}</option>
+                    `;
+                        document.getElementById('varient').innerHTML = output2;
+                    });
+                }
+
+            },
+            error: function(req, status, error) {
+                console.log(error)
+
+            }
+        })
 
     }
 

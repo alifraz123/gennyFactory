@@ -38,7 +38,7 @@
 
                                 </select>
                             </div>
-                            
+
                         </div>
                         <div class="col-sm-5">
                             <div class="form-group">
@@ -47,7 +47,7 @@
                                 <select name="item" required class="form-control">
                                     <option selected disabled value="">choose...</option>
                                     @foreach($items as $item)
-                                    <option value="{{$item->itemname}}">{{$item->itemname}}</option>
+                                    <option value="{{$item->material_item_name}}">{{$item->material_item_name}}</option>
                                     @endforeach
 
                                 </select>
@@ -66,8 +66,18 @@
                     </div>
 
 
-                    <button style="float:right; margin-right:32rem; margin-top: -55px;" type="submit" class="btn btn-primary">Submit</button>
+                    <div class="row">
+                        <div class="col-md-2">
 
+                            <div class="form-group">
+
+
+                                <button type="submit" class="btn btn-primary">Submit</button>
+
+                            </div>
+                        </div>
+
+                    </div>
 
                 </form>
             </div>
@@ -151,8 +161,8 @@
                                 <td>{{$material->item}}</td>
                                 <td> {{$material->category}}</td>
 
-                                <td><button onclick="show_modal('{{$material->material}}')" class="btn btn-success">Edit</button> </td>
-                                <td><a href='delete_materialdata/{{$material->material}}' class="btn btn-danger">Delete</a> </td>
+                                <td><button onclick="show_modal('{{$material->id}}')" class="btn btn-success">Edit</button> </td>
+                                <td><a href='delete_materialdata/{{$material->id}}' class="btn btn-danger">Delete</a> </td>
 
                             </tr>
                             @endforeach
@@ -173,13 +183,13 @@
 </section>
 
 <script>
-    function show_modal(material) {
+    function show_modal(id) {
 
         $.ajax({
-            url: 'edit_materialdata/' + material,
+            url: 'edit_materialdata/' + id,
             type: 'get',
             data: {
-                material: material
+                id: id
             },
             success: function(data) {
 
@@ -190,7 +200,7 @@
                 let category = `<option selected readonly value="${data['data'][0].category}">${data['data'][0].category}</option>`;
                 data['items'].forEach(el => {
                     output += `
-                    <option value="${el.itemname}">${el.itemname}</option>
+                    <option value="${el.material_item_name}">${el.material_item_name}</option>
                     `;
 
                     document.getElementById('item').innerHTML = output;

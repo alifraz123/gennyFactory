@@ -59,28 +59,9 @@
                                     </div>
                                     
                                 </div>
-                                <div class="col-sm-5">
-                                    <div class="form-group">
-                                        <label>Finish Quantity</label>
-                                        <input type="number" name="finish" required class="form-control" placeholder="Enter Finish Items">
-                                    </div>
-                                </div>
+                                
                             </div>
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <!-- text input -->
-                                    <div class="form-group">
-                                        <label>Semi Finish Quantity</label>
-                                        <input type="number" name="semi_finish" required class="form-control" placeholder="Enter semi_finish items">
-                                    </div>
-                                </div>
-                                <div class="col-sm-5">
-                                    <div class="form-group">
-                                        <label>Damage Quantity</label>
-                                        <input type="number" name="damage" required class="form-control" placeholder="Enter Damage items">
-                                    </div>
-                                </div>
-                            </div>
+                            
 
                         </div>
                         <button style="float:right; margin-right:80px; margin-top: -55px;" type="submit" class="btn btn-primary">Submit</button>
@@ -135,28 +116,9 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-5">
-                                                <div class="form-group">
-                                                    <label>Finish Quantity</label>
-                                                    <input type="number" name="finish" value="" id="finish" required class="form-control" placeholder="Enter Finish Items">
-                                                </div>
-                                            </div>
+                                           
                                         </div>
-                                        <div class="row">
-                                            <div class="col-sm-5">
-                                                <!-- text input -->
-                                                <div class="form-group">
-                                                    <label>Semi Finish Quantity</label>
-                                                    <input type="number" name="semi_finish" id="semi_finish" value="" required class="form-control" placeholder="Enter semi_finish items">
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-5">
-                                                <div class="form-group">
-                                                    <label>Damage Quantity</label>
-                                                    <input type="number" name="damage" id="damage" value="" required class="form-control" placeholder="Enter Damage items">
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
 
                                     </div>
                                     <button style="float:right; margin-right:32px; margin-top: -75px;" type="submit" class="btn btn-primary">Update</button>
@@ -180,9 +142,11 @@
                         <th>Varient</th>
                         <th>Item Name</th>
                         <th>Company</th>
-                        <th>Semi Finish</th>
+
                         <th>Finish</th>
-                        <th>Damaged</th>
+                        <th>SemiFinish</th>
+                        <th>Damage</th>
+                       
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
@@ -193,9 +157,13 @@
                         <td> {{$stock->varient}}</td>
                         <td>{{$stock->itemname}}</td>
                         <td> {{$stock->company}}</td}>
-                        <td>{{$stock->semiFinish}}</td>
-                        <td>{{$stock->finish}}</td>
-                        <td>{{$stock->damage}}</td>
+
+                        <td> {{$stock->finish}}</td}>
+                        <td> {{$stock->semiFinish}}</td}>
+                        <td> {{$stock->damage}}</td}>
+                      
+                        
+                       
                         <td><button onclick="show_modal('{{$stock->id}}')" class="btn btn-success">Edit</button> </td>
                         <td><a href='delete_stockdata/{{$stock->id}}' class="btn btn-danger">Delete</a> </td>
                     </tr>
@@ -257,9 +225,8 @@
                 // console.log(data)
                 document.getElementById('id').value = data['data'][0].id;
                 document.getElementById('Varient').value = data['data'][0].varient;
-                document.getElementById('finish').value = data['data'][0].finish;
-                document.getElementById('semi_finish').value = data['data'][0].semiFinish;
-                document.getElementById('damage').value = data['data'][0].damage;
+                
+              
                 let company = `<option selected readonly value="${data['data'][0].company}">${data['data'][0].company}</option>`;
                 let ItemName = `<option selected readonly value="${data['data'][0].itemname}">${data['data'][0].itemname}</option>`;
 

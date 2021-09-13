@@ -18,6 +18,39 @@ class SaveItemsdataController extends Controller
         
      }
 
+     public function MaterialItems_method(Request $items){
+          $items =  DB::insert("insert into material_items(material_item_name,category)
+         values(?,?)",[$items->material_item_name,$items->category]);
+         if($items){
+             return redirect('/MaterialItems')->with('status','inserted successfuly');
+         }
+         else{
+            return redirect('/MaterialItems')->with('failed','Not inserted ');
+         }
+     }
+
+
+     public function insertMaterialItemNames_method(Request $request)
+    {
+
+        $abc = [];
+        foreach ($request->obj as $key => $value) {
+            $abc = [
+                
+                'material_item_name' => $request->obj[$key]['material_item_name'],
+                'category' => $request->obj[$key]['category'],
+                
+            ];
+            $material_items = DB::table('material_items')->insert($abc);
+
+        }
+        if ($material_items) {
+            echo "inserted";
+        }
+    }
+
+
+
      public function show_itemsdata_method(Request $request){
          $items = DB::table('items')->get();
          $companies = DB::table('company')->get();

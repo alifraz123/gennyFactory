@@ -85,6 +85,12 @@
               </a>
             </li>
             <li class="nav-item">
+              <a href="/gennyFactory/public/MaterialItems" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Material Items</p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Stock</p>
@@ -137,7 +143,7 @@
         </li>
         <li class="nav-item">
           <a href="" class="nav-link">
-            <i class="fab fa-sellsy"></i>
+          <i class="fas fa-shopping-bag"></i>
             <p>Purchase</p>
             <i class="right fas fa-angle-left"></i>
           </a>

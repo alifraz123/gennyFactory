@@ -19,15 +19,31 @@ class Stock extends Controller
         
      }
      public function save_stockdata_detail_method(Request $stock){
-        $stock =  DB::insert("insert into stock_detail(date,company,itemname,finish,semiFinish)
-         values(?,?,?,?,?)",[$stock->date,$stock->company,$stock->itemname
-         ,$stock->finish,$stock->semi_finish]);
-         if($stock){
-             return redirect('/show_Stockdata_detail')->with('status','inserted successfuly');
+        $stock_data = DB::table('stock')->where('itemname',$stock->itemname)
+         ->where('varient',$stock->varient)->first(['finish','semiFinish']);
+
+        $finish = $stock_data->finish + $stock->finish;
+        $semiFinish = $stock_data->semiFinish + $stock->semi_finish;
+
+        $stock_update =  DB::table('stock')->where('itemname',$stock->itemname)
+         ->where('varient',$stock->varient)->update([
+             'finish' =>$finish,
+             'semiFinish' =>$semiFinish
+         ]);
+
+         if($stock_update){
+
+             $stock =  DB::insert("insert into stock_detail(date,company,itemname,varient,finish,semiFinish)
+              values(?,?,?,?,?,?)",[$stock->date,$stock->company,$stock->itemname,$stock->varient
+              ,$stock->finish,$stock->semi_finish]);
+              if($stock){
+                  return redirect('/show_Stockdata_detail')->with('status','inserted successfuly');
+              }
+              else{
+                 return redirect('/show_Stockdata_detail')->with('failed','Not inserted ');
+              }
          }
-         else{
-            return redirect('/show_Stockdata_detail')->with('failed','Not inserted ');
-         }
+
         
      }
      
@@ -83,20 +99,62 @@ class Stock extends Controller
      }
 
      public function update_Stockdata_detail_method(Request $updatecompany){
-        $data = DB::table('stock_detail')
-        ->where('id', $updatecompany->id)
-        ->update([
-            'date' => $updatecompany->date,
-            'itemname' => $updatecompany->itemname,
-            'company' => $updatecompany->company,
-            'semiFinish' => $updatecompany->semi_finish,
-            'finish' => $updatecompany->finish,
-            
-        ]);
-        // return $data;
-        if($data){
-            return redirect('/show_Stockdata_detail');
+         $stock_detail_data = DB::table('stock_detail')->where('itemname',$updatecompany->itemname)
+         ->where('varient',$updatecompany->varient)->where('id', $updatecompany->id)
+         ->first(['finish','semiFinish']);
+
+         $stock_data = DB::table('stock')->where('itemname',$updatecompany->itemname)
+         ->where('varient',$updatecompany->varient)->first(['finish','semiFinish']);
+       
+         $finish_value = 0;
+         $semiFinish_value = 0;
+         if($stock_detail_data->finish > $updatecompany->finish){
+             $less = $stock_detail_data->finish - $updatecompany->finish;
+             $finish_value = $stock_data->finish - $less;
+         }
+         else{
+            $more = $updatecompany->finish - $stock_detail_data->finish;
+            $finish_value = $stock_data->finish + $more;
+         }
+// return $stock_detail_data->semiFinish;
+         if($stock_detail_data->semiFinish > $updatecompany->semi_finish){
+            //  return $stock_data->semiFinish;
+            $less = $stock_detail_data->semiFinish - $updatecompany->semi_finish;
+            $semiFinish_value = $stock_data->semiFinish - $less;
         }
+        else{
+           $more = $updatecompany->semi_finish - $stock_detail_data->semiFinish;
+           $semiFinish_value = $stock_data->semiFinish + $more;
+        }
+
+// return  $semiFinish_value;
+         $stock_data_update = DB::table('stock')->where('itemname',$updatecompany->itemname)
+         ->where('varient',$updatecompany->varient)
+         ->update([
+             
+             'semiFinish' => $semiFinish_value,
+             'finish' => $finish_value,
+             
+         ]);
+         if($stock_data_update){
+
+             $data = DB::table('stock_detail')
+             ->where('id', $updatecompany->id)
+             ->update([
+                 'date' => $updatecompany->date,
+                 'itemname' => $updatecompany->itemname,
+                 'varient' => $updatecompany->varient,
+                 'company' => $updatecompany->company,
+                 'semiFinish' => $updatecompany->semi_finish,
+                 'finish' => $updatecompany->finish,
+                 
+             ]);
+             // return $data;
+             if($data){
+                 return redirect('/show_Stockdata_detail');
+             }
+         }
+
     }
 
      public function getItemsOfSelectedCompany_method(Request $getItems){
@@ -108,13 +166,18 @@ class Stock extends Controller
         return $items;
      }
      public function getVarientsOfSelectedItem_For_dispatch_method(Request $request){
-        $varients = DB::table('stock')->where('itemname',$request->ItemName)->where('finish','>',0)->distinct()->get('varient');
+        $varients = DB::table('stock')->where('itemname',$request->ItemName)->where('finish','>',0)->get('varient');
         return $varients;
      }
      
      public function getVarientsOfSelectedItem_For_purchase_method(Request $request){
         $varients = DB::table('material')->where('category',$request->material_type)
         ->distinct()->get('material');
+        return $varients;
+     }
+
+     public function getVarientOfSelectedItem_method(Request $request){
+        $varients = DB::table('stock')->where('itemname',$request->itemname)->get('varient');
         return $varients;
      }
 }

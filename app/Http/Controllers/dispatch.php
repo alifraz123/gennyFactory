@@ -57,6 +57,8 @@ class dispatch extends Controller
             echo "inserted";
         }
     }
+
+    
     public function getInvoicesForEdit_method(Request $request)
     {
 

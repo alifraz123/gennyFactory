@@ -10,8 +10,9 @@ class SavePartydataController extends Controller
 {
     public function save_materialdata_method(Request $material)
     {
-        $material =  DB::insert("insert into material_detail(material,item,category)
-        values(?,?,?)", [$material->material_name, $material->item, $material->Category]);
+
+        $material =  DB::insert("insert into material(material,item,category,qty,rejected)
+        values(?,?,?,?,?)", [$material->material_name, $material->item, $material->Category,0,0]);
         if ($material) {
             return redirect('/show_material')->with('status', 'inserted successfuly');
         } else {
@@ -88,7 +89,7 @@ class SavePartydataController extends Controller
     {
         $material = DB::table('material')->get();
         //  $parties->appends($request->all());
-        $items = DB::table('items')->get();
+        $items = DB::table('material_items')->get();
 
         return view('admin/modules/Material/material', ['materials' => $material, 'items' => $items]);
     }
@@ -110,7 +111,7 @@ class SavePartydataController extends Controller
     public function edit_materialdata_method($id)
     {
         $editdata =  DB::table('material')
-            ->where('material', $id)
+            ->where('id', $id)
             ->get();
         $items = DB::table('items')->get();
         // return $editdata;

@@ -103,6 +103,7 @@ Route::post('update_city', [App\Http\Controllers\SavecitydataController::class, 
 // items code
 Route::post('save_itemsdata', [App\Http\Controllers\SaveItemsdataController::class, 'save_itemsdata_method']);
 Route::get('show_itemsdata', [App\Http\Controllers\SaveItemsdataController::class, 'show_itemsdata_method']);
+Route::post('insertMaterialItemNames', [App\Http\Controllers\SaveItemsdataController::class, 'insertMaterialItemNames_method']);
 Route::get('delete_itemsdata/{id}', [App\Http\Controllers\SaveItemsdataController::class, 'delete_itemsdata_method']);
 Route::get('edit_itemsdata/{id}', [App\Http\Controllers\SaveItemsdataController::class, 'edit_itemsdata_method']);
 Route::get('/itemesditform', function () {
@@ -110,6 +111,14 @@ Route::get('/itemesditform', function () {
         return redirect('login');
     } else {
         return view('admin/modules/Items/item');
+    }
+});
+
+Route::get('/MaterialItems', function () {
+    if (Auth::guest()) {
+        return redirect('login');
+    } else {
+        return view('admin/modules/MaterialItems/MaterialItem');
     }
 });
 Route::post('edit_itemsdata', [App\Http\Controllers\SaveItemsdataController::class, 'update_itemsdata_method']);
@@ -126,6 +135,9 @@ Route::post('edit_company', [App\Http\Controllers\SavecitydataController::class,
 Route::post('save_stockdata', [App\Http\Controllers\Stock::class, 'save_stockdata_method']);
 Route::post('save_stockdata_detail', [App\Http\Controllers\Stock::class, 'save_stockdata_detail_method']);
 Route::get('show_Stockdata', [App\Http\Controllers\Stock::class, 'show_Stockdata_method']);
+
+Route::post('getVarientOfSelectedItem', [App\Http\Controllers\Stock::class, 'getVarientOfSelectedItem_method']);
+
 Route::get('show_Stockdata_detail', [App\Http\Controllers\Stock::class, 'show_Stockdata_detail_method']);
 Route::get('delete_stockdata/{id}', [App\Http\Controllers\Stock::class, 'delete_stockdata_method']);
 Route::get('delete_stockdata_detail/{id}', [App\Http\Controllers\Stock::class, 'delete_stockdata_detail_method']);
@@ -227,7 +239,7 @@ Route::get('/Return', function () {
     if (Auth::guest()) {
         return redirect('login');
     } else {
-        $sup_and_ven = DB::table('sup_and_ven')->get();
+        $sup_and_ven = DB::table('sup_and_ven')->where('type','Supplier')->get();
         $items = DB::table('items')->get();
         $stock = DB::table('stock')->get();
         $zones = DB::table('zone')->get();

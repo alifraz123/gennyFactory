@@ -143,9 +143,9 @@ class stockReturn extends Controller
             $stock_qty = DB::table('stock')->where('itemname', $dispatch_detail_data[$a]->ItemName)
                 ->where('varient', $dispatch_detail_data[$a]->varient)->first(['finish','semiFinish','damage']);
                 
-            $remaining_finishProduct = $dispatach_detail_qty->finish + $stock_qty->finish;
-            $remaining_sfinishProduct = $dispatach_detail_qty->sfinish - $stock_qty->semiFinish;
-            $remaining_damageProduct = $dispatach_detail_qty->damage - $stock_qty->damage;
+                $remaining_finishProduct =$stock_qty->finish - $dispatach_detail_qty->finish  ;
+                $remaining_sfinishProduct =$stock_qty->semiFinish - $dispatach_detail_qty->sfinish  ;
+                $remaining_damageProduct =$stock_qty->damage - $dispatach_detail_qty->damage ;
 
             DB::table('stock')->where('itemname', $dispatch_detail_data[$a]->ItemName)
                 ->where('varient', $dispatch_detail_data[$a]->varient)->update([
@@ -184,9 +184,9 @@ class stockReturn extends Controller
 
                 $damageProduct = DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->first('damage');
                
-                $remaining_finishProduct = $finishProduct->finish - $finish;
-                $remaining_sfinishProduct = $sfinish;
-                $remaining_damageProduct =  $damage;
+                 $remaining_finishProduct = $finishProduct->finish + $finish;
+                  $remaining_sfinishProduct = $sfinishProduct->semiFinish + $sfinish;
+                $remaining_damageProduct = $damageProduct->damage +  $damage;
                 
 
                  DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->update([
