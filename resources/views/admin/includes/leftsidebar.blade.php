@@ -166,7 +166,7 @@
 
         <li class="nav-item">
           <a href="" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
+            <i class="fa fa-flag"></i>
             <p>Report</p>
             <i class="right fas fa-angle-left"></i>
           </a>
@@ -182,7 +182,7 @@
         </li>
         <li class="nav-item">
           <a href="" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
+            <i class="fa fa-arrow-down"></i>
             <p>Return</p>
             <i class="right fas fa-angle-left"></i>
           </a>

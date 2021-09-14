@@ -29,10 +29,18 @@ Route::get('/admin', function () {
 
 // Material code start
 Route::post('save_materialdata', [App\Http\Controllers\SavePartydataController::class, 'save_materialdata_method']);
-Route::post('save_materialdata_detail', [App\Http\Controllers\SavePartydataController::class,
- 'save_materialdata_detail_method']);
+Route::post('insertMaterialUsedDetail', [App\Http\Controllers\SavePartydataController::class,
+ 'insertMaterialUsedDetail_method']);
  Route::post('getOpeningBalance', [App\Http\Controllers\SavePartydataController::class,
  'getOpeningBalance_method']);
+ Route::post('getMaterialItemNamesOfSelectedCategory', [App\Http\Controllers\SavePartydataController::class,
+ 'getMaterialItemNamesOfSelectedCategory_method']);
+
+ Route::post('getMaterialNamesOfSelectedItem', [App\Http\Controllers\SavePartydataController::class,
+ 'getMaterialNamesOfSelectedItem_method']);
+
+ Route::post('insertMaterialNames', [App\Http\Controllers\SaveItemsdataController::class, 'insertMaterialNames_method']);
+
 Route::get('show_material', [App\Http\Controllers\SavePartydataController::class, 'show_material_method']);
 Route::get('show_material_detail', [App\Http\Controllers\SavePartydataController::class, 'show_material_detail_method']);
 Route::get('delete_materialdata/{id}', [App\Http\Controllers\SavePartydataController::class, 'delete_materialdata_method']);
@@ -229,7 +237,8 @@ Route::get('Report', function () {
         return redirect('login');
     } else {
         $sup_ven = DB::table('sup_and_ven')->get();
-        return view('admin/modules/reports/Report', ['sup_ven' => $sup_ven]);
+        $venders = DB::table('sup_and_ven')->where('type','Vender')->get();
+        return view('admin/modules/reports/Report', ['sup_ven' => $sup_ven,'venders'=>$venders]);
     }
 });
 

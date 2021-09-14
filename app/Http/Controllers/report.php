@@ -9,7 +9,7 @@ class report extends Controller
 {
     public function MTN_CTN_Dispatch_method(Request $request)
     {
-        $dispatch = DB::table('dispatch')->where('supplier', $request->supplier_name)->whereBetween('Date',[$request->startDate, $request->endDate])->get(['supplier', 'date', 'invoice']);
+      return  $dispatch = DB::table('dispatch')->where('supplier', $request->supplier_name)->whereBetween('Date',[$request->startDate, $request->endDate])->get(['supplier', 'date', 'invoice']);
        for($e=0; $e < count($dispatch); $e++){
         $cno = DB::table('dispatch_detail')->where('invoice', $dispatch[$e]->invoice)->distinct()->get(['cno']);
         $dispatch_detail_array = [];

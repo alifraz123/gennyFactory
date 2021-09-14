@@ -12,7 +12,7 @@ class SavePartydataController extends Controller
     {
 
         $material =  DB::insert("insert into material(material,item,category,qty,rejected)
-        values(?,?,?,?,?)", [$material->material_name, $material->item, $material->Category,0,0]);
+        values(?,?,?,?,?)", [$material->material_name, $material->item, $material->Category, 0, 0]);
         if ($material) {
             return redirect('/show_material')->with('status', 'inserted successfuly');
         } else {
@@ -20,51 +20,72 @@ class SavePartydataController extends Controller
         }
     }
 
-    public function save_materialdata_detail_method(Request $material)
+    public function insertMaterialUsedDetail_method(Request $material)
     {
-        $ob =  DB::table('material')->where('material', $material->material)
-            ->where('category', $material->category)->first(['qty', 'rejected']);
-        $final_rejected = $ob->rejected + $material->rejected;
-        $purchase_invoice = DB::table('purchase_book')->where('date', $material->date)->first('invoice');
-        if ($purchase_invoice == '') {
-            $final_qty = $ob->qty + 0 - $material->used;
-            DB::table('material')->where('material', $material->material)
-                ->where('category', $material->category)->update([
-                    'qty' => $final_qty,
-                    'rejected' => $final_rejected
-                ]);
-        } else {
-            $purchase_detail_qty = DB::table('purchase_book_detail')->where('invoice', $purchase_invoice->invoice)
-                ->where('category', $material->category)->where('varient', $material->material)->first('qty');
-            if ($purchase_detail_qty == '') {
+        
+        $abc = [];
+        foreach ($material->obj as $key => $value) {
+            
+           
+            $ob =  DB::table('material')->where('material', $material->obj[$key]['material_name'])
+                ->where('category', $material->obj[$key]['category'])->first(['qty', 'rejected']);
 
-                $final_qty = $ob->qty + 0 - $material->used;
+            $final_rejected = $ob->rejected + $material->obj[$key]['rejected'];
+            $purchase_invoice = DB::table('purchase_book')->where('date', $material->obj[$key]['date'])->first('invoice');
+            if ($purchase_invoice == '') {
+                $final_qty = $ob->qty + 0 - $material->obj[$key]['used'];
+                DB::table('material')->where('material', $material->obj[$key]['material_name'])
+                    ->where('category', $material->obj[$key]['category'])->update([
+                        'qty' => $final_qty,
+                        'rejected' => $final_rejected
+                    ]);
             } else {
+                $purchase_detail_qty = DB::table('purchase_book_detail')->where('invoice', $purchase_invoice->invoice)
+                    ->where('category', $material->obj[$key]['category'])->where('varient', $material->obj[$key]['material_name'])->first('qty');
+                if ($purchase_detail_qty == '') {
 
-                $final_qty = $ob->qty + $purchase_detail_qty->qty - $material->used;
+                    $final_qty = $ob->qty + 0 - $material->obj[$key]['used'];
+                } else {
+
+                    $final_qty = $ob->qty + $purchase_detail_qty->qty - $material->obj[$key]['used'];
+                }
+                DB::table('material')->where('material', $material->obj[$key]['material_name'])
+                    ->where('category', $material->obj[$key]['category'])->update([
+                        'qty' => $final_qty,
+                        'rejected' => $final_rejected
+                    ]);
             }
-            DB::table('material')->where('material', $material->material)
-                ->where('category', $material->category)->update([
-                    'qty' => $final_qty,
-                    'rejected' => $final_rejected
-                ]);
+            $abc = [
+                'date' =>$material->obj[$key]['date'],
+                'itemname'=>$material->obj[$key]['material_item_name'],
+                'category'=>$material->obj[$key]['category'],
+                'material'=>$material->obj[$key]['material_name'],
+                'ob'=>$ob->qty,
+                'used'=>$material->obj[$key]['used'],
+                'rejected'=>$material->obj[$key]['rejected'],
+            ];
+
+            $material_items = DB::table('material_detail')->insert($abc);
         }
+       
+            echo "inserted";
+        
 
 
 
 
-        $material =  DB::insert("insert into material_detail(date,itemname,category,material,ob,used,rejected)
-        values(?,?,?,?,?,?,?)", [
-            $material->date, $material->itemname, $material->category, $material->material,$ob->qty, $material->used,
-            $material->rejected
-        ]);
+        // $material =  DB::insert("insert into material_detail(date,itemname,category,material,ob,used,rejected)
+        // values(?,?,?,?,?,?,?)", [
+        //     $material->date, $material->itemname, $material->category, $material->material,$ob->qty, $material->used,
+        //     $material->rejected
+        // ]);
 
-        if ($material) {
+        // if ($material) {
 
-            return redirect('/show_material_detail')->with('status', 'inserted successfuly');
-        } else {
-            return redirect('/show_material_detail')->with('failed', 'Not inserted ');
-        }
+        //     return redirect('/show_material_detail')->with('status', 'inserted successfuly');
+        // } else {
+        //     return redirect('/show_material_detail')->with('failed', 'Not inserted ');
+        // }
     }
     public function getOpeningBalance_method(Request $request)
     {
@@ -89,9 +110,17 @@ class SavePartydataController extends Controller
     {
         $material = DB::table('material')->get();
         //  $parties->appends($request->all());
-        $items = DB::table('material_items')->get();
 
-        return view('admin/modules/Material/material', ['materials' => $material, 'items' => $items]);
+
+        return view('admin/modules/Material/material', ['materials' => $material,]);
+    }
+    public function getMaterialItemNamesOfSelectedCategory_method(Request $request)
+    {
+        return DB::table('material_items')->where('category', $request->category)->get('material_item_name');
+    }
+    public function getMaterialNamesOfSelectedItem_method(Request $request)
+    {
+        return DB::table('material')->where('item', $request->itemName)->get('material');
     }
     public function show_material_detail_method(Request $request)
     {
@@ -148,8 +177,8 @@ class SavePartydataController extends Controller
             ->where('category', $updatecompany->modal_category)->where('id', $updatecompany->modal_id)
             ->first(['used', 'rejected']);
 
-            $material_qty = DB::table('material')->where('material', $updatecompany->modal_material)
-            ->where('category', $updatecompany->modal_category)->first(['qty','rejected']);
+        $material_qty = DB::table('material')->where('material', $updatecompany->modal_material)
+            ->where('category', $updatecompany->modal_category)->first(['qty', 'rejected']);
 
         $used_value = 0;
         $rejected_value = 0;
@@ -158,7 +187,7 @@ class SavePartydataController extends Controller
         if ($material_detail_used->used > $updatecompany->modal_used) {
             $less = $material_detail_used->used - $updatecompany->modal_used;
             $used_value = $material_detail_used->used - $less;
-             $material_qty_value = $material_qty->qty + $less;
+            $material_qty_value = $material_qty->qty + $less;
         } else {
             $more = $updatecompany->modal_used - $material_detail_used->used;
             $used_value = $more + $material_detail_used->used;
@@ -176,21 +205,21 @@ class SavePartydataController extends Controller
         }
 
         $data = DB::table('material_detail')->where('id', $updatecompany->modal_id)
-        ->update([
-            'date' => $updatecompany->modal_date,
-            'category' => $updatecompany->modal_category,
-            'itemname' => $updatecompany->modal_itemname,
-            'material' => $updatecompany->modal_material,
-            'ob' => $material_qty_value,
-            'used' => $used_value,
-            'rejected' => $rejected_value
-            
-        ]);
-        // return $material_qty_value.$material_rejected_value;
-            $material_update = DB::table('material')->where('material', $updatecompany->modal_material)
-            ->where('category',$updatecompany->modal_category)
             ->update([
-                
+                'date' => $updatecompany->modal_date,
+                'category' => $updatecompany->modal_category,
+                'itemname' => $updatecompany->modal_itemname,
+                'material' => $updatecompany->modal_material,
+                'ob' => $material_qty_value,
+                'used' => $used_value,
+                'rejected' => $rejected_value
+
+            ]);
+        // return $material_qty_value.$material_rejected_value;
+        $material_update = DB::table('material')->where('material', $updatecompany->modal_material)
+            ->where('category', $updatecompany->modal_category)
+            ->update([
+
                 'qty' => $material_qty_value,
                 'rejected' => $material_rejected_value
 
