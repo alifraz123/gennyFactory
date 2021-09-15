@@ -9,7 +9,7 @@ class report extends Controller
 {
     public function MTN_CTN_Dispatch_method(Request $request)
     {
-      return  $dispatch = DB::table('dispatch')->where('supplier', $request->supplier_name)->whereBetween('Date',[$request->startDate, $request->endDate])->get(['supplier', 'date', 'invoice']);
+        $dispatch = DB::table('dispatch')->where('supplier', $request->supplier_name)->whereBetween('Date',[$request->startDate, $request->endDate])->get(['supplier', 'date', 'invoice']);
        for($e=0; $e < count($dispatch); $e++){
         $cno = DB::table('dispatch_detail')->where('invoice', $dispatch[$e]->invoice)->distinct()->get(['cno']);
         $dispatch_detail_array = [];
@@ -32,6 +32,20 @@ class report extends Controller
        
         
         return view('admin/modules/reports/MTN_CTN_Detail', ['dispatch' => $dispatch]);
+    }
+
+    public function getPurchaseReport_method(Request $request){
+        // pdb means purchasebook data
+        $pbd = DB::table('purchase_book')->where('vender',$request->vender_name)
+        ->whereBetween('date',[$request->startDate,$request->endDate])
+        ->get(['builtyNo','via_transport','dispatch_date','recieve_date','invoice']);
+        for($a=0;$a < count($pbd); $a++){
+            
+        }
+
+
+
+        // return view('admin/modules/reports/PurchaseReport');
     }
 
     public function MTN_Dispatch_method(Request $request){

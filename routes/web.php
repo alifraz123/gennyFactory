@@ -140,8 +140,8 @@ Route::post('edit_company', [App\Http\Controllers\SavecitydataController::class,
 
 
 // Stock code
-Route::post('save_stockdata', [App\Http\Controllers\Stock::class, 'save_stockdata_method']);
-Route::post('save_stockdata_detail', [App\Http\Controllers\Stock::class, 'save_stockdata_detail_method']);
+Route::post('insertStock', [App\Http\Controllers\Stock::class, 'save_stockdata_method']);
+Route::post('insertStock_detail', [App\Http\Controllers\Stock::class, 'save_stockdata_detail_method']);
 Route::get('show_Stockdata', [App\Http\Controllers\Stock::class, 'show_Stockdata_method']);
 
 Route::post('getVarientOfSelectedItem', [App\Http\Controllers\Stock::class, 'getVarientOfSelectedItem_method']);
@@ -236,7 +236,7 @@ Route::get('Report', function () {
     if (Auth::guest()) {
         return redirect('login');
     } else {
-        $sup_ven = DB::table('sup_and_ven')->get();
+        $sup_ven = DB::table('sup_and_ven')->where('type','Supplier')->get();
         $venders = DB::table('sup_and_ven')->where('type','Vender')->get();
         return view('admin/modules/reports/Report', ['sup_ven' => $sup_ven,'venders'=>$venders]);
     }
@@ -276,6 +276,8 @@ Route::get('MTN_CTN_Dispatch', [App\Http\Controllers\report::class, 'MTN_CTN_Dis
 Route::post('getOrderDetailOfSelectedSupplier', [App\Http\Controllers\report::class, 'getOrderDetailOfSelectedSupplier_method']);
 
 Route::get('MTN_Dispatch', [App\Http\Controllers\report::class, 'MTN_Dispatch_method']);
+
+Route::get('getPurchaseReport', [App\Http\Controllers\report::class, 'getPurchaseReport_method']);
 
 Auth::routes();
 

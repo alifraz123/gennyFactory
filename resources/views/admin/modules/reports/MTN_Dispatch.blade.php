@@ -4,15 +4,14 @@
 <input type="hidden" id="hidden_credit">
 <div class="container">
     <section style="margin-top: 40px;" class="content">
-    @for($a=0; $a < count($dispatch); $a++)
-<div style="display: flex;justify-content:space-between;margin-top:50px">
-             
-        <div>
+        @for($a=0; $a < count($dispatch); $a++) <div style="display: flex;justify-content:space-between;margin-top:50px">
+
+            <div>
                 BuiltyNo : {{$dispatch[$a]->builtyNo}}
-        </div>
-        <div>
-            Chalan No : {{$dispatch[$a]->invoice}}
-        </div>
+            </div>
+            <div>
+                Chalan No : {{$dispatch[$a]->invoice}}
+            </div>
 
 </div>
 
