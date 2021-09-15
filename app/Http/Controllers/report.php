@@ -36,13 +36,19 @@ class report extends Controller
 
     public function getPurchaseReport_method(Request $request){
         // pdb means purchasebook data
-        $pbd = DB::table('purchase_book')->where('vender',$request->vender_name)
+       return $pbd = DB::table('purchase_book')->where('vender',$request->vender_name)
         ->whereBetween('date',[$request->startDate,$request->endDate])
         ->get(['builtyNo','via_transport','dispatch_date','recieve_date','invoice']);
         for($a=0;$a < count($pbd); $a++){
-            
-        }
+            $pbd_array = [];
+            $pbd_detail = DB::table('purchase_book_detail')->where('invoice',$pbd[$a]->invoice)->get();
+            for($b=0;$b < count($pbd_detail); $b++){
 
+                $pbd_array[$a] = array('itemname'=>$pbd_detail[$b]->itemname,'varient'=>$pbd_detail[$b]->varient);
+            }
+        }
+        $pbd[$a]->item_detail = $pbd_array;
+        return $pbd;
 
 
         // return view('admin/modules/reports/PurchaseReport');
