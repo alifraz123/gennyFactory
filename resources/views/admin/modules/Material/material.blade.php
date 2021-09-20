@@ -8,11 +8,10 @@
 
         </div>
         <div class="container-fluid">
-            <div class="row">
-                <h4>Material</h4>
-            </div>
-            <div class=" card card-body">
                 <div  class="container-fluid">
+                    <div class="row">
+                        <h4>Material</h4>
+                    </div>
 
                     <div class="row">
                         <!-- left column -->
@@ -102,14 +101,14 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            
 
 
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog mw-100 w-50" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Edit Company</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Edit Material</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -146,10 +145,13 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="col-md-2">
+
+                                            <button style=" margin-top: 32px;" type="submit" class="btn btn-primary">Update</button>
+                                        </div>
 
                                     </div>
 
-                                    <button style="float:right; margin-right:80px; margin-top: -55px;" type="submit" class="btn btn-primary">Update</button>
                                 </div>
                                 <div class="card-footer">
                                 </div>

@@ -141,11 +141,15 @@
                                                 </div>
                                             </div>
 
+                                            <div class="col-md-2">
+
+                                                <button style=" margin-top: 32px;" type="submit" class="btn btn-primary">Update</button>
+                                            </div>
+
                                         </div>
 
 
                                     </div>
-                                    <button style="float:right; margin-right:32px; margin-top: -75px;" type="submit" class="btn btn-primary">Update</button>
                             </div>
 
 

@@ -77,15 +77,11 @@
                                             </select>
                                         </div>
                                         <div style="width: 10%;margin-right:3px">
-                                            <label>Finish</label>
+                                            <label>Fresh</label>
                                             <input name="finish" id="finish" style="width: 100%;" type="number" required>
 
                                         </div>
-                                        <div style="width: 10%;margin-right:3px">
-                                            <label>S. Finish</label>
-                                            <input name="sfinish" id="sfinish" style="width: 100%;" type="number" required>
-
-                                        </div>
+                                       
                                         <div style="width: 10%;margin-right:3px">
                                             <label>Damage</label>
                                             <input name="damage" id="damage" style="width: 100%;" type="number" required>
@@ -107,7 +103,7 @@
                                     var itemname = document.getElementById('itemname').value;
                                     var varient = document.getElementById('varient').value;
                                     var finish = document.getElementById('finish').value;
-                                    var sfinish = document.getElementById('sfinish').value;
+                                   
                                     var damage = document.getElementById('damage').value;
 
 
@@ -117,7 +113,7 @@
                                         <input style="width:30%" readonly type='text' name='itemname[]' value='${itemname}'>
                                         <input style="width:10%"readonly type='text' name='varient[]' value='${varient}'>
                                         <input style="width:10%" type='number' name='finish[]' value='${finish}'>
-                                        <input style="width:10%" type='number' name='sfinish[]' value='${sfinish}'>
+                                        
                                         <input style="width:10%" type='number' name='damage[]' value='${damage}'>
                                        
                                         <button style="margin-left:-1.5px;width: 5%;height: 26px;margin-top: 8px;background:red;color:white;border:none" class='deleteRow'>&times</button> 
@@ -129,7 +125,7 @@
                                         $("#itemname").val('').trigger('change');
                                         document.getElementById('varient').value = '';
                                         document.getElementById('finish').value = '';
-                                        document.getElementById('sfinish').value = '';
+                                       
                                         document.getElementById('damage').value = '';
 
                                         document.getElementById('varient').focus();
@@ -248,7 +244,7 @@
         var itemname = document.getElementsByName('itemname[]');
         var varient = document.getElementsByName('varient[]');
         var finish = document.getElementsByName('finish[]');
-        var sfinish = document.getElementsByName('sfinish[]');
+        
         var damage = document.getElementsByName('damage[]');
 
 
@@ -256,7 +252,7 @@
         for (var i = 0; i < itemname.length; i++) {
             var itemname1 = itemname[i].value;
             var finish1 = finish[i].value;
-            var sfinish1 = sfinish[i].value;
+            
             var damage1 = damage[i].value;
 
             var varient1 = varient[i].value;
@@ -265,7 +261,7 @@
             obje = {
                 itemname: "",
                 finish: "",
-                sfinish: "",
+               
                 damage: "",
 
                 varient: "",
@@ -273,7 +269,7 @@
             };
             obje.itemname = itemname1;
             obje.finish = finish1;
-            obje.sfinish = sfinish1;
+           
             obje.damage = damage1;
 
             obje.varient = varient1;
@@ -313,7 +309,7 @@
                         var output = `
                                 <div class="alert alert-success">
             <button class="close" style="font-size: 30px;" data-dismiss="alert">&times</button>
-            Dispatched Successfuly
+            Added Return Successfuly
         </div>    
                                 `;
                         document.getElementById('show_insert_status').innerHTML = output;
@@ -322,7 +318,7 @@
                         var output = `
                         <div class="alert alert-danger">
             <button class="close" style="font-size: 30px;" data-dismiss="alert">&times</button>
-            Not Dispatched
+            Not Added Return
         </div>   
                                 `;
                         document.getElementById('show_insert_status').innerHTML = output;
@@ -336,7 +332,7 @@
                     var output = `
                                 <div class="alert alert-danger">
             <button class="close" style="font-size: 30px;" data-dismiss="alert">&times</button>
-            Not Inserted
+            Not Added Return
         </div>
                                 `;
                     document.getElementById('show_insert_status').innerHTML = output;
@@ -454,13 +450,7 @@
 
         }
     });
-    var varient = document.getElementById("sfinish");
-    varient.addEventListener("keydown", function(e) {
-        if (e.key === "Enter") {
-            document.getElementById('addRow').click();
-
-        }
-    });
+    
     var varient = document.getElementById("damage");
     varient.addEventListener("keydown", function(e) {
         if (e.key === "Enter") {

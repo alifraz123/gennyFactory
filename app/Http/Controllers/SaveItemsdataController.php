@@ -49,6 +49,26 @@ class SaveItemsdataController extends Controller
         }
     }
 
+
+    public function insertItemNames_method(Request $request)
+    {
+
+        $abc = [];
+        foreach ($request->obj as $key => $value) {
+            $abc = [
+                
+                'itemname' => $request->obj[$key]['ItemName'],
+                'company' => $request->obj[$key]['Company'],
+                
+            ];
+            $material_items = DB::table('items')->insert($abc);
+
+        }
+        if ($material_items) {
+            echo "inserted";
+        }
+    }
+
     public function insertMaterialNames_method(Request $request){
         $abc = [];
         foreach ($request->obj as $key => $value) {

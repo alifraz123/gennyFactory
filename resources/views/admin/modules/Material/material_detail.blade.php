@@ -15,7 +15,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h3 class="card-title">Add Material Names</h3>
+                                    <h3 class="card-title">Add Material Detail</h3>
                                 </div>
 
                             </div>
@@ -104,8 +104,10 @@
                                 document.getElementById('whereProductsShow').innerHTML += tr;
                                 document.getElementById('material_item_name').value = '';
                                 document.getElementById('material_name').value = '';
-                                $("#category").val('').trigger('change');
-                                document.getElementById('category').focus();
+                                // $("#category").val('').trigger('change');
+                                document.getElementById('used').value = '';
+                                document.getElementById('rejected').value = '';
+                                document.getElementById('material_name').focus();
                             }
 
                         };
@@ -188,18 +190,14 @@
                                             </div>
                                         </div>
 
-                                    </div>
-                                    <div class="row">
                                         <div class="form-group">
                                             <div class="col-md-2">
-
-                                                <button type="submit" class="btn btn-primary">Update</button>
+    
+                                                <button type="submit"  style="margin-top: 32px;" class="btn btn-primary">Update</button>
                                             </div>
                                         </div>
-
-
                                     </div>
-
+                                    
                                 </div>
                                 <div class="card-footer">
                                 </div>

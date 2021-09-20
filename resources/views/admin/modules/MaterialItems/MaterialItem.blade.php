@@ -162,9 +162,9 @@
             }
         });
 
-        $("#material_item_name").val('').trigger('change');
+        $("#ItemName").val('');
 
-        $("#category").val('').trigger('change');
+        $("#Company").val('').trigger('change');
         
 
     }

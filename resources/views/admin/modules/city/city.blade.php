@@ -47,11 +47,14 @@
 
                             </div>
                         </div>
+                        <div class="col-md-2">
+
+                            <button style=" margin-top: 32px;" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
 
 
                     </div>
 
-                    <button style="float:right; margin-right:80px; margin-top: -54px;" type="submit" class="btn btn-primary">Submit</button>
 
                 </form>
             </div>
@@ -87,10 +90,13 @@
 
                                             </div>
                                         </div>
+                                        <div class="col-md-2">
+
+                                            <button style="margin-top: 32px;" type="submit" class="btn btn-primary">Update</button>
+                                        </div>
 
                                     </div>
 
-                                    <button style="float:right; margin-right:20px; margin-top: -55px;" type="submit" class="btn btn-primary">Update</button>
                                 </div>
                                 <div class="card-footer">
                                 </div>

@@ -36,10 +36,11 @@
                             </div>
                         </div>
 
+                        <div class="col-md-2">
+                            <button style="margin-top:32px;" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
                     </div>
-
-                    <button style="float:right; margin-right:32rem; margin-top: -54px;" type="submit" class="btn btn-primary">Submit</button>
-
+                   
                 </form>
             </div>
 
@@ -59,15 +60,18 @@
                                 <div class="card-body">
                                     <div class="row">
 
-                                        <div class="col-sm-5">
+                                        <div class="col-md-8">
                                             <div class="form-group">
                                                 <label>Company</label>
-                                                <input type="text" style="width: 140%;" id="company" name="Company" value="" required class="form-control" placeholder="Enter Company">
+                                                <input type="text"  id="company" name="Company" value="" required class="form-control" placeholder="Enter Company">
                                             </div>
+                                        </div>
+                                        <div class="col-md-2">
+
+                                            <button style="margin-top:32px" type="submit" class="btn btn-primary">Update</button>
                                         </div>
                                     </div>
 
-                                    <button style="float:right; margin-right:11rem; margin-top: -55px;" type="submit" class="btn btn-primary">Update</button>
                                 </div>
                                 <div class="card-footer">
                                 </div>

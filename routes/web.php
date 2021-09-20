@@ -40,7 +40,9 @@ Route::post('insertMaterialUsedDetail', [App\Http\Controllers\SavePartydataContr
  'getMaterialNamesOfSelectedItem_method']);
 
  Route::post('insertMaterialNames', [App\Http\Controllers\SaveItemsdataController::class, 'insertMaterialNames_method']);
-
+ 
+ Route::post('insertItemNames', [App\Http\Controllers\SaveItemsdataController::class, 'insertItemNames_method']);
+ 
 Route::get('show_material', [App\Http\Controllers\SavePartydataController::class, 'show_material_method']);
 Route::get('show_material_detail', [App\Http\Controllers\SavePartydataController::class, 'show_material_detail_method']);
 Route::get('delete_materialdata/{id}', [App\Http\Controllers\SavePartydataController::class, 'delete_materialdata_method']);

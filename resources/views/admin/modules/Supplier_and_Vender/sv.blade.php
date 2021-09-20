@@ -101,8 +101,11 @@
                                             </textarea>
                                 </div>
                             </div>
+                            <div class="col-md-2">
+
+                                <button style="margin-top: 32px;" type="submit" class="btn btn-primary">Submit</button>
+                            </div>
                         </div>
-                        <button style="float:right; margin-right:31rem; margin-top: -55px;" type="submit" class="btn btn-primary">Submit</button>
                     </div>
                     <div class="card-footer">
                     </div>
@@ -193,8 +196,11 @@
                                                 </textarea>
                                             </div>
                                         </div>
+                                        <div class="col-md-2">
+                                            <button style=" margin-top: 32px;" type="submit" class="btn btn-primary">Submit</button>
+
+                                        </div>
                                     </div>
-                                    <button style="float:right; margin-right:20rem; margin-top: -55px;" type="submit" class="btn btn-primary">Submit</button>
 
 
                                 </form>

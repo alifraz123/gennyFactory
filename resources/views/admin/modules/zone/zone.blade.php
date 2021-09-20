@@ -35,10 +35,13 @@
                                 <input type="text" name="zone" required class="form-control" placeholder="Enter Zone Name">
                             </div>
                         </div>
+                        <div class="col-md-2">
+                            <button style="margin-top: 32px;" type="submit" class="btn btn-primary">Submit</button>
+
+                        </div>
 
                     </div>
 
-                    <button style="float:right; margin-right:32rem; margin-top: -54px;" type="submit" class="btn btn-primary">Submit</button>
 
                 </form>
             </div>
@@ -58,16 +61,19 @@
                             <input type="hidden" value="" id="zone_hidden_id" name="zone_hidden_id">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-sm-5">
+                                    <div class="col-md-5">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label>Zone Name</label>
-                                            <input type="text" style="width:140%" id="zone" name="zone" value="" required class="form-control" placeholder="Enter Item Name">
+                                            <input type="text"  id="zone" name="zone" value="" required class="form-control" placeholder="Enter Item Name">
                                         </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button style="margin-top: 32px;" type="submit" class="btn btn-primary">Update</button>
+
                                     </div>
                                 </div>
                                
-                                <button style="float:right; margin-right:11rem; margin-top: -55px;" type="submit" class="btn btn-primary">Update</button>
                             </div>
                             <div class="card-footer">
                             </div>

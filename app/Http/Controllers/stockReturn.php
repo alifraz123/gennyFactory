@@ -36,7 +36,7 @@ class stockReturn extends Controller
 
                 'varient' => $request->obj[$key]['varient'],
                 'finish' => $request->obj[$key]['finish'],
-                'sfinish' => $request->obj[$key]['sfinish'],
+               
                 'damage' => $request->obj[$key]['damage']
             ];
             $dispatch_detail = DB::table('stockreturn_detail')->insert($abc);
@@ -44,20 +44,20 @@ class stockReturn extends Controller
             $itemname = $request->obj[$key]['itemname'];
             $varient = $request->obj[$key]['varient'];
             $finish = $request->obj[$key]['finish'];
-            $sfinish = $request->obj[$key]['sfinish'];
+            
             $damage = $request->obj[$key]['damage'];
 
             $finishProduct = DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->first('finish');
-            $sfinishProduct = DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->first('semiFinish');
+           
             $damageProduct = DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->first('damage');
 
             $finish_Product = $finishProduct->finish + $finish;
-            $sfinish_Product = $sfinishProduct->semiFinish + $sfinish;
+            
             $damage_finishProduct = $damageProduct->damage + $damage;
 
             DB::table('stock')->where('itemname', $itemname)->where('varient', $varient)->update([
                 'finish' => $finish_Product,
-                'semiFinish' => $sfinish_Product,
+        
                 'damage' => $damage_finishProduct
             ]);
         }
