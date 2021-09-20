@@ -52,7 +52,7 @@
         <a class="nav-link" style="color: white;" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a style="font-weight: bold;font-family: cursive;font-size: 20px;color: darkkhaki;color:white" href="/aew/public/admin" class="nav-link">
+        <a style="font-weight: bold;font-family: cursive;font-size: 20px;color: darkkhaki;color:white" href="/gennyFactory/public/admin" class="nav-link">
         GENNY FACTORY</a>
       </li>
      

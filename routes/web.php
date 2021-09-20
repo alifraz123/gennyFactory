@@ -279,6 +279,19 @@ Route::get('MTN_Dispatch', [App\Http\Controllers\report::class, 'MTN_Dispatch_me
 
 Route::get('getPurchaseReport', [App\Http\Controllers\report::class, 'getPurchaseReport_method']);
 
+Route::get('getRawMaterialReport', [App\Http\Controllers\report::class, 'getRawMaterialReport_method']);
+
+Route::get('getPackingMaterialReport', [App\Http\Controllers\report::class, 'getPackingMaterialReport_method']);
+
+Route::get('getStickerReport', [App\Http\Controllers\report::class, 'getStickerReport_method']);
+
+Route::get('getDailyFinishedStockReport', [App\Http\Controllers\report::class, 'getDailyFinishedStockReport_method']);
+
+Route::get('getDailySemiFinishedStockReport', [App\Http\Controllers\report::class, 'getDailySemiFinishedStockReport_method']);
+
+Route::get('getAnnualPartyWiseReport', [App\Http\Controllers\report::class, 'getAnnualPartyWiseReport_method']);
+
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

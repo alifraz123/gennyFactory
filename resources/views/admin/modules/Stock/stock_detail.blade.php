@@ -223,6 +223,7 @@
                             <th>Date</th>
                             <th>Company</th>
                             <th>Item Name</th>
+                            <th>Varient</th>
                             <th>Finish</th>
                             <th>Semi Finish</th>
 
@@ -236,6 +237,7 @@
                             <td> {{$stock->date}}</td>
                             <td> {{$stock->company}}</td}>
                             <td>{{$stock->itemname}}</td>
+                            <td>{{$stock->varient}}</td>
                             <td>{{$stock->finish}}</td>
                             <td>{{$stock->semiFinish}}</td>
 

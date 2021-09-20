@@ -20,7 +20,8 @@
 </div>
 
 <div style="width:100%; border:1px solid black;display:flex">
-    @for($f=0; $f < 10; $f++) <div style="width: 10%;border:1px solid black">
+    @for($f=0; $f < 10; $f++) 
+    <div style="width: 10%;border:1px solid black">
         <div style="display: inline-block;width: 41px;text-align: center;font-weight:bold;">CNo</div>
         <div style="display: inline-block;width: 45px;text-align: center;font-weight:bold;">Qty</div>
 </div>
