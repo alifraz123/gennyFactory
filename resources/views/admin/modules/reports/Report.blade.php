@@ -70,7 +70,7 @@
 
                             </div>
 
-                            <div class="col-md-3">
+                            <div id="companySelection" class="col-md-3">
                                 <div class="form-group">
                                     <label>Company</label>
                                     <select name="company" id="company" class="form-control select2 select2bs4">
@@ -147,17 +147,17 @@
                                         <div id="dispatch_all_dispatch_detail_btn" style="margin-top:8px" class="col-md-2">
                                             <input onclick="getCompleteAllSupplierDispatchReport()" class="btn btn-primary" value="Complete Report" type="button">
                                         </div>
-                                       
+
                                     </div>
 
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-header" id="headingOne">
+                    <div  class="card">
+                        <div  class="card-header" id="headingOne">
                             <h2 class="mb-0">
-                                <button class="btn btn-link " type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                <button  class="btn btn-link " type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                                     PURCHASE VENDER WISE REPORT
                                 </button>
                             </h2>
@@ -172,7 +172,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Vender Name :</label>
-                                                <select id="vender_name" required class="form-control select2 select2bs4">
+                                                <select onchange="hideCompanySelection()" id="vender_name" required class="form-control select2 select2bs4">
                                                     <option disabled selected value="">Choose value...</option>
                                                     @foreach($venders as $vender)
                                                     <option value="{{$vender->vender}}"> {{$vender->vender}}</option>
@@ -271,7 +271,7 @@
                                     <div class="row">
 
                                         <div style=" margin-top: 32px;" class="col-md-2">
-                                            <input onclick="getPurchaseReport()" class="btn btn-primary" value="RETURN REPORT" type="button">
+                                            <input onclick="getStockReturnReport()" class="btn btn-primary" value="RETURN REPORT" type="button">
                                         </div>
 
                                     </div>
@@ -297,7 +297,7 @@
                                     <div class="row">
 
                                         <div style=" margin-top: 32px;" class="col-md-2">
-                                            <input onclick="getPurchaseReport()" class="btn btn-primary" value="DAILY PRODUCTION REPORT" type="button">
+                                            <input onclick="getDailyProductionReport()" class="btn btn-primary" value="DAILY PRODUCTION REPORT" type="button">
                                         </div>
 
                                     </div>
@@ -337,36 +337,58 @@
 
     function getSupplierWiseDispatchReport() {
         var supplier_name = document.getElementById('supplier_name').value;
+        var company = document.getElementById('company').value;
         if (supplier_name == "") {
             document.getElementById('supplier_name').focus();
+        } else if (company == "") {
+            document.getElementById('company').focus();
         } else {
-            window.open("Dispatch?supplier_name=" + supplier_name +"&"+getStartAndEndingDates(), '_blank');
+
+            window.open("Dispatch?supplier_name=" + supplier_name + "&" + getStartAndEndingDates(), '_blank');
         }
     }
 
     function getSupplierWiseDispatchDetailedReport() {
-       
+
         var supplier_name = document.getElementById('supplier_name').value;
         if (supplier_name == "") {
             document.getElementById('supplier_name').focus();
         } else {
-         
-                window.open("DispatchDetail?supplier_name=" + supplier_name +"&"+ getStartAndEndingDates(), '_blank');
+
+            window.open("DispatchDetail?supplier_name=" + supplier_name + "&" + getStartAndEndingDates(), '_blank');
 
         }
     }
 
     function getCompleteAllSupplierDispatchReport() {
-        window.open("getAnnualPartyWiseReport?"+ getStartAndEndingDates(), '_blank');
-    }
-    
+        var company = document.getElementById('company').value;
+        if (company != "") {
 
+            window.open("getAnnualPartyWiseReport?" + getStartAndEndingDates(), '_blank');
+        } else {
+            document.getElementById('company').focus();
+        }
+    }
+
+    function hideCompanySelection(){
+
+        var vender_name_value = document.getElementById('vender_name').value;
+        if(vender_name_value!=""){
+         
+            document.getElementById('companySelection').style.display="none";
+        }
+    }
     function getPurchaseReport() {
+        var company = document.getElementById('company').value;
         var vender_name = document.getElementById('vender_name').value;
         var startDate = document.getElementById('startDate').value;
         var endDate = document.getElementById('endDate').value;
-
-        window.open("getPurchaseReport?vender_name=" + vender_name + "&startDate=" + startDate + "&endDate=" + endDate, '_blank');
+        if (vender_name != "") {
+            document.getElementById('companySelection').style.display="block";
+            window.open("getPurchaseReport?vender_name=" + vender_name + "&" + getStartAndEndingDates(), '_blank');
+        } else {
+            document.getElementById('vender_name').focus();
+        }
     }
 
     function getRawMaterialReport() {
@@ -374,7 +396,7 @@
         var startDate = document.getElementById('startDate').value;
         var endDate = document.getElementById('endDate').value;
 
-        window.open("getRawMaterialReport?startDate=" + startDate, '_blank');
+        window.open("getRawMaterialReport?" + startDate, '_blank');
     }
 
     function getPackingMaterialReport() {
@@ -448,11 +470,17 @@
             endDate = document.getElementById('endDate').value;
         }
 
-        if (document.getElementById('company').value == '') {
-            alert("Please select company name also");
-            document.getElementById('company').focus();
-        } else {
-            return "startDate=" + startDate + "&endDate=" + endDate + "&company=" + company;
+        if (document.getElementById('vender_name').value == "") {
+            if (document.getElementById('company').value == '') {
+                alert("Please select company name also");
+                document.getElementById('company').focus();
+            } else {
+                return "startDate=" + startDate + "&endDate=" + endDate + "&company=" + company;
+            }
+
+        } else if (document.getElementById('vender_name').value != ""){
+            $("#vender_name").val('').trigger('change');
+            return "startDate=" + startDate + "&endDate=" + endDate;
         }
     }
 
@@ -460,6 +488,7 @@
         document.getElementById('startDate').focus();
     }
 
+    // this is code for dispatch report selection start
     dispatch_supplier_wise('none');
     dispatch_all_supplier('none')
 
@@ -471,7 +500,7 @@
 
     function dispatch_all_supplier(all_supplier_display_value) {
         document.getElementById('dispatch_all_dispatch_detail_btn').style.display = all_supplier_display_value;
-        document.getElementById('dispatch_all_dispatch_btn').style.display = all_supplier_display_value;
+
     }
 
     function dispatch_supplier_wise_radiobtn() {
@@ -480,9 +509,10 @@
     }
 
     function dispatch_all_supplier_wise_radiobtn() {
-        dispatch_all_supplier('block');
         dispatch_supplier_wise('none')
+        dispatch_all_supplier('block');
     }
+    // this is code for dispatch report selection end
 </script>
 
 </div>
