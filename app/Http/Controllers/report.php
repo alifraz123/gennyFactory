@@ -7,9 +7,10 @@ use Illuminate\Http\Request;
 
 class report extends Controller
 {
-    public function MTN_CTN_Dispatch_method(Request $request)
+    public function Dispatch_method(Request $request)
     {
-        $dispatch = DB::table('dispatch')->where('supplier', $request->supplier_name)->whereBetween('Date', [$request->startDate, $request->endDate])->get(['supplier', 'date', 'invoice']);
+        $dispatch = DB::table('dispatch')->where('supplier', $request->supplier_name)->where('company',$request->company)
+        ->whereBetween('Date', [$request->startDate, $request->endDate])->get(['supplier', 'date', 'invoice']);
         for ($e = 0; $e < count($dispatch); $e++) {
             $cno = DB::table('dispatch_detail')->where('invoice', $dispatch[$e]->invoice)->distinct()->get(['cno']);
             $dispatch_detail_array = [];
@@ -32,6 +33,29 @@ class report extends Controller
 
 
         return view('admin/modules/reports/MTN_CTN_Detail', ['dispatch' => $dispatch]);
+    }
+
+    public function DispatchDetail_method(Request $request)
+    {
+        $dispatch = DB::table('dispatch')->where('supplier', $request->supplier_name)->where('company',$request->company)
+        ->whereBetween('Date', [$request->startDate, $request->endDate])->get(['supplier', 'date', 'invoice', 'builtyNo', 'city']);
+        for ($e = 0; $e < count($dispatch); $e++) {
+            $ItemNames = DB::table('dispatch_detail')->where('invoice', $dispatch[$e]->invoice)->distinct()->get(['ItemName', 'cno']);
+            $dispatch_detail_array = [];
+            for ($a = 0; $a < count($ItemNames); $a++) {
+                $bb = [];
+                $total = 0;
+                $for_total =  DB::table('dispatch_detail')->where('invoice', $dispatch[$e]->invoice)->where('ItemName', $ItemNames[$a]->ItemName)->distinct()->get(['qty']);
+                for ($d = 0; $d < count($for_total); $d++) {
+                    $total = $total + $for_total[$d]->qty;
+                }
+                $dispatch_detail_array[$a] = array('items' => $ItemNames[$a]->ItemName, 'qty_var' => DB::table('dispatch_detail')
+                    ->where('cno', $ItemNames[$a]->cno)->where('ItemName', $ItemNames[$a]->ItemName)->distinct()->get(['varient', 'qty']), 'total' => $total);
+            }
+            $dispatch[$e]->dispatch_detail = $dispatch_detail_array;
+        }
+        // return $dispatch;
+        return view('admin/modules/reports/MTN_Dispatch', ['dispatch' => $dispatch]);
     }
 
     public function getPurchaseReport_method(Request $request)
@@ -234,74 +258,55 @@ class report extends Controller
 
     public function getAnnualPartyWiseReport_method(Request $request)
     {
-        $annualSaleReport =  DB::table('dispatch')->whereBetween('date', [$request->startDate, $request->endDate])
-            ->where('supplier', $request->supplier_name)->get(['invoice']);
-            
-            $invoiceArrayForWhereInQuery = [];
-            for($g=0; $g < count($annualSaleReport); $g++){
-                $invoiceArrayForWhereInQuery[$g] = $annualSaleReport[$g]->invoice;
-            }
-// return $invoiceArrayForWhereInQuery;
-            //  $last =  count($annualSaleReport)-1;
-             $itemnames =  DB::table('dispatch_detail')
+        $annualSaleReport =  DB::table('dispatch')->where('company',$request->company)
+        ->whereBetween('date', [$request->startDate, $request->endDate])
+            ->get(['invoice']);
+
+        $invoiceArrayForWhereInQuery = [];
+        for ($g = 0; $g < count($annualSaleReport); $g++) {
+            $invoiceArrayForWhereInQuery[$g] = $annualSaleReport[$g]->invoice;
+        }
+        // return $invoiceArrayForWhereInQuery;
+        //  $last =  count($annualSaleReport)-1;
+        $itemnames =  DB::table('dispatch_detail')
             ->whereIn('invoice', $invoiceArrayForWhereInQuery)
             ->distinct()->get('ItemName');
-            
-            for($d=0; $d < count($itemnames); $d++){
-                $invoices_array = [];
-                $total_value = 0;
-               $itemnames_detail = DB::table('dispatch_detail')->where('ItemName',$itemnames[$d]->ItemName)->get();
-            //    return $itemnames_detail." "; 
-               for($e=0; $e < count($itemnames_detail); $e++){
 
-                    if(count($invoices_array)==0){
-                        $invoices_array[$e] = array('varient'=>$itemnames_detail[$e]->varient,
-                        'qty'=>$itemnames_detail[$e]->qty) ;
-                        $total_value = $total_value + $itemnames_detail[$e]->qty;
-                        
-                    }
-                    else{
-                        for($a=0; $a < count($invoices_array); $a++){
-                            if($itemnames_detail[$e]->varient == $invoices_array[$a]['varient']){
-                                $invoices_array[$a]['qty'] = $invoices_array[$a]['qty']+$itemnames_detail[$e]->qty;
-                            }
-                            else{
-                                $invoices_array[count($invoices_array)] = array('varient'=>$itemnames_detail[$e]->varient,
-                                'qty'=>$itemnames_detail[$e]->qty) ;
-                                $total_value = $total_value + $itemnames_detail[$e]->qty;
-                                break;
-                                
-                            }     
+        for ($d = 0; $d < count($itemnames); $d++) {
+            $invoices_array = [];
+            $total_value = 0;
+            $itemnames_detail = DB::table('dispatch_detail')->where('ItemName', $itemnames[$d]->ItemName)->get();
+            //    return $itemnames_detail." "; 
+            for ($e = 0; $e < count($itemnames_detail); $e++) {
+
+                if (count($invoices_array) == 0) {
+                    $invoices_array[$e] = array(
+                        'varient' => $itemnames_detail[$e]->varient,
+                        'qty' => $itemnames_detail[$e]->qty
+                    );
+                    $total_value = $total_value + $itemnames_detail[$e]->qty;
+                } else {
+                    for ($a = 0; $a < count($invoices_array); $a++) {
+                        if ($itemnames_detail[$e]->varient == $invoices_array[$a]['varient']) {
+                            $invoices_array[$a]['qty'] = $invoices_array[$a]['qty'] + $itemnames_detail[$e]->qty;
+                        } else {
+                            $invoices_array[count($invoices_array)] = array(
+                                'varient' => $itemnames_detail[$e]->varient,
+                                'qty' => $itemnames_detail[$e]->qty
+                            );
+                            $total_value = $total_value + $itemnames_detail[$e]->qty;
+                            break;
                         }
                     }
                 }
-                $itemnames[$d]->varients = $invoices_array;
-                $itemnames[$d]->total = $total_value;
             }
-            return $itemnames;
-
-        return view('admin/modules/reports/AnnualPartyWiseSaleReport', ['annualSaleReport' => $itemnames,'supplier'=>$request->supplier_name,'date'=>$request->startDate]);
-    }
-
-    public function MTN_Dispatch_method(Request $request)
-    {
-        $dispatch = DB::table('dispatch')->where('supplier', $request->supplier_name)->whereBetween('Date', [$request->startDate, $request->endDate])->get(['supplier', 'date', 'invoice', 'builtyNo', 'city']);
-        for ($e = 0; $e < count($dispatch); $e++) {
-            $ItemNames = DB::table('dispatch_detail')->where('invoice', $dispatch[$e]->invoice)->distinct()->get(['ItemName', 'cno']);
-            $dispatch_detail_array = [];
-            for ($a = 0; $a < count($ItemNames); $a++) {
-                $bb = [];
-                $total = 0;
-                $for_total =  DB::table('dispatch_detail')->where('invoice', $dispatch[$e]->invoice)->where('ItemName', $ItemNames[$a]->ItemName)->distinct()->get(['qty']);
-                for ($d = 0; $d < count($for_total); $d++) {
-                    $total = $total + $for_total[$d]->qty;
-                }
-                $dispatch_detail_array[$a] = array('items' => $ItemNames[$a]->ItemName, 'qty_var' => DB::table('dispatch_detail')
-                    ->where('cno', $ItemNames[$a]->cno)->where('ItemName', $ItemNames[$a]->ItemName)->distinct()->get(['varient', 'qty']), 'total' => $total);
-            }
-            $dispatch[$e]->dispatch_detail = $dispatch_detail_array;
+            $itemnames[$d]->varients = $invoices_array;
+            $itemnames[$d]->total = $total_value;
         }
-        // return $dispatch;
-        return view('admin/modules/reports/MTN_Dispatch', ['dispatch' => $dispatch]);
+        // return $itemnames;
+
+        return view('admin/modules/reports/AnnualPartyWiseSaleReport', ['annualSaleReport' => $itemnames, 'supplier' => $request->supplier_name, 'date' => $request->startDate]);
     }
+
+    
 }

@@ -209,7 +209,7 @@
 </div>
 
 <script>
-    todatDate();
+    todayDate();
 
     function getDateOfSelectedSupplier() {
         var supplier_value = document.getElementById('supplier').value;
@@ -351,7 +351,7 @@
 
             $("#whereProductsShow div").remove();
             $("#supplier").val('').trigger('change');
-            todatDate();
+            todayDate();
 
         }
 
@@ -421,7 +421,7 @@
 
     }
 
-    function todatDate() {
+    function todayDate() {
         var now = new Date();
         var day = ("0" + now.getDate()).slice(-2);
         var month = ("0" + (now.getMonth() + 1)).slice(-2);

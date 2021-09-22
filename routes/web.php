@@ -238,9 +238,10 @@ Route::get('Report', function () {
     if (Auth::guest()) {
         return redirect('login');
     } else {
-        $sup_ven = DB::table('sup_and_ven')->where('type','Supplier')->get();
-        $venders = DB::table('sup_and_ven')->where('type','Vender')->get();
-        return view('admin/modules/reports/Report', ['sup_ven' => $sup_ven,'venders'=>$venders]);
+        $sup_ven = DB::table('dispatch')->distinct()->get('supplier');
+        $venders = DB::table('purchase_book')->distinct()->get('vender');
+        $companies = DB::table('company')->get();
+        return view('admin/modules/reports/Report', ['sup_ven' => $sup_ven,'venders'=>$venders,'companies'=>$companies]);
     }
 });
 
@@ -273,11 +274,11 @@ Route::get('delete_return_invoice', [App\Http\Controllers\stockReturn::class, 'd
 Route::get('edit_Returninvoice/{id}', [App\Http\Controllers\stockReturn::class, 'edit_Returninvoice_method']);
 Route::post('update_stockReturn', [App\Http\Controllers\stockReturn::class, 'update_stockReturn']);
 
-Route::get('MTN_CTN_Dispatch', [App\Http\Controllers\report::class, 'MTN_CTN_Dispatch_method']);
+Route::get('Dispatch', [App\Http\Controllers\report::class, 'Dispatch_method']);
 
 Route::post('getOrderDetailOfSelectedSupplier', [App\Http\Controllers\report::class, 'getOrderDetailOfSelectedSupplier_method']);
 
-Route::get('MTN_Dispatch', [App\Http\Controllers\report::class, 'MTN_Dispatch_method']);
+Route::get('DispatchDetail', [App\Http\Controllers\report::class, 'DispatchDetail_method']);
 
 Route::get('getPurchaseReport', [App\Http\Controllers\report::class, 'getPurchaseReport_method']);
 

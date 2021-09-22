@@ -2,8 +2,8 @@
 @section('content')
 <style>
     html {
-  scroll-behavior: smooth;
-}
+        scroll-behavior: smooth;
+    }
 </style>
 <div class="content-wrapper">
     <div class="container">
@@ -33,6 +33,54 @@
                                     <input type="date" name="endDate" id="endDate" required class="form-control">
                                 </div>
                             </div>
+
+                            <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="exampleRadios" id="yearly" value="yearly">
+                                            <label class="form-check-label" for="yearly">
+                                                Yearly Report
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="exampleRadios" id="monthly" value="monthly">
+                                            <label class="form-check-label" for="monthly">
+                                                Monthly Report
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" onclick="focusOnCustomeDate()" name="exampleRadios" id="custome" value="custome">
+                                            <label class="form-check-label" for="custome">
+                                                Custome Date Report
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Company</label>
+                                    <select name="company" id="company" class="form-control select2 select2bs4">
+                                        <option disabled selected value="">Choose company...</option>
+                                        @foreach($companies as $company)
+                                        <option value="{{$company->companyName}}"> {{$company->companyName}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -54,24 +102,52 @@
 
                                     <div class="row">
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-check">
+                                                        <input onclick="dispatch_supplier_wise_radiobtn()" class="form-check-input" type="radio" name="supplierWiseOrAllSupplier" id="supplier_wise" value="supplier_wise">
+                                                        <label class="form-check-label" for="supplier_wise">
+                                                            Supplier Wise
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-check">
+                                                        <input onclick="dispatch_all_supplier_wise_radiobtn()" class="form-check-input" type="radio" name="supplierWiseOrAllSupplier" id="all_supplier" value="all_supplier">
+                                                        <label class="form-check-label" for="all_supplier">
+                                                            All Supplier
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="dispatch_supplier_name" class="col-md-4">
                                             <div class="form-group">
                                                 <label>Supplier Name :</label>
                                                 <select name="supplier_name" id="supplier_name" required class="form-control select2 select2bs4">
                                                     <option disabled selected value="">Choose value...</option>
                                                     @foreach($sup_ven as $supplier)
-                                                    <option value="{{$supplier->name}}"> {{$supplier->name}}</option>
+                                                    <option value="{{$supplier->supplier}}"> {{$supplier->supplier}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
-                                        <div style="margin-top:32px" class="col-md-2">
-                                            <input onclick="getPartyReport()" class="btn btn-primary" value="DISPATCH DETAIL" type="button">
+                                        <div id="dispatch_dispatch_detail_btn" style="margin-top:32px" class="col-md-2">
+                                            <input onclick="getSupplierWiseDispatchReport()" class="btn btn-primary" value="DISPATCH" type="button">
                                         </div>
-                                        <div style="margin-top:32px" class="col-md-2">
-                                            <input onclick="getPartyDetailedReport()" class="btn btn-primary" value="DISPATCH" type="button">
+                                        <div id="dispatch_dispatch_btn" style="margin-top:32px" class="col-md-2">
+                                            <input onclick="getSupplierWiseDispatchDetailedReport()" class="btn btn-primary" value="DISPATCH DETAIL" type="button">
                                         </div>
 
+                                        <div id="dispatch_all_dispatch_detail_btn" style="margin-top:8px" class="col-md-2">
+                                            <input onclick="getCompleteAllSupplierDispatchReport()" class="btn btn-primary" value="Complete Report" type="button">
+                                        </div>
+                                       
                                     </div>
 
                                 </div>
@@ -99,7 +175,7 @@
                                                 <select id="vender_name" required class="form-control select2 select2bs4">
                                                     <option disabled selected value="">Choose value...</option>
                                                     @foreach($venders as $vender)
-                                                    <option value="{{$vender->name}}"> {{$vender->name}}</option>
+                                                    <option value="{{$vender->vender}}"> {{$vender->vender}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -164,11 +240,11 @@
                                     <div style="display: flex;">
 
                                         <div style="margin-right:10px; margin-top: 14px;">
-                                            <input onclick="getDailyFinishedStockReport()" class="btn btn-primary" value="GENNY FINISHED STOCK" type="button">
+                                            <input onclick="getDailyFinishedStockReport()" class="btn btn-primary" value="FINISHED STOCK" type="button">
                                         </div>
 
                                         <div style="margin-right:10px; margin-top: 14px;">
-                                            <input onclick="getDailySemiFinishedStockReport()" class="btn btn-primary" value="GENNY SEMI FINISHED STOCK" type="button">
+                                            <input onclick="getDailySemiFinishedStockReport()" class="btn btn-primary" value="SEMI FINISHED STOCK" type="button">
                                         </div>
 
                                     </div>
@@ -204,83 +280,6 @@
                             </div>
                         </div>
                     </div>
-
-
-                    <div class="card">
-                        <div class="card-header" id="headingOne">
-                            <h2 class="mb-0">
-                                <button class="btn btn-link " type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="true" aria-controls="collapseTwo">
-                                    ANNUAL PARTYWISE SALE REPORT
-                                </button>
-                            </h2>
-                        </div>
-
-                        <div id="collapseSix" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
-                            <div class="card-body">
-                                <div id="cardStart" style="padding:20px" class="card card-outline card-info">
-
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="exampleRadios" id="yearly" value="yearly">
-                                                        <label class="form-check-label" for="yearly">
-                                                            Yearly Report
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="exampleRadios" id="monthly" value="monthly">
-                                                        <label class="form-check-label" for="monthly">
-                                                            Monthly Report
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" onclick="focusOnCustomeDate()" name="exampleRadios" id="custome" value="custome">
-                                                        <label class="form-check-label" for="custome">
-                                                            Custome Date Report
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-
-                                        </div>
-
-
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Supplier Name :</label>
-                                                <select name="supplier_name" id="supplier_name_for_annualReport"  class="form-control select2 select2bs4">
-                                                    <option disabled selected value="">Choose value...</option>
-                                                    @foreach($sup_ven as $supplier)
-                                                    <option value="{{$supplier->name}}"> {{$supplier->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div style=" margin-top: 32px;" class="col-md-2">
-                                            <input onclick="getAnnualPartyWiseReport()" class="btn btn-primary" value="ANNUAL PARTYWISE REPORT" type="button">
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
 
                     <div class="card">
                         <div class="card-header" id="headingOne">
@@ -336,19 +335,31 @@
     $('#startDate').val(today);
     $('#endDate').val(today);
 
-    function getPartyReport() {
+    function getSupplierWiseDispatchReport() {
         var supplier_name = document.getElementById('supplier_name').value;
-        var startDate = document.getElementById('startDate').value;
-        var endDate = document.getElementById('endDate').value;
-        window.open("MTN_CTN_Dispatch?supplier_name=" + supplier_name + "&startDate=" + startDate + "&endDate=" + endDate, '_blank');
+        if (supplier_name == "") {
+            document.getElementById('supplier_name').focus();
+        } else {
+            window.open("Dispatch?supplier_name=" + supplier_name +"&"+getStartAndEndingDates(), '_blank');
+        }
     }
 
-    function getPartyDetailedReport() {
+    function getSupplierWiseDispatchDetailedReport() {
+       
         var supplier_name = document.getElementById('supplier_name').value;
-        var startDate = document.getElementById('startDate').value;
-        var endDate = document.getElementById('endDate').value;
-        window.open("MTN_Dispatch?supplier_name=" + supplier_name + "&startDate=" + startDate + "&endDate=" + endDate, '_blank');
+        if (supplier_name == "") {
+            document.getElementById('supplier_name').focus();
+        } else {
+         
+                window.open("DispatchDetail?supplier_name=" + supplier_name +"&"+ getStartAndEndingDates(), '_blank');
+
+        }
     }
+
+    function getCompleteAllSupplierDispatchReport() {
+        window.open("getAnnualPartyWiseReport?"+ getStartAndEndingDates(), '_blank');
+    }
+    
 
     function getPurchaseReport() {
         var vender_name = document.getElementById('vender_name').value;
@@ -398,8 +409,8 @@
         window.open("getDailySemiFinishedStockReport?startDate=" + startDate, '_blank');
     }
 
-    function getAnnualPartyWiseReport() {
-        var supplier_name = document.getElementById('supplier_name_for_annualReport').value;
+    function getStartAndEndingDates() {
+        var company = document.getElementById('company').value;
         var startDate = '';
         var endDate = '';
         if (document.getElementById('yearly').checked) {
@@ -407,7 +418,6 @@
             var year = now.getFullYear();
             startDate = year + '-01-01';
             endDate = year + '-12-31';
-            alert(startDate+" "+endDate)
         } else if (document.getElementById('monthly').checked) {
             var day = 0;
             var now = new Date();
@@ -428,24 +438,50 @@
                 }
             }
             startDate = year + "-" + month + '-01';
-            endDate = year + "-" + month +"-"+ day; 
+            endDate = year + "-" + month + "-" + day;
         } else if (document.getElementById('custome').checked) {
             document.getElementById('startDate').focus();
             startDate = document.getElementById('startDate').value;
             endDate = document.getElementById('endDate').value;
+        } else {
+            startDate = document.getElementById('startDate').value;
+            endDate = document.getElementById('endDate').value;
         }
 
-        if(document.getElementById('supplier_name_for_annualReport').value == ''){
-            alert("Please select supplier name also");
-            document.getElementById('supplier_name_for_annualReport').focus();
-        }
-        else{
-
-            window.open("getAnnualPartyWiseReport?supplier_name=" + supplier_name + "&startDate=" + startDate + "&endDate=" + endDate, '_blank');
+        if (document.getElementById('company').value == '') {
+            alert("Please select company name also");
+            document.getElementById('company').focus();
+        } else {
+            return "startDate=" + startDate + "&endDate=" + endDate + "&company=" + company;
         }
     }
-    function focusOnCustomeDate(){
+
+    function focusOnCustomeDate() {
         document.getElementById('startDate').focus();
+    }
+
+    dispatch_supplier_wise('none');
+    dispatch_all_supplier('none')
+
+    function dispatch_supplier_wise(supplier_wise_display_value) {
+        document.getElementById('dispatch_supplier_name').style.display = supplier_wise_display_value;
+        document.getElementById('dispatch_dispatch_detail_btn').style.display = supplier_wise_display_value;
+        document.getElementById('dispatch_dispatch_btn').style.display = supplier_wise_display_value;
+    }
+
+    function dispatch_all_supplier(all_supplier_display_value) {
+        document.getElementById('dispatch_all_dispatch_detail_btn').style.display = all_supplier_display_value;
+        document.getElementById('dispatch_all_dispatch_btn').style.display = all_supplier_display_value;
+    }
+
+    function dispatch_supplier_wise_radiobtn() {
+        dispatch_supplier_wise('block');
+        dispatch_all_supplier('none');
+    }
+
+    function dispatch_all_supplier_wise_radiobtn() {
+        dispatch_all_supplier('block');
+        dispatch_supplier_wise('none')
     }
 </script>
 
