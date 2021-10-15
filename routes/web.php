@@ -1,20 +1,24 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SavecitydataController;
-use App\Http\Controllers\SavePartydataController;
-use App\Http\Controllers\SaveItemsdataController;
-use App\Http\Controllers\SaveSalesBookdataController;
-use App\Http\Controllers\SaveSalesBookDetaildataController;
-use App\Http\Controllers\Cashbook;
-use App\Http\Controllers\Stock;
-use App\Http\Controllers\Dispatch;
-use App\Http\Controllers\Purchase_book;
-use App\Http\Controllers\stockReturn;
-use App\Http\Controllers\report;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\PartyController;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\DispatchController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
 
 Route::get('/', function () {
     return redirect('/admin');
@@ -27,273 +31,227 @@ Route::get('/admin', function () {
     }
 });
 
-// Material code start
-Route::post('save_materialdata', [App\Http\Controllers\SavePartydataController::class, 'save_materialdata_method']);
-Route::post('insertMaterialUsedDetail', [App\Http\Controllers\SavePartydataController::class,
- 'insertMaterialUsedDetail_method']);
- Route::post('getOpeningBalance', [App\Http\Controllers\SavePartydataController::class,
- 'getOpeningBalance_method']);
- Route::post('getMaterialItemNamesOfSelectedCategory', [App\Http\Controllers\SavePartydataController::class,
- 'getMaterialItemNamesOfSelectedCategory_method']);
+Route::get('roles', [App\Http\Controllers\UserController::class, 'roles_method']);
+Route::post('insertRole', [App\Http\Controllers\UserController::class, 'insertRole_method']);
+Route::get('roleEdit', [App\Http\Controllers\UserController::class, 'roleEdit_method']);
+Route::post('updateRole', [App\Http\Controllers\UserController::class, 'updateRole_method']);
+Route::get('roleDelete/{id}', [App\Http\Controllers\UserController::class, 'roleDelete_method']);
 
- Route::post('getMaterialNamesOfSelectedItem', [App\Http\Controllers\SavePartydataController::class,
- 'getMaterialNamesOfSelectedItem_method']);
 
- Route::post('insertMaterialNames', [App\Http\Controllers\SaveItemsdataController::class, 'insertMaterialNames_method']);
- 
- Route::post('insertItemNames', [App\Http\Controllers\SaveItemsdataController::class, 'insertItemNames_method']);
- 
-Route::get('show_material', [App\Http\Controllers\SavePartydataController::class, 'show_material_method']);
-Route::get('show_material_detail', [App\Http\Controllers\SavePartydataController::class, 'show_material_detail_method']);
-Route::get('delete_materialdata/{id}', [App\Http\Controllers\SavePartydataController::class, 'delete_materialdata_method']);
-Route::get('edit_materialdata/{id}', [App\Http\Controllers\SavePartydataController::class, 'edit_materialdata_method']);
-Route::get('edit_materialdata_detail/{id}', [App\Http\Controllers\SavePartydataController::class,
- 'edit_materialdata_detail_method']);
-Route::get('/materialeditform', function () {
+Route::get('userType', [App\Http\Controllers\UserController::class, 'userType_method']);
+Route::post('insertUserType', [App\Http\Controllers\UserController::class, 'insertUserType_method']);
+Route::get('userTypeEdit', [App\Http\Controllers\UserController::class, 'userTypeEdit_method']);
+Route::post('updateUserType', [App\Http\Controllers\UserController::class, 'updateUserType_method']);
+Route::get('userTypeDelete/{id}', [App\Http\Controllers\UserController::class, 'userTypeDelete_method']);
+
+Route::get('createUser', [App\Http\Controllers\UserController::class, 'createUser_method']);
+Route::post('insertCreatedUser', [App\Http\Controllers\UserController::class, 'insertCreatedUser_method']);
+Route::get('createdUserEdit', [App\Http\Controllers\UserController::class, 'createdUserEdit_method']);
+Route::get('createdUserDelete/{id}', [App\Http\Controllers\UserController::class, 'createdUserDelete_method']);
+Route::post('updateCreatedUser', [App\Http\Controllers\UserController::class, 'updateCreatedUser_method']);
+Route::post('getUserTypeAndRoleFromDB', [App\Http\Controllers\UserController::class, 'getUserTypeAndRoleFromDB_method']);
+
+Route::get('zone', [App\Http\Controllers\PartyController::class, 'zone_method']);
+Route::post('insertZone', [App\Http\Controllers\PartyController::class, 'insertZone_method']);
+Route::get('zoneEdit', [App\Http\Controllers\PartyController::class, 'zoneEdit_method']);
+Route::post('updateZone', [App\Http\Controllers\PartyController::class, 'updateZone_method']);
+Route::get('zoneDelete/{id}', [App\Http\Controllers\PartyController::class, 'zoneDelete_method']);
+
+Route::get('city', [App\Http\Controllers\PartyController::class, 'city_method']);
+Route::post('insertCity', [App\Http\Controllers\PartyController::class, 'insertCity_method']);
+Route::get('cityEdit', [App\Http\Controllers\PartyController::class, 'cityEdit_method']);
+Route::post('updateCity', [App\Http\Controllers\PartyController::class, 'updateCity_method']);
+Route::get('cityDelete/{id}', [App\Http\Controllers\PartyController::class, 'cityDelete_method']);
+Route::post('getZoneNameForEdit', [App\Http\Controllers\PartyController::class, 'getZoneNameForEdit_method']);
+
+
+
+Route::get('area', [App\Http\Controllers\PartyController::class, 'area_method']);
+Route::post('insertArea', [App\Http\Controllers\PartyController::class, 'insertArea_method']);
+Route::get('areaEdit', [App\Http\Controllers\PartyController::class, 'areaEdit_method']);
+Route::post('updateArea', [App\Http\Controllers\PartyController::class, 'updateArea_method']);
+Route::get('areaDelete/{id}', [App\Http\Controllers\PartyController::class, 'areaDelete_method']);
+Route::post('getZoneNameCityNameForEdit', [App\Http\Controllers\PartyController::class, 'getZoneNameCityNameForEdit_method']);
+
+
+
+Route::get('company', [App\Http\Controllers\PartyController::class, 'company_method']);
+Route::post('insertCompany', [App\Http\Controllers\PartyController::class, 'insertCompany_method']);
+Route::get('companyEdit', [App\Http\Controllers\PartyController::class, 'companyEdit_method']);
+Route::post('updateCompany', [App\Http\Controllers\PartyController::class, 'updateCompany_method']);
+Route::get('companyDelete/{id}', [App\Http\Controllers\PartyController::class, 'companyDelete_method']);
+
+Route::get('itemsCategory', [App\Http\Controllers\PartyController::class, 'itemsCategory_method']);
+Route::post('insertItemsCategory', [App\Http\Controllers\PartyController::class, 'insertItemsCategory_method']);
+Route::get('itemsCategoryEdit', [App\Http\Controllers\PartyController::class, 'itemsCategoryEdit_method']);
+Route::post('updateItemsCategory', [App\Http\Controllers\PartyController::class, 'updateItemsCategory_method']);
+Route::get('itemsCategoryDelete/{id}', [App\Http\Controllers\PartyController::class, 'itemsCategoryDelete_method']);
+
+
+Route::get('items', [App\Http\Controllers\PartyController::class, 'items_method']);
+Route::post('insertItems', [App\Http\Controllers\PartyController::class, 'insertItems_method']);
+Route::get('itemsEdit', [App\Http\Controllers\PartyController::class, 'itemsEdit_method']);
+Route::post('updateItems', [App\Http\Controllers\PartyController::class, 'updateItems_method']);
+Route::get('itemsDelete/{id}', [App\Http\Controllers\PartyController::class, 'itemsDelete_method']);
+Route::post('getCompanyNameForEdit', [App\Http\Controllers\PartyController::class, 'getCompanyNameForEdit_method']);
+
+Route::get('partyType', [App\Http\Controllers\PartyController::class, 'partyType_method']);
+Route::post('insertPartyType', [App\Http\Controllers\PartyController::class, 'insertPartyType_method']);
+Route::get('partyTypeEdit', [App\Http\Controllers\PartyController::class, 'partyTypeEdit_method']);
+Route::post('updatePartyType', [App\Http\Controllers\PartyController::class, 'updatePartyType_method']);
+Route::get('partyTypeDelete/{id}', [App\Http\Controllers\PartyController::class, 'partyTypeDelete_method']);
+
+
+Route::get('party', [App\Http\Controllers\PartyController::class, 'party_method']);
+Route::post('insertParty', [App\Http\Controllers\PartyController::class, 'insertParty_method']);
+Route::get('partyEdit', [App\Http\Controllers\PartyController::class, 'partyEdit_method']);
+Route::post('updateParty', [App\Http\Controllers\PartyController::class, 'updateParty_method']);
+Route::post('getPartyCodeForEdit', [App\Http\Controllers\PartyController::class, 'getPartyCodeForEdit_method']);
+
+Route::get('useraccount', [App\Http\Controllers\PartyController::class, 'useraccount_method']);
+Route::post('insertUserAccount', [App\Http\Controllers\PartyController::class, 'insertUserAccount_method']);
+Route::get('userAccountEdit', [App\Http\Controllers\PartyController::class, 'userAccountEdit_method']);
+Route::post('updateUserAccount', [App\Http\Controllers\PartyController::class, 'updateUserAccount_method']);
+Route::get('userAccountDelete/{id}', [App\Http\Controllers\PartyController::class, 'userAccountDelete_method']);
+
+Route::get('accountcompany', [App\Http\Controllers\PartyController::class, 'accountcompany_method']);
+Route::post('insertAccountCompany', [App\Http\Controllers\PartyController::class, 'insertAccountCompany_method']);
+Route::get('accountCompanyEdit', [App\Http\Controllers\PartyController::class, 'accountCompanyEdit_method']);
+Route::post('updateAccountCompany', [App\Http\Controllers\PartyController::class, 'updateAccountCompany_method']);
+Route::get('accountCompanyDelete/{id}', [App\Http\Controllers\PartyController::class, 'accountCompanyDelete_method']);
+
+Route::get('accountemployee', [App\Http\Controllers\PartyController::class, 'accountemployee_method']);
+Route::post('insertAccountEmployee', [App\Http\Controllers\PartyController::class, 'insertAccountEmployee_method']);
+Route::get('accountEmployeeEdit', [App\Http\Controllers\PartyController::class, 'accountEmployeeEdit_method']);
+Route::post('updateAccountEmployee', [App\Http\Controllers\PartyController::class, 'updateAccountEmployee_method']);
+Route::get('accountEmployeeDelete/{id}', [App\Http\Controllers\PartyController::class, 'accountEmployeeDelete_method']);
+
+
+// Dashboar code starts from here
+Route::get('getAccountHeadFromUserAccountTable', [App\Http\Controllers\UserController::class, 
+'getAccountHeadFromUserAccountTable_method']);
+
+Route::get('setSessionAH', [App\Http\Controllers\UserController::class, 
+'setSessionAH_method']);
+Route::get('getCompaniesFromAccountsCompany', [App\Http\Controllers\UserController::class, 
+'getCompaniesFromAccountsCompany_method']);
+Route::get('setSessionCompany', [App\Http\Controllers\UserController::class, 
+'setSessionCompany_method']);
+Route::get('getCityNameForMakingPartyCode', [App\Http\Controllers\UserController::class, 
+'getCityNameForMakingPartyCode_method']);
+
+Route::get('getCityNameForMakingPartyCode2', [App\Http\Controllers\UserController::class, 
+'getCityNameForMakingPartyCode2_method']);
+
+Route::get('getCitiesOfSelectedZone', [App\Http\Controllers\PartyController::class, 
+'getCitiesOfSelectedZone_method']);
+
+Route::get('getCityNameOfSelectedZone2', [App\Http\Controllers\PartyController::class, 
+'getCityNameOfSelectedZone2_method']);
+
+Route::get('getAreasOfSelectedCity', [App\Http\Controllers\PartyController::class, 
+'getAreasOfSelectedCity_method']);
+
+Route::get('getAreaOfSelectedCity2', [App\Http\Controllers\PartyController::class, 
+'getAreasOfSelectedCity_method']);
+
+
+Route::get('getCitiesOfSelectedZone2', [App\Http\Controllers\PartyController::class, 
+'getCitiesOfSelectedZone2_method']);
+
+Route::post('checkDuplicationOfPartyName', [App\Http\Controllers\PartyController::class, 'checkDuplicationOfPartyName_method']);
+
+Route::get('checkDuplication', [App\Http\Controllers\UserController::class, 
+'checkDuplication_method']);
+
+// itemsRate code starts from here
+Route::get('itemRate', [App\Http\Controllers\StockController::class, 'itemRate_method']);
+Route::post('insertItemRate', [App\Http\Controllers\StockController::class, 'insertItemRate_method']);
+Route::get('itemRateEdit', [App\Http\Controllers\StockController::class, 'itemRateEdit_method']);
+Route::post('updateItemRate', [App\Http\Controllers\StockController::class, 'updateItemRate_method']);
+Route::get('itemRateDelete/{id}', [App\Http\Controllers\StockController::class, 'itemRateDelete_method']);
+Route::get('getItemNameOfItemRate', [App\Http\Controllers\StockController::class, 'getItemNameOfItemRate_method']);
+Route::get('getPartyTypeOfItemRate', [App\Http\Controllers\StockController::class, 'getPartyTypeOfItemRate_method']);
+Route::get('checkDuplicationOfItemRateData', [App\Http\Controllers\StockController::class, 'checkDuplicationOfItemRateData_method']);
+
+
+// stock code starts from here
+Route::get('stock', [App\Http\Controllers\StockController::class, 'stock_method']);
+Route::post('insertStock', [App\Http\Controllers\StockController::class, 'insertStock_method']);
+Route::get('stockEdit', [App\Http\Controllers\StockController::class, 'stockEdit_method']);
+Route::post('updateStock', [App\Http\Controllers\StockController::class, 'updateStock_method']);
+Route::get('stockDelete/{id}', [App\Http\Controllers\StockController::class, 'stockDelete_method']);
+Route::get('getItemNameOfStock', [App\Http\Controllers\StockController::class, 'getItemNameOfStock_method']);
+Route::get('checkDuplicationOfStockData', [App\Http\Controllers\StockController::class, 'checkDuplicationOfStockData_method']);
+
+// Salebook code starts from here
+Route::get('/salebook', function () {
     if (Auth::guest()) {
         return redirect('login');
     } else {
-        return view('admin/modules/Material/materialedit');
+     
+        return view('admin/modules/SalesBook/salesbook');
     }
 });
-Route::post('getMaterialOfSelectedCategory', [App\Http\Controllers\SavePartydataController::class,
-'getMaterialOfSelectedCategory_method']);
-Route::post('edit_materialdata', [App\Http\Controllers\SavePartydataController::class, 'update_materialdata_method']);
-Route::post('edit_materialdata_detail', [App\Http\Controllers\SavePartydataController::class,
- 'update_materialdata_detail_method']);
-
-
-
-
-
-
-Route::get('/sv', function () {
+Route::post('getDateOfSelectedSupplier', [App\Http\Controllers\DispatchController::class, 'getDateOfSelectedSupplier_method']);
+Route::post('dispatch', [App\Http\Controllers\DispatchController::class, 'dispatch_method']);
+Route::get('edit_salesbook', function () {
     if (Auth::guest()) {
         return redirect('login');
     } else {
-        return view('admin/modules/Supplier_and_Vender/sv');
-    }
-});
-Route::post('save_svdata', [App\Http\Controllers\SavecitydataController::class, 'save_svdata_method']);
-Route::get('show_svdata', [App\Http\Controllers\SavecitydataController::class, 'show_svdata_method']);
-Route::get('delete_svdata/{id}', [App\Http\Controllers\SavecitydataController::class, 'delete_svdata_method']);
-Route::get('edit_svdata/{id}', [App\Http\Controllers\SavecitydataController::class, 'edit_svdata_method']);
-Route::get('/sveditform', function () {
-    if (Auth::guest()) {
-        return redirect('login');
-    } else {
-        return view('admin/modules/Supplier_and_Vender/svedit');
-    }
-});
-Route::post('edit_svdata', [App\Http\Controllers\SavecitydataController::class, 'update_svdata_method']);
-Route::get('/items', function () {
-    if (Auth::guest()) {
-        return redirect('login');
-    } else {
-        return view('admin/modules/Items/item');
-    }
-});
-
-Route::get('show_zone', [App\Http\Controllers\SavecitydataController::class, 'show_zone_method']);
-Route::post('save_zone', [App\Http\Controllers\SavecitydataController::class, 'save_zone_method']);
-Route::get('delete_zone/{id}', [App\Http\Controllers\SavecitydataController::class, 'delete_zone_method']);
-
-Route::post('update_zone', [App\Http\Controllers\SavecitydataController::class, 'update_zone_method']);
-
-
-
-Route::get('show_city', [App\Http\Controllers\SavecitydataController::class, 'show_city_method']);
-Route::post('save_city', [App\Http\Controllers\SavecitydataController::class, 'save_city_method']);
-Route::get('delete_city/{id}', [App\Http\Controllers\SavecitydataController::class, 'delete_city_method']);
-Route::get('edit_city/{id}', [App\Http\Controllers\SavecitydataController::class, 'edit_city_method']);
-Route::post('update_city', [App\Http\Controllers\SavecitydataController::class, 'update_city_method']);
-
-
-
-// items code
-Route::post('save_itemsdata', [App\Http\Controllers\SaveItemsdataController::class, 'save_itemsdata_method']);
-Route::get('show_itemsdata', [App\Http\Controllers\SaveItemsdataController::class, 'show_itemsdata_method']);
-Route::post('insertMaterialItemNames', [App\Http\Controllers\SaveItemsdataController::class, 'insertMaterialItemNames_method']);
-Route::get('delete_itemsdata/{id}', [App\Http\Controllers\SaveItemsdataController::class, 'delete_itemsdata_method']);
-Route::get('edit_itemsdata/{id}', [App\Http\Controllers\SaveItemsdataController::class, 'edit_itemsdata_method']);
-Route::get('/itemesditform', function () {
-    if (Auth::guest()) {
-        return redirect('login');
-    } else {
-        return view('admin/modules/Items/item');
-    }
-});
-
-Route::get('/MaterialItems', function () {
-    if (Auth::guest()) {
-        return redirect('login');
-    } else {
-        return view('admin/modules/MaterialItems/MaterialItem');
-    }
-});
-Route::post('edit_itemsdata', [App\Http\Controllers\SaveItemsdataController::class, 'update_itemsdata_method']);
-
-
-// company code
-Route::post('save_company', [App\Http\Controllers\SavecitydataController::class, 'save_company_method']);
-Route::get('show_company', [App\Http\Controllers\SavecitydataController::class, 'show_company_method']);
-Route::get('delete_company/{id}', [App\Http\Controllers\SavecitydataController::class, 'delete_company_method']);
-Route::post('edit_company', [App\Http\Controllers\SavecitydataController::class, 'update_company_method']);
-
-
-// Stock code
-Route::post('insertStock', [App\Http\Controllers\Stock::class, 'save_stockdata_method']);
-Route::post('insertStock_detail', [App\Http\Controllers\Stock::class, 'save_stockdata_detail_method']);
-Route::get('show_Stockdata', [App\Http\Controllers\Stock::class, 'show_Stockdata_method']);
-
-Route::post('getVarientOfSelectedItem', [App\Http\Controllers\Stock::class, 'getVarientOfSelectedItem_method']);
-
-Route::get('show_Stockdata_detail', [App\Http\Controllers\Stock::class, 'show_Stockdata_detail_method']);
-Route::get('delete_stockdata/{id}', [App\Http\Controllers\Stock::class, 'delete_stockdata_method']);
-Route::get('delete_stockdata_detail/{id}', [App\Http\Controllers\Stock::class, 'delete_stockdata_detail_method']);
-Route::get('edit_stockdata/{id}', [App\Http\Controllers\Stock::class, 'edit_stockdata_method']);
-Route::get('edit_stockdata_detail/{id}', [App\Http\Controllers\Stock::class, 'edit_stockdata_detail_method']);
-Route::get('/stockditform', function () {
-    if (Auth::guest()) {
-        return redirect('login');
-    } else {
-        return view('admin/modules/Items/item');
-    }
-});
-Route::post('edit_stockdata', [App\Http\Controllers\Stock::class, 'update_Stockdata_method']);
-Route::post('edit_stockdata_detail', [App\Http\Controllers\Stock::class, 'update_Stockdata_detail_method']);
-Route::post('getItemsOfSelectedCompany', [App\Http\Controllers\Stock::class, 'getItemsOfSelectedCompany_method']);
-Route::post('getItemsOfSelectedCompany_For_dispatch', [App\Http\Controllers\Stock::class,
-'getItemsOfSelectedCompany_For_dispatch_method']);
-Route::post('getVarientsOfSelectedItem_For_dispatch', [App\Http\Controllers\Stock::class,
-'getVarientsOfSelectedItem_For_dispatch_method']);
-Route::post('getVarientsOfSelectedItem_For_purchase', [App\Http\Controllers\Stock::class,
-'getVarientsOfSelectedItem_For_purchase_method']);
-
-
-
-// Dispatch code
-Route::get('/salesbook', function () {
-    if (Auth::guest()) {
-        return redirect('login');
-    } else {
-        $sup_and_ven = DB::table('sup_and_ven')->where('type','Supplier')->get();
-        $items = DB::table('items')->get();
-        $stock = DB::table('stock')->get();
-        $zones = DB::table('zone')->get();
-        $companies = DB::table('company')->get();
-        return view('admin/modules/SalesBook/salesbook', ['parties' => $sup_and_ven,'zones'=>$zones,
-         'items' => $items, 'stocks' => $stock,'companies'=>$companies]);
-    }
-});
-Route::post('getDateOfSelectedSupplier', [App\Http\Controllers\Dispatch::class, 'getDateOfSelectedSupplier_method']);
-Route::post('dispatch', [App\Http\Controllers\Dispatch::class, 'dispatch_method']);
-Route::get('edit_salesbookinvoice', function () {
-    if (Auth::guest()) {
-        return redirect('login');
-    } else {
-        $parties = DB::table('sup_and_ven')->get();
+        $parties = DB::table('salebook')->where('AccountHead',session('AH'))->distinct()->get('PartyName');
         return view('admin/modules/SalesBook/salesbookedit', ['parties' => $parties]);
     }
 });
-Route::get('getInvoicesForEdit', [App\Http\Controllers\Dispatch::class, 'getInvoicesForEdit_method']);
-Route::get('edit_invoice/{id}', [App\Http\Controllers\Dispatch::class, 'edit_invoice_method']);
-Route::post('update_dispatch', [App\Http\Controllers\Dispatch::class, 'update_dispatch']);
-Route::get('delete_dispatch', [App\Http\Controllers\Dispatch::class, 'delete_dispatch']);
+Route::get('getInvoicesForEdit', [App\Http\Controllers\DispatchController::class, 'getInvoicesForEdit_method']);
+Route::get('edit_invoice/{id}', [App\Http\Controllers\DispatchController::class, 'edit_invoice_method']);
+Route::post('update_dispatch', [App\Http\Controllers\DispatchController::class, 'update_dispatch']);
+Route::get('delete_dispatch', [App\Http\Controllers\DispatchController::class, 'delete_dispatch']);
+Route::get('getCitiesOfSelectedAccountHead', [App\Http\Controllers\DispatchController::class, 'getCitiesOfSelectedAccountHead_method']);
+Route::get('getAreaOfSelectedCity_sale', [App\Http\Controllers\DispatchController::class, 'getAreaOfSelectedCity_sale_method']);
+Route::get('getPartiesOfSelectedArea', [App\Http\Controllers\DispatchController::class, 'getPartiesOfSelectedArea_method']);
+Route::get('getPartyNamesOfSelectedBooker_sale', [App\Http\Controllers\DispatchController::class, 'getPartyNamesOfSelectedBooker_sale']);
+Route::get('getDataOfSelectedPartyName_sale', [App\Http\Controllers\DispatchController::class, 'getDataOfSelectedPartyName_sale']);
+Route::get('getItemNames_Of_Selected_AccountHead_And_CompanyName', [App\Http\Controllers\DispatchController::class,
+ 'getItemNames_Of_Selected_AccountHead_And_CompanyName']);
+ Route::get('getPriceFromRateTable_sale', [App\Http\Controllers\DispatchController::class,
+  'getPriceFromRateTable_sale_method']);
+  Route::get('getPriceFromItemsTable_sale', [App\Http\Controllers\DispatchController::class, 'getPriceFromItemsTable_sale']);
 
 
-// purchase book code
-Route::get('/purchasebook', function () {
+//   Cashbook code starts from here
+Route::get('/cashBook', function () {
     if (Auth::guest()) {
         return redirect('login');
     } else {
-        $sup_and_ven = DB::table('sup_and_ven')->where('type','Vender')->get();
-        $items = DB::table('items')->get();
-        $stock = DB::table('stock')->get();
-        $zones = DB::table('zone')->get();
-        $materials = DB::table('material')->get();
-        return view('admin/modules/Purchase_book/purchasebook', ['parties' => $sup_and_ven,'zones'=>$zones,
-         'items' => $items, 'stocks' => $stock,'materials'=>$materials]);
+     
+        return view('admin/modules/SalesBook/CashBook/cashBook');
     }
 });
-Route::post('getDateOfSelectedVender', [App\Http\Controllers\Purchase_book::class, 'getDateOfSelectedVender_method']);
-Route::post('purchase', [App\Http\Controllers\Purchase_book::class, 'purchasebook_method']);
-Route::get('edit_purchasebookinvoice', function () {
+Route::post('dispatch_cash', [App\Http\Controllers\DispatchController::class, 'dispatch_cash_method']);
+  
+
+//   JournalVoucher code starts from here
+Route::get('/journalVoucher', function () {
     if (Auth::guest()) {
         return redirect('login');
     } else {
-        $parties = DB::table('sup_and_ven')->where('type','Vender')->get();
-        return view('admin/modules/Purchase_book/purchasebookedit', ['parties' => $parties]);
+     
+        return view('admin/modules/SalesBook/JournalVoucher/journalVoucher');
     }
 });
-Route::get('getPurchaseInvoicesForEdit', [App\Http\Controllers\Purchase_book::class, 'getInvoicesForEdit_method']);
-Route::get('edit_purchasebook/{id}', [App\Http\Controllers\Purchase_book::class, 'edit_invoice_method']);
-Route::post('update_purchase', [App\Http\Controllers\Purchase_book::class, 'update_purchase']);
-Route::get('delete_purchasebook', [App\Http\Controllers\Purchase_book::class, 'delete_purchasebook']);
+Route::post('dispatch_journalVoucher', [App\Http\Controllers\DispatchController::class, 'dispatch_journalVoucher_method']);
 
-
-
-// Reports code start from here
-Route::get('Report', function () {
+//   SaleReturn code starts from here
+Route::get('/saleReturn', function () {
     if (Auth::guest()) {
         return redirect('login');
     } else {
-        $sup_ven = DB::table('dispatch')->distinct()->get('supplier');
-        $venders = DB::table('purchase_book')->distinct()->get('vender');
-        $companies = DB::table('company')->get();
-        return view('admin/modules/reports/Report', ['sup_ven' => $sup_ven,'venders'=>$venders,'companies'=>$companies]);
+     
+        return view('admin/modules/SalesBook/SaleReturn/saleReturn');
     }
 });
-
-
-// Stock Return code
-Route::get('/Return', function () {
-    if (Auth::guest()) {
-        return redirect('login');
-    } else {
-        $sup_and_ven = DB::table('sup_and_ven')->where('type','Supplier')->get();
-        $items = DB::table('items')->get();
-        $stock = DB::table('stock')->get();
-        $zones = DB::table('zone')->get();
-        $companies = DB::table('company')->get();
-        return view('admin/modules/Return/return', ['parties' => $sup_and_ven,'zones'=>$zones,
-         'items' => $items, 'stocks' => $stock,'companies'=>$companies]);
-    }
-});
-Route::post('addReturn', [App\Http\Controllers\stockReturn::class, 'addReturn_method']);
-Route::get('edit_return_invoice', function () {
-    if (Auth::guest()) {
-        return redirect('login');
-    } else {
-        $parties = DB::table('sup_and_ven')->get();
-        return view('admin/modules/Return/stockReturn_edit', ['parties' => $parties]);
-    }
-});
-Route::get('getReturnInvoicesForEdit', [App\Http\Controllers\stockReturn::class, 'getReturnInvoicesForEdit_method']);
-Route::get('delete_return_invoice', [App\Http\Controllers\stockReturn::class, 'delete_return_invoice']);
-Route::get('edit_Returninvoice/{id}', [App\Http\Controllers\stockReturn::class, 'edit_Returninvoice_method']);
-Route::post('update_stockReturn', [App\Http\Controllers\stockReturn::class, 'update_stockReturn']);
-
-Route::get('Dispatch', [App\Http\Controllers\report::class, 'Dispatch_method']);
-
-Route::post('getOrderDetailOfSelectedSupplier', [App\Http\Controllers\report::class, 'getOrderDetailOfSelectedSupplier_method']);
-
-Route::get('DispatchDetail', [App\Http\Controllers\report::class, 'DispatchDetail_method']);
-
-Route::get('getPurchaseReport', [App\Http\Controllers\report::class, 'getPurchaseReport_method']);
-
-Route::get('getRawMaterialReport', [App\Http\Controllers\report::class, 'getRawMaterialReport_method']);
-
-Route::get('getPackingMaterialReport', [App\Http\Controllers\report::class, 'getPackingMaterialReport_method']);
-
-Route::get('getStickerReport', [App\Http\Controllers\report::class, 'getStickerReport_method']);
-
-Route::get('getDailyFinishedStockReport', [App\Http\Controllers\report::class, 'getDailyFinishedStockReport_method']);
-
-Route::get('getDailySemiFinishedStockReport', [App\Http\Controllers\report::class, 'getDailySemiFinishedStockReport_method']);
-
-Route::get('getAnnualPartyWiseReport', [App\Http\Controllers\report::class, 'getAnnualPartyWiseReport_method']);
-
+Route::post('dispatch_journalVoucher', [App\Http\Controllers\DispatchController::class, 'dispatch_journalVoucher_method']);
 
 Auth::routes();
 

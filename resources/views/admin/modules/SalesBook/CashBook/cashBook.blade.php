@@ -18,10 +18,10 @@
                         <div class="col-md-10">
 
                             <div style="margin-top: 15px;" class="card card-default">
-                            <div class="card-header">
+                                <div class="card-header">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h3 class="card-title">Sale Invoice</h3>
+                                            <h3 class="card-title">Cash Book</h3>
                                         </div>
 
                                     </div>
@@ -29,18 +29,13 @@
                                 </div>
 
                                 <div style="margin-left: 15px;margin-top:15px;line-height:0px" class="row">
-                                   
 
-                                    <div style="width: 30%;margin-right:3px">
+
+                                    <div style="width: 20%;margin-right:3px">
                                         <label>Date</label>
                                         <input class="form-control" style="padding: 0;width: 100%;height: 30px;font-size: 14px;" id="Date" name="date" type="date">
                                     </div>
-
-
-                                </div>
-
-                                <div style="margin: 15px;line-height:0px" class="row">
-                                    <div style="width: 30%;margin-right:3px">
+                                    <div style="width: 25%;margin-right:3px">
 
                                         <label>City</label>
                                         <select name="City" id="City" class="control-form select2" style="width: 100%;" onchange="getAreaOfSelectedCity(this.value)" required>
@@ -68,28 +63,25 @@
 
                                     </div>
 
-                                    <div style="width: 15%;margin-right:3px">
-                                        <label>Invoice</label>
-                                        <input class="form-control" readonly required style="padding: 0;width: 100%;height: 30px;font-size: 14px;" id="Invoice" name="Invoice" type="text">
-                                    </div>
-
 
                                 </div>
 
+                                <div style="margin: 15px;line-height:0px" class="row">
+                                    
+                                    
 
-                                <div style="margin-left: 15px;line-height:0px" class="row">
+                                    <div style="width: 20%;margin-right:3px">
+                                        <label>Invoice</label>
+                                        <input class="form-control" readonly required style="padding: 0;width: 100%;height: 30px;font-size: 14px;" id="Invoice" name="Invoice" type="text">
+                                    </div>
                                     <div style="width: 25%;margin-right:3px">
                                         <label>Sale Officer</label>
                                         <input name="saleOfficer" readonly id="saleOfficer" class="form-control" style="width: 100%;padding:0;height:30px">
 
                                     </div>
+                                    
+
                                     <div style="width: 25%;margin-right:3px">
-
-                                        <label>Remarks</label>
-                                        <input type="text" style="width: 100%;padding:0;height:30px" class="form-control" name="remarks" id="remarks" placeholder="Remarks">
-                                    </div>
-
-                                    <div style="width: 20%;margin-right:3px">
                                         <label>PartyPerson</label>
                                         <input type="text" name="PartyPerson" id="PartyPerson" class="form-control" style="width: 100%;padding:0;height:30px" required>
                                     </div>
@@ -101,78 +93,23 @@
 
                                 </div>
 
-                                <!-- Add Product Detail -->
-                                <div style="line-height: 0;margin-left:-4px;margin-top:-1%" class="card-body">
 
-                                    <div style="display: flex;">
-
-                                        <div style="width: 60%;margin-right:3px">
-                                            <label>Item Name</label>
-                                            <select name="Itemname[]" onchange="getPriceOfSelectedItemName(this.value)" id="ItemName" style="width: 100%;" required class="select2">
-
-
-                                            </select>
-                                        </div>
-                                        <div style="width: 10%;margin-right:3px">
-
-                                            <label>Qty</label>
-                                            <input type="number" oninput="getTotalPrice()" name="qty" id="qty" style="width:100%;height:28px;">
-                                        </div>
-                                        <div style="width: 10%;margin-right:3px">
-                                            <label>Price</label>
-                                            <input name="price" id="price" readonly style="width: 100%;height:28px;" type="number" required>
-
-                                        </div>
-
-                                        <input type="hidden" id="saving_price" name="saving_price">
-
-                                        <div style="width: 10%;margin-right:3px">
-                                            <label>Total</label>
-                                            <input name="total" readonly id="total" style="width: 100%;height:28px;" type="number" required>
-
-                                        </div>
-                                        <div style="width: 10%;margin-right:3px">
-                                            <label>TO</label>
-                                            <input name="TO" id="TO" oninput="getTotalPrice()" style="width: 100%;height:28px;" type="number" required>
-
-                                        </div>
-                                        <div style="width: 10%;margin-right:3px">
-                                            <label>TOA</label>
-                                            <input name="TOA" readonly id="TOA" style="width: 100%;height:28px;" type="number" required>
-
-                                        </div>
-                                        <div style="width: 10%;margin-right:3px">
-                                            <label>Sch</label>
-                                            <input name="Sch" id="Sch" oninput="getTotalPrice()" style="width: 100%;height:28px;" type="number" required>
-
-                                        </div>
-                                        <div style="width: 10%;margin-right:3px">
-                                            <label>SchA</label>
-                                            <input name="SchA" readonly id="SchA" style="width: 100%;height:28px;" type="number" required>
-
-                                        </div>
-                                        <div style="width: 10%;margin-right:3px">
-                                            <label>%</label>
-                                            <input name="Percent" oninput="getTotalPrice()" id="Percent" style="width: 100%;height:28px;" type="number" required>
-
-                                        </div>
-                                        <div style="width: 10%;margin-right:3px">
-                                            <label>%A</label>
-                                            <input name="PercentAmount" readonly id="PercentAmount" style="width: 100%;height:28px;" type="number" required>
-
-                                        </div>
-                                        <div style="width: 10%;margin-right:3px">
-                                            <label>F.Total</label>
-                                            <input name="finalTotal" readonly id="finalTotal" style="width: 100%;height:28px;" type="number" required>
-
-                                        </div>
-
-                                        <button onclick="addRow()" id="addRow" style="width: 5%;margin-left:-1px;height: 26px;margin-top: 8px;background:green;color:white;border:none" class="addRow">+</button>
-
+                                <div style="margin-left: 15px;line-height:0px;margin-bottom:20px;" class="row">
+                                   
+                                    <div style="width: 25%;margin-right:3px">
+                                        <label>Cash</label>
+                                        <input type="text" name="Cash" id="Cash" oninput="getCashValue(this.value)" class="form-control" style="width: 100%;padding:0;height:30px" placeholder="Add Cash" required>
                                     </div>
-                                    <div style="line-height: 0;" id="whereProductsShow">
+                                    <div style="width: 25%;margin-right:3px">
+
+                                        <label>Remarks</label>
+                                        <input type="text" style="width: 100%;padding:0;height:30px" class="form-control" name="remarks" id="remarks" placeholder="Remarks">
                                     </div>
+
+
                                 </div>
+
+
                             </div>
                             <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
@@ -301,55 +238,11 @@
 
                                 <div style="line-height: 0;padding-top: 10px;" class="card-body">
                                     <div class="row">
-                                        <div style="width: 100%;">
-                                            <div class="form-group">
-                                                <label>Total</label>
-                                                <input id="SaleTotal" readonly placeholder="Total" name="Total" style="width: 100%;" type="text" required>
-
-                                            </div>
-                                        </div>
-
-                                        <div style="width: 100%;" class="form-group">
-                                            <label>TO Disc.</label>
-
-                                            <input type="text" readonly placeholder="TO Discount" name="TODiscount" id="TODiscount" class="control-form" style="width: 100%;" required>
-
-                                        </div>
-
-
-                                        <div class="row">
-
+                                       
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label>Scheme Disc</label>
-                                                    <input type="text" readonly id="schemeDiscount" name="schemeDiscount" style="width: 100%;" required placeholder="Scheme Disc.">
-                                                </div>
-
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>% Disc</label>
-                                                    <input type="text" readonly id="PercentDiscount" name="PercentDiscount" style="width: 100%;" required class="" placeholder="% Discount">
-                                                </div>
-
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Extra Discount</label>
-                                                    <input type="text" oninput="getSaleFinalTotal(this.value)" id="extraDiscount" name="extraDiscount" style="width: 100%;" required class="" placeholder="Extra Discount">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>F. Total</label>
-                                                    <input type="text" readonly id="SaleFinalTotal" name="finalTotal" style="width: 100%;" required class="" placeholder="Final Total">
-                                                </div>
-
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Debit</label>
-                                                    <input type="text" readonly id="debit" name="debit" style="width: 100%;" required placeholder="Debit">
+                                                    <label>Credit</label>
+                                                    <input type="text" readonly id="Credit" name="Credit" style="width: 100%;" required placeholder="Credit">
                                                 </div>
 
                                             </div>
@@ -361,11 +254,10 @@
 
                                             </div>
                                             <div class="col-md-12">
-                                                <button style="padding: 7px;width:47%;" onclick="dispatch()" class="btn btn-primary">Submit</button>
+                                                <button style="padding: 7px;width:47%;" onclick="dispatch()" class="btn btn-primary">Save</button>
                                                 <button style="padding: 7px;width:40%;" onclick="dispatch_print()" class="btn btn-primary">Print</button>
                                             </div>
 
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -381,75 +273,6 @@
 </div>
 
 <script>
-    function getTotalSalesBookData() {
-        var total1 = 0;
-        var TOA1 = 0;
-        var SchA1 = 0;
-        var PercenDiscount1 = 0;
-
-        var ItemName = document.getElementsByName('ItemName[]');
-        var total = document.getElementsByName('total[]');
-        var TOA = document.getElementsByName('TOA[]');
-        var SchA = document.getElementsByName('SchA[]');
-        var PercentAmount = document.getElementsByName('PercentAmount[]');
-
-        alert(ItemName.length)
-        for (var i = 0; i < ItemName.length; i++) {
-            total1 = total1 + parseInt(total[i].value);
-            TOA1 = TOA1 + parseInt(TOA[i].value);
-            SchA1 = SchA1 + parseInt(SchA[i].value);
-            PercenDiscount1 = PercenDiscount1 + parseFloat(PercentAmount[i].value);
-
-        }
-        document.getElementById('SaleTotal').value = total1;
-        document.getElementById('TODiscount').value = TOA1;
-        document.getElementById('schemeDiscount').value = SchA1;
-        document.getElementById('PercentDiscount').value = PercenDiscount1;
-        document.getElementById('SaleFinalTotal').value = total1 - TOA1 - SchA1 - PercenDiscount1;
-        document.getElementById('debit').value = total1 - TOA1 - SchA1 - PercenDiscount1;
-    }
-
-
-    function getSaleFinalTotal(extraDiscount) {
-        var SaleTotal = document.getElementById('SaleTotal').value;
-        var TODiscount = document.getElementById('TODiscount').value;
-        var SchemeDiscount = document.getElementById('schemeDiscount').value;
-        var PercentDiscount = document.getElementById('PercentDiscount').value;
-        result = SaleTotal - TODiscount - SchemeDiscount - PercentDiscount - extraDiscount;
-        document.getElementById('SaleFinalTotal').value = result;
-        document.getElementById('debit').value = result;
-    }
-
-    function getTotalPrice() {
-        var qty = document.getElementById('qty');
-        var price = document.getElementById('price');
-        var total = document.getElementById('total');
-        var TO = document.getElementById('TO');
-        var TOA = document.getElementById("TOA");
-        var Sch = document.getElementById('Sch');
-        var SchA = document.getElementById('SchA');
-        var Percent = document.getElementById('Percent');
-        var PercentAmount = document.getElementById('PercentAmount');
-        var finalTotal = document.getElementById('finalTotal');
-
-        total.value = qty.value * price.value;
-        TOA.value = TO.value * qty.value;
-        if (Sch.value != 0 && Sch.value != '') {
-            SchA.value = (Sch.value * price.value - Sch.value * TO.value);
-        } else {
-            SchA.value = 0;
-        }
-        if (Percent.value != 0 && Percent.value != '') {
-            PercentAmount.value = ((qty.value * price.value - TO.value * qty.value - (Sch.value * price.value - Sch.value * TO.value)) * Percent.value) / 100;
-        } else {
-            PercentAmount.value = 0;
-        }
-        finalTotal.value = (qty.value * price.value - TO.value * qty.value - (Sch.value * price.value - Sch.value * TO.value)) -
-            ((qty.value * price.value - TO.value * qty.value - (Sch.value * price.value - Sch.value * TO.value)) * Percent.value) / 100;
-        getTotalSalesBookData();
-    }
-
-
 
     var AccountHead = document.getElementById('AccountHeadValue').innerText;
     var CompanyName = document.getElementById('AccountHeadCompanyName').innerText;
@@ -477,41 +300,7 @@
             }
         })
 
-        $.ajax({
-            url: 'getItemNames_Of_Selected_AccountHead_And_CompanyName',
-            type: 'get',
-            data: {
-                AccountHead: AccountHead,
-                CompanyName: CompanyName
-            },
-            success: function(data) {
-                // console.log(data)
-                if (data.length != 0) {
-                    let ItemName = '<option disabled selected readonly value="">Choose Item Name...</option>';
-                    data.forEach(el => {
-                        ItemName += `
-                        <option value="${el.ItemName}">${el.ItemName}</option>
-                        `;
-                        document.getElementById('ItemName').innerHTML = ItemName;
-                    });
-                    document.getElementById('qty').value = 0;
-                    document.getElementById('price').value = 0;
-                    document.getElementById('total').value = 0;
-                    document.getElementById('TO').value = 0;
-                    document.getElementById('TOA').value = 0;
-                    document.getElementById('Sch').value = 0;
-                    document.getElementById('SchA').value = 0;
-                    document.getElementById('Percent').value = 0;
-                    document.getElementById('PercentAmount').value = 0;
-                    document.getElementById('finalTotal').value = 0;
-
-
-                } else {
-                    document.getElementById('ItemName').innerHTML = '';
-                }
-            }
-        })
-
+      
     }
 
     function getAreaOfSelectedCity(City) {
@@ -566,30 +355,7 @@
         })
     }
 
-    function getPartyNamesOfSelectedBooker(Booker) {
-        $.ajax({
-            url: 'getPartyNamesOfSelectedBooker_sale',
-            type: 'get',
-            data: {
-                Booker: Booker
-            },
-            success: function(data) {
-                // console.log(data)
-                if (data.length != 0) {
-                    let PartyName = '<option disabled selected readonly value="">Choose PartyName...</option>';
-                    data.forEach(el => {
-                        PartyName += `
-                        <option value="${el.PartyName}">${el.PartyName}</option>
-                        `;
-                        document.getElementById('PartyName').innerHTML = PartyName;
-                    });
 
-                } else {
-                    document.getElementById('PartyName').innerHTML = '';
-                }
-            }
-        })
-    }
     var PartyType = '';
 
     function getDataOfSelectedPartyName(PartyName) {
@@ -611,90 +377,15 @@
         })
     }
 
-    function getPriceOfSelectedItemName(ItemName) {
-        var ItemName = document.getElementById('ItemName').value;
+function getCashValue(Cash){
+    document.getElementById('Credit').value = Cash;
 
-        $.ajax({
-            url: 'getPriceFromRateTable_sale',
-            type: 'get',
-            data: {
-                ItemName: ItemName,
-                PartyType: PartyType,
-                AccountHead: AccountHead,
-                CompanyName: CompanyName
-            },
-            success: function(data) {
-                console.log(data)
-                document.getElementById('price').value = data.Rate;
-            }
-        })
-
-
-        $.ajax({
-            url: 'getPriceFromItemsTable_sale',
-            type: 'get',
-            data: {
-                ItemName: ItemName,
-                Company: CompanyName
-            },
-            success: function(data) {
-                // console.log(data)
-                document.getElementById('saving_price').value = data.Rate;
-            }
-        })
-    }
-
+}
 
     todatDate();
 
     function dispatch() {
-        var ItemName = document.getElementsByName('ItemName[]');
-        var qty = document.getElementsByName('qty[]');
-        var price = document.getElementsByName('price[]');
-        var saving_price = document.getElementsByName('saving_price[]');
-        var total = document.getElementsByName('total[]');
-        var TO = document.getElementsByName('TO[]');
-        var TOA = document.getElementsByName('TOA[]');
-        var Sch = document.getElementsByName('Sch[]');
-        var SchA = document.getElementsByName('SchA[]');
-        var Percent = document.getElementsByName('Percent[]');
-        var PercentAmount = document.getElementsByName('PercentAmount[]');
-        var finalTotal = document.getElementsByName('finalTotal[]');
-        var different_priceValue = '';
-
-        var obj = [];
-        for (var i = 0; i < ItemName.length; i++) {
-            var ItemName1 = ItemName[i].value;
-            var qty1 = qty[i].value;
-            var price1 = price[i].value;
-            var different_priceValue = price[i].value - saving_price[i].value;
-            // alert(different_priceValue)
-            var total1 = total[i].value;
-            var TO1 = TO[i].value;
-            var TOA1 = TOA[i].value;
-            var Sch1 = Sch[i].value;
-            var SchA1 = SchA[i].value;
-            var Percent1 = Percent[i].value;
-            var PercentAmount1 = PercentAmount[i].value;
-            var finalTotal1 = finalTotal[i].value;
-
-            var obje;
-            obje = {
-                ItemName: ItemName1,
-                Qty: qty1,
-                Price: price1,
-                Total: total1,
-                TO: TO1,
-                TOA: TOA1,
-                Sch: Sch1,
-                SchA: SchA1,
-                Percent: Percent1,
-                PercentAmount: PercentAmount1,
-                FinalTotal: finalTotal1,
-            };
-            obj.push(obje);
-        }
-        // console.log(obj);
+    
         var Date = document.getElementById('Date').value;
         var Invoice = document.getElementById('Invoice').value;
         var PartyName = document.getElementById('PartyName').value;
@@ -703,29 +394,22 @@
         var booker = document.getElementById('saleOfficer').value;
         var CompanyName = document.getElementById('AccountHeadCompanyName').innerText;
         var AccountHead = document.getElementById('AccountHeadValue').innerText;
-        var Total = document.getElementById('SaleTotal').value;
-        var TODiscount = document.getElementById('TODiscount').value;
-        var SchemeDiscount = document.getElementById('schemeDiscount').value;
-        var PercentDiscount = document.getElementById('PercentDiscount').value;
-        var ExtraDiscount = document.getElementById('extraDiscount').value;
-        var FinalTotal = document.getElementById('SaleFinalTotal').value;
-        var Debit = document.getElementById('debit').value;
+        var Cash = document.getElementById('Cash').value;
+        var Credit = document.getElementById('Credit').value;
         var Remarks = document.getElementById('remarks').value;
         var Balance = document.getElementById('balance').value;
-        var Difference = different_priceValue;
+        
         var InvoiceStatus = 'Enable';
 
-
         if (Date != '' && PartyName != '' && City != '' && Area != '' && booker != '' && CompanyName != '' && AccountHead != '' &&
-            Total != '' && TODiscount != '' && SchemeDiscount != '' && PercentDiscount != '' && FinalTotal != '' && Debit != '' && Remarks != '' && InvoiceStatus != '') {
-               
+             Cash != '' && Credit != '' && Remarks != '' && InvoiceStatus != '') {
+
             var token = '{{csrf_token()}}';
             $.ajax({
                 type: "post",
-                url: "dispatch",
+                url: "dispatch_cash",
                 data: {
 
-                    obj: obj,
                     Date: Date,
                     Invoice: Invoice,
                     PartyName: PartyName,
@@ -734,16 +418,11 @@
                     booker: booker,
                     CompanyName: CompanyName,
                     AccountHead: AccountHead,
-                    Total: Total,
-                    TODiscount: TODiscount,
-                    SchemeDiscount: SchemeDiscount,
-                    PercentDiscount: PercentDiscount,
-                    ExtraDiscount: ExtraDiscount,
-                    FinalTotal: FinalTotal,
-                    Debit: Debit,
+                   
+                    Cash: Cash,
+                    Credit: Credit,
                     Remarks: Remarks,
                     Balance: Balance,
-                    Difference: Difference,
                     InvoiceStatus: InvoiceStatus,
                     _token: token
                 },
@@ -809,7 +488,7 @@
         document.getElementById('PercentDiscount').value = '';
         document.getElementById('extraDiscount').value = '';
         document.getElementById('SaleFinalTotal').value = '';
-        document.getElementById('debit').value = '';
+        document.getElementById('Credit').value = '';
         document.getElementById('balance').value = '';
         document.getElementById('whereProductsShow').remove();
     }
