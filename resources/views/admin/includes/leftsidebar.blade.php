@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
-  <a href="/gennyFactory/public/admin" style="height: 56px;" class="brand-link">
+  <a href="/admin" style="height: 56px;" class="brand-link">
     <img src="" alt="" class="brand-image img-circle elevation-3" style="opacity: .8">
     <span class="brand-text font-weight-light"></span>
   </a>
@@ -20,25 +20,25 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="/gennyFactory/public/show_company" class="nav-link">
+              <a href="/show_company" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Company</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/gennyFactory/public/show_svdata" class="nav-link">
+              <a href="/show_svdata" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Suppliers & Venders</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/gennyFactory/public/show_zone" class="nav-link">
+              <a href="/show_zone" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Zone</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/gennyFactory/public/show_city" class="nav-link">
+              <a href="/show_city" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>City</p>
               </a>
@@ -62,14 +62,14 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/gennyFactory/public/show_material" class="nav-link">
+                  <a href="/show_material" class="nav-link">
                     <i class="far fa-dot-circle nav-icon"></i>
                     <p>Material</p>
                    
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/gennyFactory/public/show_material_detail" class="nav-link">
+                  <a href="/show_material_detail" class="nav-link">
                     <i class="far fa-dot-circle nav-icon"></i>
                     <p>Material Detail</p>
                   </a>
@@ -79,13 +79,13 @@
             </li>
 
             <li class="nav-item">
-              <a href="/gennyFactory/public/show_itemsdata" class="nav-link">
+              <a href="/show_itemsdata" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Items</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/gennyFactory/public/MaterialItems" class="nav-link">
+              <a href="/MaterialItems" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Material Items</p>
               </a>
@@ -98,14 +98,14 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/gennyFactory/public/show_Stockdata" class="nav-link">
+                  <a href="/show_Stockdata" class="nav-link">
                     <i class="far fa-dot-circle nav-icon"></i>
                     <p>Stock</p>
                    
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/gennyFactory/public/show_Stockdata_detail" class="nav-link">
+                  <a href="/show_Stockdata_detail" class="nav-link">
                     <i class="far fa-dot-circle nav-icon"></i>
                     <p>Stock Detail</p>
                   </a>
@@ -127,13 +127,13 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="/gennyFactory/public/salesbook" class="nav-link">
+              <a href="/salesbook" class="nav-link">
                 <i class="far fa-dot-circle nav-icon"></i>
                 <p>Add Sale Invoice</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/gennyFactory/public/edit_salesbookinvoice" class="nav-link">
+              <a href="/edit_salesbookinvoice" class="nav-link">
                 <i class="far fa-dot-circle nav-icon"></i>
                 <p>Edit Sale Invoice</p>
               </a>
@@ -149,13 +149,13 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="/gennyFactory/public/purchasebook" class="nav-link">
+              <a href="/purchasebook" class="nav-link">
                 <i class="far fa-dot-circle nav-icon"></i>
                 <p>PurchaseBook</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/gennyFactory/public/edit_purchasebookinvoice" class="nav-link">
+              <a href="/edit_purchasebookinvoice" class="nav-link">
                 <i class="far fa-dot-circle nav-icon"></i>
                 <p>Edit PurchaseBook</p>
               </a>
@@ -172,7 +172,7 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="/gennyFactory/public/Report" class="nav-link">
+              <a href="/Report" class="nav-link">
                 <i class="far fa-dot-circle nav-icon"></i>
                 <p>Generate Report</p>
               </a>
@@ -188,13 +188,13 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="/gennyFactory/public/Return" class="nav-link">
+              <a href="/Return" class="nav-link">
                 <i class="far fa-dot-circle nav-icon"></i>
                 <p>Add Return</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/gennyFactory/public/edit_return_invoice" class="nav-link">
+              <a href="/edit_return_invoice" class="nav-link">
                 <i class="far fa-dot-circle nav-icon"></i>
                 <p>Edit Return</p>
               </a>

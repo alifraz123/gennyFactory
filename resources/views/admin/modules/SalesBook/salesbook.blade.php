@@ -279,7 +279,7 @@
         var BuiltyNo = document.getElementById('BuiltyNo').value;
         var Remarks = document.getElementById('Remarks').value;
 
-        if (City != '' && Remarks != '' && zone != '' && gatePass != '' && BuiltyNo != '') {
+        if (true) {
 
             var token = '{{csrf_token()}}';
             $.ajax({
